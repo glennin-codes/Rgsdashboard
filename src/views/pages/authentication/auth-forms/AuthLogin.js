@@ -3,18 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-
-  useMediaQuery
-} from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -28,7 +17,7 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import {  useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { loginSuccess } from 'Redux/authSlice';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
@@ -41,22 +30,19 @@ const FirebaseLogin = ({ ...others }) => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-const navigate=useNavigate();
+  const navigate = useNavigate();
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-console.log(isAuthenticated)
+  console.log(isAuthenticated);
   return (
     <>
-     
-
       <Formik
         initialValues={{
           email: 'info@glenayienda.tech',
-          password: '123456',
-          
+          password: '123456'
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -70,16 +56,15 @@ console.log(isAuthenticated)
             }
 
             // Dispatch the loginSuccess action to update the authentication state
-       
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
             // Navigate to the dashboard page
-        
-      dispatch(loginSuccess());
-     navigate('/')
+
+            dispatch(loginSuccess());
+            navigate('/');
             setStatus({ success: true });
             setSubmitting(false);
-
           } catch (err) {
             console.error(err);
             if (scriptedRef.current) {
@@ -142,7 +127,7 @@ console.log(isAuthenticated)
                 </FormHelperText>
               )}
             </FormControl>
-            
+
             {errors.submit && (
               <Box sx={{ mt: 3 }}>
                 <FormHelperText error>{errors.submit}</FormHelperText>
@@ -151,7 +136,7 @@ console.log(isAuthenticated)
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button  disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
                   Sign in
                 </Button>
               </AnimateButton>
