@@ -1,5 +1,3 @@
-import { Link, Navigate } from 'react-router-dom';
-
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
@@ -8,9 +6,8 @@ import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
-import Logo from 'ui-component/Logo';;
-import { useState } from 'react';
-
+// import Logo from 'ui-component/Logo';
+// import { useState } from 'react';
 
 // assets
 
@@ -20,7 +17,6 @@ const Login = () => {
   const theme = useTheme();
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-
 
   return (
     <AuthWrapper1>
@@ -40,7 +36,7 @@ const Login = () => {
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                           LOGIN
+                            LOGIN
                           </Typography>
                           <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
                             Enter your credentials to continue
@@ -55,13 +51,11 @@ const Login = () => {
                   <Grid item xs={12}>
                     <Divider />
                   </Grid>
-                  
                 </Grid>
               </AuthCardWrapper>
             </Grid>
           </Grid>
         </Grid>
-       
       </Grid>
     </AuthWrapper1>
   );
