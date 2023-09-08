@@ -1,6 +1,8 @@
 // assets
 import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
-
+import SettingsIcon from '@mui/icons-material/Settings';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PeopleIcon from '@mui/icons-material/People';
 // constant
 const icons = {
   IconTypography,
@@ -21,7 +23,7 @@ const utilities = {
       title: 'display All',
       type: 'item',
       url: '/utils/util-typography',
-      icon: icons.IconTypography,
+      icon: SettingsIcon,
       breadcrumbs: false
     },
     {
@@ -29,7 +31,7 @@ const utilities = {
       title: 'Eployees',
       type: 'item',
       url: '/utils/util-color',
-      icon: icons.IconPalette,
+      icon: PeopleIcon,
       breadcrumbs: false
     },
     {
@@ -37,7 +39,7 @@ const utilities = {
       title: 'Payroll stats',
       type: 'item',
       url: '/utils/util-shadow',
-      icon: icons.IconShadow,
+      icon: AttachMoneyIcon ,
       breadcrumbs: false
     },
     {
