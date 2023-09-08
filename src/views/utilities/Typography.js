@@ -1,4 +1,4 @@
-import { Grid, Link } from '@mui/material';
+import { Grid } from '@mui/material';
 import MuiTypography from '@mui/material/Typography';
 
 // project imports
@@ -100,7 +100,6 @@ const Typography = () => (
                 overline text
               </MuiTypography>
             </Grid>
-           
           </Grid>
         </SubCard>
       </Grid>
