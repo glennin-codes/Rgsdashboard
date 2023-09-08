@@ -1,23 +1,18 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Button,
-  Checkbox,
-  Divider,
   FormControl,
-  FormControlLabel,
   FormHelperText,
-  Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Stack,
-  Typography,
+
   useMediaQuery
 } from '@mui/material';
 
@@ -33,31 +28,26 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Google from 'assets/images/icons/social-google.svg';
-import { Navigate } from 'react-router';
+import {  useNavigate } from 'react-router';
+import { loginSuccess } from 'Redux/authSlice';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const FirebaseLogin = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useSelector((state) => state.customization);
-  const [checked, setChecked] = useState(true);
-
-  const googleHandler = async () => {
-    console.error('Login');
-  };
-
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+const navigate=useNavigate();
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+console.log(isAuthenticated)
   return (
     <>
      
@@ -78,7 +68,18 @@ const FirebaseLogin = ({ ...others }) => {
               setStatus({ success: true });
               setSubmitting(false);
             }
-// post request to api to handle validation to the backend if its true change the redux state to authenticated to true
+
+            // Dispatch the loginSuccess action to update the authentication state
+       
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+      
+            // Navigate to the dashboard page
+        
+      dispatch(loginSuccess());
+     navigate('/')
+            setStatus({ success: true });
+            setSubmitting(false);
+
           } catch (err) {
             console.error(err);
             if (scriptedRef.current) {
@@ -150,7 +151,7 @@ const FirebaseLogin = ({ ...others }) => {
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button  disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
                   Sign in
                 </Button>
               </AnimateButton>

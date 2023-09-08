@@ -12,13 +12,15 @@ import { store } from 'store';
 // style + assets
 import 'assets/scss/style.scss';
 import config from './config';
+import authStore from 'Redux/authStore';
+;
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
-  <Provider store={store}>
+  <Provider store={authStore}>
     <BrowserRouter basename={config.basename}>
       <App />
     </BrowserRouter>
