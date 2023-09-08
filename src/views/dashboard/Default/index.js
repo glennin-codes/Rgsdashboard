@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // material-ui
-import { Box, Grid, Typography } from '@mui/material';
+import { Box,  } from '@mui/material';
 import LandOwnershipForm from 'ui-component/FillForm';
 // project imports
 
@@ -10,6 +10,7 @@ import LandOwnershipForm from 'ui-component/FillForm';
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
+  console.log(isLoading);
   useEffect(() => {
     setLoading(false);
   }, []);
