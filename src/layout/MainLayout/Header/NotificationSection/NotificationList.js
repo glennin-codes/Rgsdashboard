@@ -101,7 +101,7 @@ const NotificationList = () => {
         </ListItem>
         <Grid container direction="column" className="list-container">
           <Grid item xs={12} sx={{ pb: 2 }}>
-            <Typography variant="subtitle2">It is a long established fact that a reader will be distracted</Typography>
+            <Typography variant="subtitle2">Your work is expected </Typography>
           </Grid>
           <Grid item xs={12}>
             <Grid container>
