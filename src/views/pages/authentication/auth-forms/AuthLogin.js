@@ -56,12 +56,10 @@ const FirebaseLogin = ({ ...others }) => {
               setSubmitting(false);
             }
 
-console.log(values);
-            const resp= await axios.post('https://jade-panda-robe.cyclic.app/api/login',
-              values
-            );
-            const token=resp.data.token;
-            localStorage.setItem("token", JSON.stringify(token));
+            console.log(values);
+            const resp = await axios.post('https://jade-panda-robe.cyclic.app/api/login', values);
+            const token = resp.data.token;
+            localStorage.setItem('token', JSON.stringify(token));
             // Dispatch the loginSuccess action to update the authentication state
             // Navigate to the dashboard page
 
@@ -70,23 +68,21 @@ console.log(values);
             setStatus({ success: true });
             setSubmitting(false);
           } catch (err) {
-           
             if (scriptedRef.current) {
               setStatus({ success: false });
-              if(err?.response?.status === 401){
-                setErrors({ submit: err?.response?.data?.message});
-              }else if(err?.response?.status===500){ 
-              setErrors({ submit: err?.response?.data?.message});
+              if (err?.response?.status === 401) {
+                setErrors({ submit: err?.response?.data?.message });
+              } else if (err?.response?.status === 403) {
+                setErrors({ submit: err?.response?.data?.message });
+              } else if (err?.response?.status === 500) {
+                setErrors({ submit: err?.response?.data?.message });
+              } else {
+                setErrors({ submit: 'Network problem, check your connections and try again' });
               }
-              else{
-                setErrors({ submit: 'Network problem, check your connections and try again'});
-              }
+            }
 
-            }
-              
-              setSubmitting(false);
-            }
-          
+            setSubmitting(false);
+          }
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -143,13 +139,18 @@ console.log(values);
             </FormControl>
 
             {errors.submit && (
-              <Box sx={{ mt: 2}}>
-                <FormHelperText 
-                sx={{
-                  textAlign:'center' ,fontSize:'1rem',fontWeight:"600",
-                  background:"white"
-                }}
-                error>{errors.submit}</FormHelperText>
+              <Box sx={{ mt: 2 }}>
+                <FormHelperText
+                  sx={{
+                    textAlign: 'center',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    background: 'white'
+                  }}
+                  error
+                >
+                  {errors.submit}
+                </FormHelperText>
               </Box>
             )}
 
