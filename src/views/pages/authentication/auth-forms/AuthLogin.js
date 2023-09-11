@@ -19,6 +19,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { useNavigate } from 'react-router';
 import { loginSuccess } from 'Redux/authSlice';
+import axios from 'axios';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -41,8 +42,8 @@ const FirebaseLogin = ({ ...others }) => {
     <>
       <Formik
         initialValues={{
-          email: 'info@glenayienda.tech',
-          password: '123456'
+          email: '',
+          password: ''
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -55,24 +56,37 @@ const FirebaseLogin = ({ ...others }) => {
               setSubmitting(false);
             }
 
+console.log(values);
+            const resp= await axios.post('https://jade-panda-robe.cyclic.app/api/login',
+              values
+            );
+            const token=resp.data.token;
+            localStorage.setItem("token", JSON.stringify(token));
             // Dispatch the loginSuccess action to update the authentication state
-
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
             // Navigate to the dashboard page
 
             dispatch(loginSuccess());
-            navigate('/');
+            // navigate('/');
             setStatus({ success: true });
             setSubmitting(false);
           } catch (err) {
-            console.error(err);
+           
             if (scriptedRef.current) {
               setStatus({ success: false });
-              setErrors({ submit: err.message });
+              if(err?.response?.status === 401){
+                setErrors({ submit: err?.response?.data?.message});
+              }else if(err?.response?.status===500){ 
+              setErrors({ submit: err?.response?.data?.message});
+              }
+              else{
+                setErrors({ submit: 'Network problem, check your connections and try again'});
+              }
+
+            }
+              
               setSubmitting(false);
             }
-          }
+          
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -129,8 +143,13 @@ const FirebaseLogin = ({ ...others }) => {
             </FormControl>
 
             {errors.submit && (
-              <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errors.submit}</FormHelperText>
+              <Box sx={{ mt: 2}}>
+                <FormHelperText 
+                sx={{
+                  textAlign:'center' ,fontSize:'1rem',fontWeight:"600",
+                  background:"white"
+                }}
+                error>{errors.submit}</FormHelperText>
               </Box>
             )}
 
