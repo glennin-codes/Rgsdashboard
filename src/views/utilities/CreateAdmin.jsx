@@ -3,6 +3,7 @@ import { Container, TextField, Button, Grid, Paper } from '@mui/material';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import MainCard from 'ui-component/cards/MainCard';
 import { generateRandomPassword } from 'utils/GeneratePassword';
+import PhotoUpload from 'ui-component/PhotoUpload';
 
 const initialState = {
   name: '',
@@ -108,22 +109,7 @@ export function CreateAdmin() {
               />
             </Grid>
             <Grid item xs={12}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileInputChange}
-                style={{ display: 'none' }}
-                id="photo-input"
-              />
-              <label htmlFor="photo-input">
-                <Button
-                  variant="outlined"
-                  component="span"
-                  fullWidth
-                >
-                  Upload Photo
-                </Button>
-              </label>
+              <PhotoUpload setFormData={setFormData} formData={formData}/>
             </Grid>
             <Grid item xs={12}>
               <AnimateButton>
