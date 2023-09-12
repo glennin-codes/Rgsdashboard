@@ -9,6 +9,7 @@ import { generateRandomPassword } from 'utils/GeneratePassword';
 import PhotoUpload from 'ui-component/PhotoUpload';
 import axios from 'axios';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
+import CustomSnackbar from 'ui-component/SnackBar';
 
 const initialState = {
   name: '',
@@ -26,7 +27,11 @@ const initialState = {
 const CreateEmployee = () =>{
 
   const [formData, setFormData] = useState(initialState);
-
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -36,6 +41,14 @@ const CreateEmployee = () =>{
     const generatedPassword = generateRandomPassword(8); // Change 12 to your desired password length
     setFormData({ ...formData, password: generatedPassword });
   };
+  const handleSuccessSnackbarClose = () => {
+    setOpenSuccessSnackbar(false);
+  };
+  
+  const handleErrorSnackbarClose = () => {
+    setOpenErrorSnackbar(false);
+  };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
   const token=getDataFromLocalStorage('token');
@@ -52,13 +65,15 @@ const CreateEmployee = () =>{
 
       const response = await apiInstance.post('/api/employees', formData);
   
-      // Handle the API response as needed
-      console.log('API Response:', response.data);
-  
+     // Handle success
+     
+    setSuccessMessage(response.data.message);
+    setOpenSuccessSnackbar(true);
       // Reset the form if needed
       setFormData(initialState);
     } catch (error) {
-   
+      setErrorMessage(error?.response?.data?.message);
+      setOpenErrorSnackbar(true);
       console.error('API Error:', error);
     }
   };
@@ -144,6 +159,14 @@ return (
           </Grid>
         </form>
       </Paper>
+      <CustomSnackbar
+        openSuccessSnackbar={openSuccessSnackbar}
+        openErrorSnackbar={openErrorSnackbar}
+        successMessage={successMessage}
+        errorMessage={errorMessage}
+        handleSuccessSnackbarClose={handleSuccessSnackbarClose}
+        handleErrorSnackbarClose={handleErrorSnackbarClose}
+      />
     </Container>
   </MainCard>
 );
