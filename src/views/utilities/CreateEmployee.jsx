@@ -8,6 +8,7 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import { generateRandomPassword } from 'utils/GeneratePassword';
 import PhotoUpload from 'ui-component/PhotoUpload';
 import axios from 'axios';
+import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 
 const initialState = {
   name: '',
