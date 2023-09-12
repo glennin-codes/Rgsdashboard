@@ -50,7 +50,7 @@ const CreateEmployee = () =>{
   
     try {
 
-      const response = await apiInstance.post('/api/employees/createEmployee', formData);
+      const response = await apiInstance.post('/api/employees', formData);
   
       // Handle the API response as needed
       console.log('API Response:', response.data);

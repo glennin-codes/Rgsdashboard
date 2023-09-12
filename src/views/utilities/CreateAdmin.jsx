@@ -45,7 +45,7 @@ export function CreateAdmin() {
   
     try {
 
-      const response = await apiInstance.post('/api/employees/createAdmin', formData);
+      const response = await apiInstance.post('/api/admin', formData);
   
       // Handle the API response as needed
       console.log('API Response:', response.data);
