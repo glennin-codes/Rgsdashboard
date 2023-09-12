@@ -5,6 +5,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { generateRandomPassword } from 'utils/GeneratePassword';
 import PhotoUpload from 'ui-component/PhotoUpload';
 import axios from 'axios';
+import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 
 const initialState = {
   name: '',
@@ -32,8 +33,7 @@ export function CreateAdmin() {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    // Replace 'YOUR_TOKEN_HERE' with your actual token
-    const token = 'YOUR_TOKEN_HERE';
+  const token=getDataFromLocalStorage('token');
   
     // Create an Axios instance with the default headers
     const apiInstance = axios.create({
