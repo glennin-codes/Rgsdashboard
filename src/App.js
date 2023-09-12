@@ -18,6 +18,8 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 import { decodeToken } from 'utils/decodeToken';
 import { AuthLogout, loginSuccess } from 'Redux/authSlice';
 import { checkTokenExpiryAndWorkingHours } from 'utils/checkTokenExpiry';
+import { Route } from 'react-router';
+
 
 // ==============================|| APP ||============================== //
 
@@ -76,6 +78,7 @@ const App = () => {
             // You can add any login redirection logic here
             // Replace with your login component or redirection logic
           )}
+         
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>

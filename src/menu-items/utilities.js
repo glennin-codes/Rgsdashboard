@@ -22,7 +22,7 @@ const utilities = {
       id: 'Display All Properties',
       title: 'display All',
       type: 'item',
-      url: '/utils/util-typography',
+      url: 'datas/all',
       icon: SettingsIcon,
       breadcrumbs: false
     },
@@ -30,7 +30,7 @@ const utilities = {
       id: 'Employees',
       title: 'Eployees',
       type: 'item',
-      url: '/utils/util-color',
+      url: '/datas/employees',
       icon: PeopleIcon,
       breadcrumbs: false
     },
@@ -38,7 +38,7 @@ const utilities = {
       id: 'Payroll stats',
       title: 'Payroll stats',
       type: 'item',
-      url: '/utils/util-shadow',
+      url: '/datas/payrollstats',
       icon: AttachMoneyIcon ,
       breadcrumbs: false
     },
@@ -49,19 +49,17 @@ const utilities = {
       icon: icons.IconWindmill,
       children: [
         {
-          id: 'Lorem Ipsun',
-          title: 'Lorem Ipsun',
+          id: 'Create Admin',
+          title: 'Create Admin',
           type: 'item',
-          url: '/icons/tabler-icons',
+          url: '/management/createAdmin',
           breadcrumbs: false
         },
         {
-          id: 'fundamentals ',
-          title: 'fundamentals',
+          id: 'create Employee ',
+          title: 'Create Employee ',
           type: 'item',
-          external: true,
-          target: '_blank',
-          // url: 'https://mui.com/material-ui/material-icons/',
+          url: '/management/createEmployee',
           breadcrumbs: false
         }
       ]

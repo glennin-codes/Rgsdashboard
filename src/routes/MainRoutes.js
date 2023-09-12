@@ -9,15 +9,14 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
-const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
+const Employees = Loadable(lazy(() => import('views/utilities/Employees')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
+const CreateEmployee = Loadable(lazy(() => import('views/utilities/CreateEmployee')));
+const CreateAdmin = Loadable(lazy(() => import('views/utilities/CreateAdmin')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
-
-
 
 // ==============================|| MAIN ROUTING ||============================== //
 const MainRoutes = {
@@ -38,38 +37,42 @@ const MainRoutes = {
       ]
     },
     {
-      path: 'utils',
+      path: 'datas',
       children: [
         {
-          path: 'util-typography',
+          path: 'all',
           element: <UtilsTypography />
         }
       ]
     },
     {
-      path: 'utils',
+      path: 'datas',
       children: [
         {
-          path: 'util-color',
-          element: <UtilsColor />
+          path: 'employees',
+          element: <Employees />
         }
       ]
     },
     {
-      path: 'utils',
+      path: 'datas',
       children: [
         {
-          path: 'util-shadow',
+          path: 'payrollstats',
           element: <UtilsShadow />
         }
       ]
     },
     {
-      path: 'icons',
+      path: 'management',
       children: [
         {
-          path: 'tabler-icons',
-          element: <UtilsTablerIcons />
+          path: 'createAdmin',
+          element: <CreateAdmin />
+        },
+        {
+          path: 'createEmployee',
+          element: <CreateEmployee />
         }
       ]
     },
@@ -83,7 +86,7 @@ const MainRoutes = {
       ]
     },
     {
-      path: 'sample-page',
+      path: 'listings',
       element: <SamplePage />
     }
   ]
