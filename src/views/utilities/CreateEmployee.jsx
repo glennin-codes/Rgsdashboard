@@ -5,6 +5,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import React, { useState } from 'react';
 import { Container,  TextField, Button, Grid, Paper } from '@mui/material';
 import AnimateButton from 'ui-component/extended/AnimateButton';
+import { generateRandomPassword } from 'utils/GeneratePassword';
 
 const initialState = {
   name: '',
@@ -29,10 +30,10 @@ const CreateEmployee = () =>{
   };
 
   const handleGeneratePassword = () => {
-    // Implement password generation logic here
-    const generatedPassword = 'your_generated_password'; // Replace with actual password generation logic
+    const generatedPassword = generateRandomPassword(8); // Change 12 to your desired password length
     setFormData({ ...formData, password: generatedPassword });
   };
+  
 
   const handleFileInputChange = () => {
     // Handle file input change to upload a photo

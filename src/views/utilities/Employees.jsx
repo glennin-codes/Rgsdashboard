@@ -25,13 +25,13 @@ const Table = () => {
         }
       })
       .then((response) => {
-        setData(response?.data?.employees); // Assuming your API returns data as an array
+        setData(response?.data?.employees);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, [token]);
-console.log(data)
+
   return (
     <MainCard title="employees list ">
       <Drawer />
