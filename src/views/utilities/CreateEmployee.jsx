@@ -34,19 +34,33 @@ const CreateEmployee = () =>{
     const generatedPassword = generateRandomPassword(8); // Change 12 to your desired password length
     setFormData({ ...formData, password: generatedPassword });
   };
-  
-
-  const handleFileInputChange = () => {
-    // Handle file input change to upload a photo
-    // You can implement file upload logic here
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission, e.g., send data to the server
-    console.log(formData);
-    // Reset the form if needed
-    setFormData(initialState);
+  
+    // Replace 'YOUR_TOKEN_HERE' with your actual token
+    const token = 'YOUR_TOKEN_HERE';
+  
+    // Create an Axios instance with the default headers
+    const apiInstance = axios.create({
+      baseURL: 'https://jade-panda-robe.cyclic.app', 
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  
+    try {
+
+      const response = await apiInstance.post('/api/employees/createEmployee', formData);
+  
+      // Handle the API response as needed
+      console.log('API Response:', response.data);
+  
+      // Reset the form if needed
+      setFormData(initialState);
+    } catch (error) {
+   
+      console.error('API Error:', error);
+    }
   };
 return (
   <MainCard title="Register an Employee">
