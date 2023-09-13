@@ -21,7 +21,6 @@ import {
   Paper,
   Popper,
   Stack,
-
   Typography
 } from '@mui/material';
 
@@ -35,10 +34,12 @@ import Transitions from 'ui-component/extended/Transitions';
 import User1 from 'assets/images/users/user-round.svg';
 
 // assets
-import { IconLogout,  IconSettings, } from '@tabler/icons';
+import { IconLogout, IconSettings } from '@tabler/icons';
 import { AuthLogout } from 'Redux/authSlice';
 import CountdownTimer from 'utils/countDownTime';
 import Greeting from 'utils/greetings';
+import { decodeToken } from 'utils/decodeToken';
+import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -46,20 +47,20 @@ const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
-const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
-  
 
   /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
   const anchorRef = useRef(null);
-  
+
   const handleLogout = async () => {
     localStorage.removeItem('token');
-    dispatch(AuthLogout())
+    dispatch(AuthLogout());
   };
+  const { name = '', location = '', photo = '', role = '' } = decodeToken(getDataFromLocalStorage('token')) || {};
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -113,7 +114,7 @@ const dispatch=useDispatch();
         }}
         icon={
           <Avatar
-            src={User1}
+          src={photo ? photo : User1}
             sx={{
               ...theme.typography.mediumAvatar,
               margin: '8px 0 8px 8px !important',
@@ -157,41 +158,46 @@ const dispatch=useDispatch();
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                   <Box sx={{ p: 2 }}>
-                    <Stack>
-                      <Stack direction="row" spacing={0.5} alignItems="center">
-                        <Greeting />
-                        <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          Johne Doe
+                    <Grid container direction="column" spacing={1}>
+                      <Grid item>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Greeting />
+                          <Typography component="span" variant="h3" sx={{ fontWeight: 400 }}>
+                            {name}
+                          </Typography>
+                        </Stack>
+                      </Grid>
+                      <Grid item alignItems="center" >
+                        <Typography component="span" variant="h4" sx={{ fontWeight: 400 ,color:"maroon" }}>
+                          {role === 'user' ? 'employee' : role === 'Admin' ? 'Admin' : 'master-Admin'}
                         </Typography>
-                      </Stack>
-                      <Typography variant="subtitle2">District A,Mogadishu</Typography>
-                    </Stack>
-               
+                      </Grid>
+                      <Grid item alignItems="center" >
+                        <Typography variant="h5">Location: {location}</Typography>
+                      </Grid>
+                    </Grid>
                   </Box>
+
                   <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                     <Box sx={{ p: 2 }}>
                       {/* <UpgradePlanCard /> */}
                       <Divider />
-                      <Card
-                        sx={{
-                          bgcolor: theme.palette.primary.light,
-                          my: 2
-                        }}
-                      >
-                        <CardContent>
-                          <Grid container spacing={3} direction="column">
-                            <Grid item>
-                              <Grid item container alignItems="center" justifyContent="space-between">
-                                <Grid item>
-                                 <CountdownTimer />
+                      {role === 'user' && (
+                        <Card sx={{ bgcolor: theme.palette.primary.light, my: 2 }}>
+                          <CardContent>
+                            <Grid container spacing={3} direction="column">
+                              <Grid item>
+                                <Grid item container alignItems="center" justifyContent="space-between">
+                                  <Grid item>
+                                    <CountdownTimer />
+                                  </Grid>
                                 </Grid>
-                                
                               </Grid>
                             </Grid>
-                            
-                          </Grid>
-                        </CardContent>
-                      </Card>
+                          </CardContent>
+                        </Card>
+                      )}
+
                       <Divider />
                       <List
                         component="nav"
@@ -219,7 +225,7 @@ const dispatch=useDispatch();
                           </ListItemIcon>
                           <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                         </ListItemButton>
-                    
+
                         <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
                           selected={selectedIndex === 4}
@@ -228,9 +234,7 @@ const dispatch=useDispatch();
                           <ListItemIcon>
                             <IconLogout stroke={1.5} size="1.3rem" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography  
-                        
-                          variant="body2">Logout</Typography>} />
+                          <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
                         </ListItemButton>
                       </List>
                     </Box>

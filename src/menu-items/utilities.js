@@ -3,6 +3,8 @@ import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/i
 import SettingsIcon from '@mui/icons-material/Settings';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PeopleIcon from '@mui/icons-material/People';
+import { decodeToken } from 'utils/decodeToken';
+import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 // constant
 const icons = {
   IconTypography,
@@ -12,6 +14,9 @@ const icons = {
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
+const {role}=decodeToken(getDataFromLocalStorage('token')) 
+
+const user = role === 'user';
 
 const utilities = {
   id: 'utilities',
@@ -22,6 +27,7 @@ const utilities = {
       id: 'Display All Properties',
       title: 'display All',
       type: 'item',
+      user,
       url: 'datas/all',
       icon: SettingsIcon,
       breadcrumbs: false
@@ -30,6 +36,7 @@ const utilities = {
       id: 'Employees',
       title: 'Eployees',
       type: 'item',
+      user,
       url: '/datas/employees',
       icon: PeopleIcon,
       breadcrumbs: false
@@ -38,6 +45,7 @@ const utilities = {
       id: 'Payroll stats',
       title: 'Payroll stats',
       type: 'item',
+      user,
       url: '/datas/payrollstats',
       icon: AttachMoneyIcon ,
       breadcrumbs: false
@@ -45,6 +53,7 @@ const utilities = {
     {
       id: 'Managment',
       title: 'Managment',
+      user,
       type: 'collapse',
       icon: icons.IconWindmill,
       children: [
@@ -52,6 +61,7 @@ const utilities = {
           id: 'Create Admin',
           title: 'Create Admin',
           type: 'item',
+          user,
           url: '/management/createAdmin',
           breadcrumbs: false
         },
@@ -59,6 +69,7 @@ const utilities = {
           id: 'create Employee ',
           title: 'Create Employee ',
           type: 'item',
+          user,
           url: '/management/createEmployee',
           breadcrumbs: false
         }

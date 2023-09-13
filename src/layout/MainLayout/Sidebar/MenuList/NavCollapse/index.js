@@ -93,6 +93,7 @@ const NavCollapse = ({ menu, level }) => {
   return (
     <>
       <ListItemButton
+      disabled={menu.user ? true : false}
         sx={{
           borderRadius: `${customization.borderRadius}px`,
           mb: 0.5,
