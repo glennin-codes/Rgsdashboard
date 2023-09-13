@@ -7,8 +7,8 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 const icons = { IconBrandChrome, IconHelp };
 const token = getDataFromLocalStorage('token');
 const { role } = decodeToken(token);
-
-const user = role === 'user';
+//Ensure that role is defined before comparing it
+const user = role !== undefined && role === 'user';
 
 if (role === null) {
   console.error('Role is null');
