@@ -34,7 +34,7 @@ const utilities = {
     },
     {
       id: 'Employees',
-      title: 'Epmloyees',
+      title: 'Employees',
       type: 'item',
       user,
       url: '/datas/employees',
