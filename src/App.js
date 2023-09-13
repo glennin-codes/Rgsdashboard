@@ -14,6 +14,7 @@ import { checkTokenExpiryAndWorkingHours } from 'utils/checkTokenExpiry';
 import { useDispatch } from 'react-redux';
 import {  useLocation } from 'react-router-dom';
 import Routes from 'routes'
+import { setRole } from 'Redux/RoleSlyce';
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
@@ -33,7 +34,18 @@ const App = () => {
       dispatch(AuthLogout());
     }
   }, [dispatch]);
+  useEffect(() => {
+    // Get the token from localStorage
+    const token = localStorage.getItem('token');
 
+    if (token) {
+      // Decode the token
+      const decodedData = decodeToken(token);
+
+      // Dispatch the setRole action
+      dispatch(setRole(decodedData.role));
+    }
+  }, [dispatch]);
   useEffect(() => {
     // Create an interval for periodic checks
     const checkWorkingHoursInterval = setInterval(() => {

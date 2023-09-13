@@ -19,6 +19,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { loginSuccess } from 'Redux/authSlice';
 import axios from 'axios';
+import { setRole } from 'Redux/RoleSlyce';
+import { decodeToken } from 'utils/decodeToken';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -59,10 +61,22 @@ const FirebaseLogin = ({ ...others }) => {
             const resp = await axios.post('https://jade-panda-robe.cyclic.app/api/login', values);
             const token = resp.data.token;
             localStorage.setItem('token', JSON.stringify(token));
+
+              // Get the token from localStorage
+    const getToken = localStorage.getItem('token');
+
+    if (token) {
+      // Decode the token
+      const decodedData = decodeToken(getToken);
+
+      // Dispatch the setRole action
+      dispatch(setRole(decodedData.role));
+    }
             // Dispatch the loginSuccess action to update the authentication state
             // Navigate to the dashboard page
 
             dispatch(loginSuccess());
+            
 
             setStatus({ success: true });
             setSubmitting(false);

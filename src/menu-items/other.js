@@ -1,15 +1,8 @@
 // assets
 import { IconBrandChrome, IconHelp } from '@tabler/icons';
-import { decodeToken } from 'utils/decodeToken';
-import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
+//constants
 
-// constant
 const icons = { IconBrandChrome, IconHelp };
-const decodedData = decodeToken(getDataFromLocalStorage('token'));
-const {  role = '' } = decodedData || {};
-const user= role === 'user'
-
-
 
 const other = {
   id: 'listings',
@@ -19,13 +12,12 @@ const other = {
       id: 'show property Listings',
       title: 'Property Listing',
       type: 'item',
-      user,
+
       url: 'listings',
-      
+
       icon: icons.IconBrandChrome,
       breadcrumbs: false
-    },
-   
+    }
   ]
 };
 
