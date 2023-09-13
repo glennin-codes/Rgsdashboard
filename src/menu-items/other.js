@@ -5,9 +5,16 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 
 // constant
 const icons = { IconBrandChrome, IconHelp };
-const {role}=decodeToken(getDataFromLocalStorage('token')) 
+const token = getDataFromLocalStorage('token');
+const { role } = decodeToken(token);
 
 const user = role === 'user';
+
+if (role === null) {
+  console.error('Role is null');
+}
+
+
 const other = {
   id: 'listings',
   type: 'group',

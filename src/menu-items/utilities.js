@@ -14,9 +14,15 @@ const icons = {
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
-const {role}=decodeToken(getDataFromLocalStorage('token')) 
+const token = getDataFromLocalStorage('token');
+const { role } = decodeToken(token);
 
 const user = role === 'user';
+
+if (role === null) {
+  console.error('Role is null');
+}
+
 
 const utilities = {
   id: 'utilities',
