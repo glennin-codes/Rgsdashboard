@@ -15,7 +15,7 @@ const Table = () => {
   const [data, setData] = useState([]);
   const token = getDataFromLocalStorage('token'); 
 
-  console.log(token);
+  // console.log(token);
   useEffect(() => {
     // Fetch data from your API using Axios
     axios

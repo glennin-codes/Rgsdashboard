@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Button,
-  Checkbox,
-  Divider,
   FormControl,
-  FormControlLabel,
   FormHelperText,
   Grid,
   IconButton,
@@ -28,13 +23,16 @@ import { Formik } from 'formik';
 
 // project imports
 import useScriptRef from 'hooks/useScriptRef';
-import Google from 'assets/images/icons/social-google.svg';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import PhotoUploadField from 'ui-component/FormikPhotoUpload';
+import CustomSnackbar from 'ui-component/SnackBar';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -42,16 +40,16 @@ const FirebaseRegister = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useSelector((state) => state.customization);
   const [showPassword, setShowPassword] = useState(false);
-  const [checked, setChecked] = useState(true);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
-
-  const googleHandler = async () => {
-    console.error('Register');
-  };
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -66,57 +64,18 @@ const FirebaseRegister = ({ ...others }) => {
     setStrength(temp);
     setLevel(strengthColor(temp));
   };
+  const handleSuccessSnackbarClose = () => {
+    setOpenSuccessSnackbar(false);
+  };
 
-  useEffect(() => {
-    changePassword('123456');
-  }, []);
+  const handleErrorSnackbarClose = () => {
+    setOpenErrorSnackbar(false);
+  };
+const navigate=useNavigate()
 
   return (
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
-        <Grid item xs={12}>
-          <AnimateButton>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={googleHandler}
-              size="large"
-              sx={{
-                color: 'grey.700',
-                backgroundColor: theme.palette.grey[50],
-                borderColor: theme.palette.grey[100]
-              }}
-            >
-              <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-              </Box>
-              Sign up with Google
-            </Button>
-          </AnimateButton>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ alignItems: 'center', display: 'flex' }}>
-            <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-            <Button
-              variant="outlined"
-              sx={{
-                cursor: 'unset',
-                m: 2,
-                py: 0.5,
-                px: 7,
-                borderColor: `${theme.palette.grey[100]} !important`,
-                color: `${theme.palette.grey[900]}!important`,
-                fontWeight: 500,
-                borderRadius: `${customization.borderRadius}px`
-              }}
-              disableRipple
-              disabled
-            >
-              OR
-            </Button>
-            <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-          </Box>
-        </Grid>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle1">Sign up with Email address</Typography>
@@ -128,25 +87,56 @@ const FirebaseRegister = ({ ...others }) => {
         initialValues={{
           email: '',
           password: '',
-          submit: null
+          phone: '',
+          location: '',
+          photo: '',
+          fname:"",
+          lname:""
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+          password: Yup.string().max(255).required('Password is required'),
+          phone: Yup.number().required('Phone number is required'),
+          location: Yup.string().max(280).required('Location or an Address  is required'),
+          
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting ,resetForm}) => {
+          const dataToSend = {
+            photo: selectedImage, // You might need to serialize this if it's not a file path or URL
+            email: values.email,
+            password: values.password,
+            location: values.location,
+            phone: values.phone,
+            name: values.fname + ' ' + values.lname,
+          };
+      
           try {
+            console.log('formdata',dataToSend);
+         
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
             }
+            const response = await axios.post('https://jade-panda-robe.cyclic.app/api/master-admin',dataToSend);
+           
+            setSuccessMessage(response.data.message);
+            setOpenSuccessSnackbar(true);
+            resetForm();
+            setSelectedImage(null);
+            setTimeout(() => {
+              // Navigate after the delay (e.g., 3 seconds)
+              navigate('/');
+            }, 3000);
+          
           } catch (err) {
             console.error(err);
             if (scriptedRef.current) {
               setStatus({ success: false });
-              setErrors({ submit: err.message });
+              setErrors({ submit: err?.response?.data?.message});
               setSubmitting(false);
             }
+            setErrorMessage(err?.response?.data?.message);
+            setOpenErrorSnackbar(true);
           }
         }}
       >
@@ -160,7 +150,10 @@ const FirebaseRegister = ({ ...others }) => {
                   margin="normal"
                   name="fname"
                   type="text"
-                  defaultValue=""
+                  value={values.fname}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                 
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
@@ -171,11 +164,48 @@ const FirebaseRegister = ({ ...others }) => {
                   margin="normal"
                   name="lname"
                   type="text"
-                  defaultValue=""
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                 
+                  value={values.lname}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
             </Grid>
+            <FormControl fullWidth error={Boolean(touched.location && errors.location)} sx={{ ...theme.typography.customInput }}>
+              <InputLabel htmlFor="outlined-adornment-location-register">Address Location</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-address-register"
+                type="text"
+                value={values.location}
+                name="location"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                inputProps={{}}
+              />
+              {touched.location && errors.location && (
+                <FormHelperText error id="standard-weight-helper-text--register">
+                  {errors.location}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <FormControl fullWidth error={Boolean(touched.phone && errors.phone)} sx={{ ...theme.typography.customInput }}>
+              <InputLabel htmlFor="outlined-adornment-phone-register">Phone Number</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-phone-register"
+                type="text"
+                value={values.phone}
+                name="phone"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                inputProps={{}}
+              />
+              {touched.phone && errors.phone && (
+                <FormHelperText error id="standard-weight-helper-text--register">
+                  {errors.phone}
+                </FormHelperText>
+              )}
+            </FormControl>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
               <OutlinedInput
@@ -245,27 +275,18 @@ const FirebaseRegister = ({ ...others }) => {
                 </Box>
               </FormControl>
             )}
+            <PhotoUploadField
+              name="photo"
+              value={values.photo}
+              error={Boolean(touched.photo && errors.photo)}
+            selectedImage={selectedImage}
+            setSelectedImage={setSelectedImage}
 
-            <Grid container alignItems="center" justifyContent="space-between">
-              <Grid item>
-                <FormControlLabel
-                  control={
-                    <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} name="checked" color="primary" />
-                  }
-                  label={
-                    <Typography variant="subtitle1">
-                      Agree with &nbsp;
-                      <Typography variant="subtitle1" component={Link} to="#">
-                        Terms & Condition.
-                      </Typography>
-                    </Typography>
-                  }
-                />
-              </Grid>
-            </Grid>
+            />
+
             {errors.submit && (
-              <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errors.submit}</FormHelperText>
+              <Box sx={{ mt: 2}}>
+                <FormHelperText  sx={{textAlign:"center"}} error>{errors.submit}</FormHelperText>
               </Box>
             )}
 
@@ -277,8 +298,17 @@ const FirebaseRegister = ({ ...others }) => {
               </AnimateButton>
             </Box>
           </form>
+
         )}
       </Formik>
+      <CustomSnackbar
+          openSuccessSnackbar={openSuccessSnackbar}
+          openErrorSnackbar={openErrorSnackbar}
+          successMessage={successMessage}
+          errorMessage={errorMessage}
+          handleSuccessSnackbarClose={handleSuccessSnackbarClose}
+          handleErrorSnackbarClose={handleErrorSnackbarClose}
+        />
     </>
   );
 };

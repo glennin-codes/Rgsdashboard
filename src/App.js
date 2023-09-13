@@ -1,15 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
-
-// routing
-import Routes from 'routes';
-
-// defaultTheme
 import themes from 'themes';
-
-// project imports
 import NavigationScroll from 'layout/NavigationScroll';
 import Loadable from 'ui-component/Loadable';
 import { lazy } from 'react';
@@ -18,18 +11,20 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 import { decodeToken } from 'utils/decodeToken';
 import { AuthLogout, loginSuccess } from 'Redux/authSlice';
 import { checkTokenExpiryAndWorkingHours } from 'utils/checkTokenExpiry';
-import { Route } from 'react-router';
-
-
-// ==============================|| APP ||============================== //
+import { useDispatch } from 'react-redux';
+import {  useLocation } from 'react-router-dom';
+import Routes from 'routes'
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const AuthLogin3 = Loadable(lazy(() => import('views/pages/authentication/authentication3/Login3')));
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const Register = Loadable(lazy(() => import('views/pages/authentication/authentication3/Register3')));
   const dispatch = useDispatch();
   const decodedData = decodeToken(getDataFromLocalStorage('token'));
-  const { name = '', location = '', role = '', isWorkingHours } = decodedData || {};
+  const {  role = '', isWorkingHours } = decodedData || {};
+  const pathLocation = useLocation();
+  const isMasterRegisterRoute = pathLocation.pathname.includes('master-register');
 
   useEffect(() => {
     if (checkTokenExpiryAndWorkingHours()) {
@@ -50,9 +45,7 @@ const App = () => {
       if (
         role === 'user' &&
         (!isWorkingHours || currentHour < 8 || currentHour >= 17) &&
-        dayOfWeek == 5 &&
-        dayOfWeek == 6 &&
-        dayOfWeek === 0
+        (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0)
       ) {
         // Log out the regular user
         dispatch(AuthLogout());
@@ -69,17 +62,7 @@ const App = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themes(customization)}>
         <CssBaseline />
-        <NavigationScroll>
-          {isAuthenticated ? (
-            <Routes />
-          ) : (
-            <AuthLogin3 />
-            // Render the login page when not authenticated
-            // You can add any login redirection logic here
-            // Replace with your login component or redirection logic
-          )}
-         
-        </NavigationScroll>
+        <NavigationScroll>{isMasterRegisterRoute ? <Register /> : isAuthenticated ? <Routes /> : <AuthLogin3 />}</NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>
   );

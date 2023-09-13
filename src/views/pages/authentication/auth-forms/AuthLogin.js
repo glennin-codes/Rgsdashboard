@@ -17,7 +17,6 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { useNavigate } from 'react-router';
 import { loginSuccess } from 'Redux/authSlice';
 import axios from 'axios';
 
@@ -31,7 +30,7 @@ const FirebaseLogin = ({ ...others }) => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const navigate = useNavigate();
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -64,7 +63,7 @@ const FirebaseLogin = ({ ...others }) => {
             // Navigate to the dashboard page
 
             dispatch(loginSuccess());
-            // navigate('/');
+
             setStatus({ success: true });
             setSubmitting(false);
           } catch (err) {
