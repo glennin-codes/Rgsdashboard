@@ -48,7 +48,7 @@ export function CreateAdmin() {
 
     // Create an Axios instance with the default headers
     const apiInstance = axios.create({
-      baseURL: 'https://jade-panda-robe.cyclic.app',
+      baseURL: 'https://plum-inquisitive-bream.cyclic.cloud',
       headers: {
         Authorization: `Bearer ${token}`
       }

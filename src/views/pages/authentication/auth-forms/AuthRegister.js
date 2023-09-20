@@ -117,7 +117,7 @@ const navigate=useNavigate()
               setStatus({ success: true });
               setSubmitting(false);
             }
-            const response = await axios.post('https://jade-panda-robe.cyclic.app/api/master-admin',dataToSend);
+            const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/master-admin',dataToSend);
            
             setSuccessMessage(response.data.message);
             setOpenSuccessSnackbar(true);

@@ -19,7 +19,7 @@ const Table = () => {
   useEffect(() => {
     // Fetch data from your API using Axios
     axios
-      .get('https://jade-panda-robe.cyclic.app/api/employees', {
+      .get('https://plum-inquisitive-bream.cyclic.cloud/api/employees', {
         headers: {
           Authorization: `Bearer ${token}`
         }
