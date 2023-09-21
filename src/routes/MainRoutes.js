@@ -8,10 +8,10 @@ import Loadable from 'ui-component/Loadable';
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
 // utilities routing
-const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
+const DisplayAll = Loadable(lazy(() => import('views/utilities/DisplayAllDatas')));
 const Employees = Loadable(lazy(() => import('views/utilities/Employees')));
-const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
-const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
+const PayrollStats= Loadable(lazy(() => import('views/utilities/payrolStats')));
+
 const CreateEmployee = Loadable(lazy(() => import('views/utilities/CreateEmployee')));
 const CreateAdmin = Loadable(lazy(() => import('views/utilities/CreateAdmin')));
 
@@ -41,7 +41,7 @@ const MainRoutes = {
       children: [
         {
           path: 'all',
-          element: <UtilsTypography />
+          element: <DisplayAll />
         }
       ]
     },
@@ -59,7 +59,7 @@ const MainRoutes = {
       children: [
         {
           path: 'payrollstats',
-          element: <UtilsShadow />
+          element: <PayrollStats />
         }
       ]
     },
@@ -76,15 +76,7 @@ const MainRoutes = {
         }
       ]
     },
-    {
-      path: 'icons',
-      children: [
-        {
-          path: 'material-icons',
-          element: <UtilsMaterialIcons />
-        }
-      ]
-    },
+   
     {
       path: 'listings',
       element: <SamplePage />
