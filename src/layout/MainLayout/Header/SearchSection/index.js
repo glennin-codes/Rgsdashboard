@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -14,7 +13,8 @@ import Transitions from 'ui-component/extended/Transitions';
 // assets
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import { shouldForwardProp } from '@mui/system';
-
+import debounce from 'lodash.debounce';
+import { useCallback } from 'react';
 // styles
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   zIndex: 1100,
@@ -58,14 +58,29 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
 
 // ==============================|| SEARCH INPUT - MOBILE||============================== //
 
-const MobileSearch = ({ value, setValue, popupState }) => {
+const MobileSearch = ({ value, setValue, popupState,fetchData }) => {
   const theme = useTheme();
+  const debouncedFetchData = useCallback(
+    debounce(() => {
+      fetchData();
+    }, 300), 
+    [fetchData]
+  );
+
+  const handleSearchInputChange = (event) => {
+    setValue(event.target.value);
+    if (value.trim() === '') {
+      fetchData();
+    }
+    debouncedFetchData();
+  };
+
 
   return (
     <OutlineInputStyle
       id="input-search-header"
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={ handleSearchInputChange}
       placeholder="Search"
       startAdornment={
         <InputAdornment position="start">
@@ -110,14 +125,32 @@ const MobileSearch = ({ value, setValue, popupState }) => {
 MobileSearch.propTypes = {
   value: PropTypes.string,
   setValue: PropTypes.func,
-  popupState: PopupState
+  fetchData: PropTypes.func,
+  popupState: PropTypes.object
 };
 
 // ==============================|| SEARCH INPUT ||============================== //
 
-const SearchSection = () => {
+const SearchSection = ({value,setValue,fetchData}) => {
   const theme = useTheme();
-  const [value, setValue] = useState('');
+  const debouncedFetchData = useCallback(
+    debounce(() => {
+      fetchData();
+    }, 300), 
+    [fetchData]
+  );
+
+  const handleSearchInputChange = (event) => {
+    const inputValue=event.target.value
+    setValue(event.target.value);
+    if (inputValue === '') {
+      setValue("")
+      fetchData();
+    } else {
+      debouncedFetchData();
+    }
+  };
+
 
   return (
     <>
@@ -148,7 +181,7 @@ const SearchSection = () => {
                         <Box sx={{ p: 2 }}>
                           <Grid container alignItems="center" justifyContent="space-between">
                             <Grid item xs>
-                              <MobileSearch value={value} setValue={setValue} popupState={popupState} />
+                              <MobileSearch value={value} setValue={setValue} fetchData={fetchData} popupState={popupState} />
                             </Grid>
                           </Grid>
                         </Box>
@@ -165,7 +198,7 @@ const SearchSection = () => {
         <OutlineInputStyle
           id="input-search-header"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleSearchInputChange}
           placeholder="Search"
           startAdornment={
             <InputAdornment position="start">
@@ -174,7 +207,13 @@ const SearchSection = () => {
           }
           endAdornment={
             <InputAdornment position="end">
-              <ButtonBase sx={{ borderRadius: '12px' }}>
+              <ButtonBase sx={{ borderRadius: '12px' }}
+              onClick={
+                ()=>{
+                  console.log("clicked me" )
+                }
+              }
+              >
                 <HeaderAvatarStyle variant="rounded">
                   <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
                 </HeaderAvatarStyle>

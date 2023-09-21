@@ -5,30 +5,35 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
+import SearchSection from 'layout/MainLayout/Header/SearchSection';
 
 
 const DisplayAll = () =>{
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const [value, setValue] = useState('');
 
+
+const fetchData = async () => {
+  try {
+    const response = await fetch(
+      `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}`
+    );
+    const result = await response.json();
+    console.log(result);
+    setData(result);
+    console.log(result.length);
+    setTotalPages(Math.ceil(result.length / limit));
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
   useEffect(() => {
     fetchData();
-  }, [page, limit]);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}`);
-      const result = await response.json();
-      console.log(result);
-      setData(result);
-      console.log(result.length)
-      setTotalPages(Math.ceil(result.length / limit));
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  }, [page, limit,value]);
+console.log(value);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -46,6 +51,7 @@ const DisplayAll = () =>{
   };
  return(
   <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
+     <SearchSection value={value} setValue={setValue} fetchData={fetchData}/>
      <div>
       <TableContainer component={Paper}>
         <Table>
@@ -56,7 +62,7 @@ const DisplayAll = () =>{
               <TableCell>HouseNo</TableCell>
               <TableCell>Land Size</TableCell>
               <TableCell>location</TableCell>
-              <TableCell>No.OfFamily</TableCell>
+              <TableCell>No.Family</TableCell>
               <TableCell>paymentId</TableCell>
               {/* Add more table columns as needed */}
             </TableRow>
