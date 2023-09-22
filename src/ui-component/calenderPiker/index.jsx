@@ -1,69 +1,47 @@
-import React, { useState } from 'react';
-import { OutlineInputStyle, InputAdornment, ButtonBase, Box } from '@mui/material';
-import { IconSearch, IconAdjustmentsHorizontal } from '@mui/icons-material';
-import { DateRangePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { useState } from 'react';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-const SearchBar = ({ onDateRangeChange }) => {
-  const [value, setValue] = useState('');
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false);
+import { Box } from '@mui/system';
 
-  const handleSearchInputChange = (event) => {
-    setValue(event.target.value);
+import 'dayjs/locale/en-gb';
+
+export const DateRangePicker = ({ fetchData }) => {
+  const [startDate, setStartDate] = useState(null);
+const [endDate, setEndDate] = useState(null);
+
+  const handleSearch = (e) => {
+    setEndDate(e);
+    if (endDate) {
+      fetchData(startDate,endDate);
+    }
   };
 
-  const handleDateRangeChange = (newDateRange) => {
-    setDateRange(newDateRange);
-    onDateRangeChange(newDateRange);
-  };
-
+  // localeText={deDE.components.MuiLocalizationProvider.defaultProps.localeText}
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-        <OutlineInputStyle
-          id="input-search-header"
-          value={value}
-          onChange={handleSearchInputChange}
-          placeholder="Search"
-          startAdornment={
-            <InputAdornment position="start">
-              <IconSearch stroke={1.5} size="1rem" color="grey" />
-            </InputAdornment>
-          }
-          endAdornment={
-            <InputAdornment position="end">
-              <ButtonBase
-                sx={{ borderRadius: '12px' }}
-                onClick={() => setIsDateRangePickerOpen(true)}
-              >
-                <div>Filter by Date</div>
-                <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
-              </ButtonBase>
-            </InputAdornment>
-          }
-          aria-describedby="search-helper-text"
-          inputProps={{ 'aria-label': 'weight' }}
+    <Box>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+        <DatePicker
+          sx={{
+            marginRight:2
+          }}
+          label="Select Start Date"
+          value={startDate}
+          views={['day', 'month', 'year']}
+          onChange={(e) => {
+            setStartDate(e);
+          }}
         />
-        <DateRangePicker
-          open={isDateRangePickerOpen}
-          onChange={handleDateRangeChange}
-          value={dateRange}
-          onClose={() => setIsDateRangePickerOpen(false)}
-          calendars={2}
-          renderInput={(startProps, endProps) => (
-            <>
-              <div>Start Date:</div>
-              <input {...startProps} />
-              <div>End Date:</div>
-              <input {...endProps} />
-            </>
-          )}
+
+        <DatePicker
+          disabled={!startDate ? true : false}
+          label="Select endDate"
+          value={endDate}
+          views={['day', 'month', 'year']}
+          onChange={handleSearch}
         />
-      </Box>
-    </LocalizationProvider>
+      </LocalizationProvider>
+    </Box>
   );
 };
-
-export default SearchBar;

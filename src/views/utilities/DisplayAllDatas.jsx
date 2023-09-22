@@ -1,12 +1,12 @@
  import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, IconButton, Box, Typography } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, IconButton, Box, Typography, Grid } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import SearchSection from 'layout/MainLayout/Header/SearchSection';
-
+import { DateRangePicker } from 'ui-component/calenderPiker';
 
 
 const DisplayAll = () =>{
@@ -17,10 +17,13 @@ const DisplayAll = () =>{
   const [value, setValue] = useState('');
 
 
-const fetchData = async () => {
+const fetchData = async (startDate,endDate) => {
   try {
+    console.log({"start":startDate,"end":endDate})
+    const startDateString = startDate ? startDate.toISOString() : '';
+    const endDateString = endDate ? endDate.toISOString() : '';
     const response = await fetch(
-      `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}`
+      `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}`
     );
     const result = await response.json();
     console.log(result);
@@ -52,9 +55,16 @@ console.log(value);
   };
  return(
   <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
-     <SearchSection value={value} setValue={setValue} fetchData={fetchData}/>
- 
-
+    <Grid container spacing={2}>
+      {/* On extra-small screens (xs), display components in a column */}
+      <Grid item xs={12}>
+        <SearchSection value={value} setValue={setValue} fetchData={fetchData} />
+      </Grid>
+      <Grid item xs={12}>
+        <DateRangePicker fetchData={fetchData} />
+      </Grid>
+-
+    </Grid>
      <div>
       <TableContainer component={Paper}>
         <Table>

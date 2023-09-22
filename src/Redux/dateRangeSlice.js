@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { date } from 'yup';
+
 const initialState={
     startDate:null,
     endDate:null
