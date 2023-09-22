@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, IconButton, Box, Typography } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
@@ -6,6 +6,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import SearchSection from 'layout/MainLayout/Header/SearchSection';
+
 
 
 const DisplayAll = () =>{
@@ -52,6 +53,8 @@ console.log(value);
  return(
   <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
      <SearchSection value={value} setValue={setValue} fetchData={fetchData}/>
+ 
+
      <div>
       <TableContainer component={Paper}>
         <Table>

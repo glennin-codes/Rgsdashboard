@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import { Home as HomeIcon } from '@mui/icons-material';
 
-const NotFound = () => {
+const RenderNotFoundPage = () => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
       <Typography variant="h4" gutterBottom>
@@ -18,4 +18,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default RenderNotFoundPage ;
