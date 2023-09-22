@@ -24,7 +24,11 @@ const [endDate, setEndDate] = useState(null);
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <DatePicker
           sx={{
-            marginRight:2
+            marginRight:2,
+            marginBottom:{
+              xs:2,
+              small:2
+            }
           }}
           label="Select Start Date"
           value={startDate}
