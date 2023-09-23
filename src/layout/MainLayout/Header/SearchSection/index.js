@@ -15,6 +15,8 @@ import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import { shouldForwardProp } from '@mui/system';
 import debounce from 'lodash.debounce';
 import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetDateSearch, setDateSearchFalse } from 'Redux/dateRangeSlice';
 // styles
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   zIndex: 1100,
@@ -60,6 +62,9 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
 
 const MobileSearch = ({ value, setValue, popupState,fetchData }) => {
   const theme = useTheme();
+  const dispatch=useDispatch();
+  const searchByDate = useSelector(state => state.dateRange.dateSearch);
+  
   const debouncedFetchData = useCallback(
     debounce(() => {
       fetchData();
@@ -89,13 +94,23 @@ const MobileSearch = ({ value, setValue, popupState,fetchData }) => {
       }
       endAdornment={
         <InputAdornment position="end">
-          <ButtonBase sx={{ borderRadius: '12px' }}>
+          <ButtonBase sx={{ borderRadius: '12px' }}
+          onClick={
+            ()=>{
+            !searchByDate?dispatch(SetDateSearch()):dispatch(setDateSearchFalse());
+            }
+          }
+          >
             <HeaderAvatarStyle variant="rounded">
               <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
             </HeaderAvatarStyle>
           </ButtonBase>
           <Box sx={{ ml: 2 }}>
-            <ButtonBase sx={{ borderRadius: '12px' }}>
+            <ButtonBase sx={{ borderRadius: '12px' }}
+            onClick={()=>{
+              dispatch(setDateSearchFalse())
+            }}
+            >
               <Avatar
                 variant="rounded"
                 sx={{
@@ -133,6 +148,9 @@ MobileSearch.propTypes = {
 
 const SearchSection = ({value,setValue,fetchData}) => {
   const theme = useTheme();
+  const dispatch=useDispatch();
+  const searchByDate = useSelector(state => state.dateRange.dateSearch);
+  
   const debouncedFetchData = useCallback(
     debounce(() => {
       fetchData();
@@ -210,8 +228,8 @@ const SearchSection = ({value,setValue,fetchData}) => {
               <ButtonBase sx={{ borderRadius: '12px' }}
               onClick={
                 ()=>{
-                  console.log("clicked me" )
-                }
+                  !searchByDate?dispatch(SetDateSearch()):dispatch(setDateSearchFalse());
+                  }
               }
               >
                 <HeaderAvatarStyle variant="rounded">

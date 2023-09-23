@@ -1,23 +1,22 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState={
-    startDate:null,
-    endDate:null
+  dateSearch:false
 } 
 const dateRangeSlice=createSlice(
     {
         name:'dateRange',
         initialState,
         reducers:{
-            setStartDate:(state,action)=>{
-                state.startDate=action.payload;
+            SetDateSearch:(state)=>{
+                state.dateSearch=true;
             },
-            setEndDate:(state,action)=>{
-                state.startDate=action.payload;
-
-            }
+            setDateSearchFalse:(state)=>{
+                state.dateSearch=false;
+            },
+            
         }
     }
 );
-export const {setStartDate,setEndDate}=dateRangeSlice.actions
+export const {SetDateSearch,setDateSearchFalse}=dateRangeSlice.actions
 export default dateRangeSlice.reducer

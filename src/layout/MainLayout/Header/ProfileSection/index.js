@@ -59,6 +59,7 @@ const ProfileSection = () => {
   const handleLogout = async () => {
     localStorage.removeItem('token');
     dispatch(AuthLogout());
+    navigate('/');
   };
   const { name = '', location = '', photo = '', role = '' } = decodeToken(getDataFromLocalStorage('token')) || {};
 
