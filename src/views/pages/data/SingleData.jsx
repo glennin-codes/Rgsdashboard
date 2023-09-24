@@ -70,11 +70,11 @@ export const RealEstateForm = () => {
                 <Typography>{realEstate.religion}</Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="h6">No.Family</Typography>
+                <Typography variant="h6">No. of Family:</Typography>
                 <Typography>{realEstate.numberOfFamily}</Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Land</Typography>
+                <Typography variant="h6">Land:</Typography>
                 <Typography>{realEstate.landInSquareMetres} Ha</Typography>
               </Grid>
 
