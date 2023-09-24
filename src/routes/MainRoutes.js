@@ -9,6 +9,7 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 
 // utilities routing
 const DisplayAll = Loadable(lazy(() => import('views/utilities/DisplayAllDatas')));
+const SingleForm = Loadable(lazy(() => import('views/pages/data/SingleData')));
 const Employees = Loadable(lazy(() => import('views/utilities/Employees')));
 const PayrollStats= Loadable(lazy(() => import('views/utilities/payrolStats')));
 
@@ -42,6 +43,10 @@ const MainRoutes = {
         {
           path: 'all',
           element: <DisplayAll />
+        },
+        {
+          path: 'all/single/:id',
+          element: <SingleForm/>
         }
       ]
     },

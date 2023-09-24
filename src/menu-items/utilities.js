@@ -24,6 +24,14 @@ const utilities = {
       type: 'item',
 
       url: 'datas/all',
+      children:[
+        {
+          id: 'singleData', 
+          type: 'item',
+          url: '/singleData/:id',
+          breadcrumbs: false
+        },
+      ],
       icon: SettingsIcon,
       breadcrumbs: false
     },
@@ -41,6 +49,7 @@ const utilities = {
       type: 'item',
 
       url: '/datas/payrollstats',
+      
       icon: AttachMoneyIcon ,
       breadcrumbs: false
     },
