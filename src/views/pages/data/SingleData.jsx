@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useParams } from 'react-router';
@@ -19,65 +17,101 @@ export const printData = (data) => {
     console.log(data.date);
     printWindow.document.open();
     printWindow.document.write(`
-      <html>
+    <!DOCTYPE html>
+    <html>
         <head>
           <title>Print Form</title>
           <style>
-            body {
-              font-family: Arial, sans-serif;
-              margin: 20px;
-            }
-            h4 {
-              text-align: center;
-              margin-bottom: 20px;
-            }
-            #form-container {
-              padding: 16px;
-              background: white;
-              margin: 0 auto;
-              width: 80%;
-              font-size: 18px;
-              font-family:' ubuntu';
-              position: relative;
-             
-            }
-            .form-header{
-              text-align: center;
-              margin-bottom: 20px;
-            }
-            .form-fields{
-              margin-bottom: 30px;
+           
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px; 
           
-            }
-            .form-fields label{
-              color: #f108f1ee;
-              font-size: bold;
-            }
-            .form-field{
-              margin-bottom: 10px;
-            }
-            .form-footer{
-              position: absolute;
-              margin-top: 50px;
-              bottom: 10px;
-              right: 30px;
-              font-size: 12px;
-          
-            }
-            .form-actions{
-              margin-top: '16px';
-              text-align: 'center'
-            }
-            .print-button{
-              background-color: green;
-               color: white;
-            }
-          </style>
+          }
+          h4 {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          /* Default styles for the form container */
+#form-container{
+  padding: 16px;
+  background: white;
+  margin: 0 auto;
+  width: 80%;
+  font-size: 18px;
+  font-family:' ubuntu';
+  position: relative;
+ 
+}
+.form-header{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-fields{
+  margin-bottom: 30px;
+
+}
+.form-fields label{
+  color: #f108f1ee;
+  font-size: bold;
+}
+.form-field{
+  margin-bottom: 10px;
+}
+.form-footer{
+  position: absolute;
+  margin-top: 50px;
+  bottom: 10px;
+  right: 30px;
+  font-size: 12px;
+
+}
+.form-actions{
+  margin-top: '16px';
+  text-align: 'center'
+}
+.print-button{
+  background-color: green;
+   color: white;
+}
+/* Media queries for responsiveness */
+@media (min-width: 992px) {
+  /* For desktop screens, display 4 fields per row */
+  .form-fields {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+
+@media (max-width: 991px) {
+  /* For medium and small screens, display 3 fields per row */
+  .form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* For small screens, display 2 fields per row */
+  .form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Add more styles as needed for form fields, buttons, etc. */
+
+        </style>
         </head>
         <body>
           <div id="print-content">
-            <h4>Real Estate Form</h4>
+         
             <div id="form-container">
+            <h4>Real Estate Form</h4>
                       <form className="form-fields">
           <div className="form-field">
             <label htmlFor="name">Name:</label>
@@ -281,7 +315,9 @@ export const RealEstateForm = () => {
       <div className="form-header">
         <h2>More Information</h2>
       </div>
+      <Paper>
       {realEstate && (
+     
         <form className="form-fields">
           <div className="form-field">
             <label htmlFor="name">Name:</label>
@@ -350,7 +386,9 @@ export const RealEstateForm = () => {
             Print Form
           </button>
         </div>
+        
       )}
+      </Paper>
     </div>
   );
 };
