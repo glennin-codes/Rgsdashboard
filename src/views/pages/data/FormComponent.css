@@ -1,12 +1,46 @@
 /* Default styles for the form container */
-.form-container {
+#form-container {
     padding: 16px;
     background: white;
     margin: 0 auto;
     width: 80%;
-    font-size: 16px;
+    font-size: 18px;
+    font-family:' ubuntu';
+    position: relative;
+   
   }
-  
+  .form-actions{
+    margin-top: 16px;
+    text-align: center
+  }
+  .print-button{
+    background-color: green;
+     color: white;
+  }
+  .form-header{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .form-fields{
+    margin-bottom: 30px;
+
+  }
+  .form-fields label{
+    color: #f108f1ee;
+    font-size: bold;
+  }
+  .form-field{
+    margin-bottom: 10px;
+  }
+  .form-footer{
+    position: absolute;
+    margin-top: 50px;
+    bottom: 10px;
+    right: 30px;
+    font-size: 12px;
+
+  }
+
   /* Media queries for responsiveness */
   @media (min-width: 992px) {
     /* For desktop screens, display 4 fields per row */
@@ -16,6 +50,7 @@
       gap: 16px;
     }
   }
+
   
   @media (max-width: 991px) {
     /* For medium and small screens, display 3 fields per row */

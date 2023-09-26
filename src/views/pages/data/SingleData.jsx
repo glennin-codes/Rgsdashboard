@@ -12,13 +12,11 @@ import './FormComponent.css';
 
 // Function to print data
 export const printData = (data) => {
-
- 
   // Create a new window for printing
   const printWindow = window.open('', '_blank');
 
   if (printWindow) {
-     console.log(data.date);
+    console.log(data.date);
     printWindow.document.open();
     printWindow.document.write(`
       <html>
@@ -33,16 +31,93 @@ export const printData = (data) => {
               text-align: center;
               margin-bottom: 20px;
             }
+            #form-container {
+              padding: 16px;
+              background: white;
+              margin: 0 auto;
+              width: 80%;
+              font-size: 18px;
+              font-family:' ubuntu';
+              position: relative;
+             
+            }
+            .form-header{
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            .form-fields{
+              margin-bottom: 30px;
+          
+            }
+            .form-fields label{
+              color: #f108f1ee;
+              font-size: bold;
+            }
+            .form-field{
+              margin-bottom: 10px;
+            }
+            .form-footer{
+              position: absolute;
+              margin-top: 50px;
+              bottom: 10px;
+              right: 30px;
+              font-size: 12px;
+          
+            }
+            .form-actions{
+              margin-top: '16px';
+              text-align: 'center'
+            }
+            .print-button{
+              background-color: green;
+               color: white;
+            }
           </style>
         </head>
         <body>
           <div id="print-content">
             <h4>Real Estate Form</h4>
-            <div id="form-content">
-              <!-- Render data fields here -->
-              <p>Name: ${data.name}</p>
-              <p>Phone: ${data.phone}</p>
-              <!-- Add more fields as needed -->
+            <div id="form-container">
+                      <form className="form-fields">
+          <div className="form-field">
+            <label htmlFor="name">Name:</label>
+            <span>${data.name}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor="phone" >Phone:</label>
+            <span>${data.phone}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor="location" >Location:</label>
+            <span>${data.location}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor='houseNo'>HouseNo.:</label>
+            <span>${data.houseNo}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor="pamentID">PayementId:</label>
+            <span>${data.paymentUniqueId}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor="religion">Religion:</label>
+            <span>${data.religion}</span>
+          </div>
+         
+          <div className="form-field">
+            <label htmlFor="family">No. of Family:</label>
+            <span>${data.numberOfFamily}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor="landSize">LandSize:</label>
+            <span>${data.landInSquareMetres}</span>
+          </div>
+          <div className="form-field">
+            <label htmlFor="landSize">Date of issue:</label>
+            <span>  ${new Date(data.date).toLocaleDateString('en-GB')}</span>
+          </div>
+         
+        </form>
             </div>
           </div>
         </body>
@@ -100,19 +175,91 @@ export const RealEstateForm = () => {
            
             body {
               font-family: Arial, sans-serif;
-              margin: 20px; /* Add margin for better print layout */
+              margin: 20px; 
             }
             h4 {
               text-align: center;
               margin-bottom: 20px;
             }
-            /* Customize the styles as needed */
+            /* Default styles for the form container */
+#form-container {
+    padding: 16px;
+    background: white;
+    margin: 0 auto;
+    width: 80%;
+    font-size: 18px;
+    font-family:' ubuntu';
+    position: relative;
+   
+  }
+  .form-header{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .form-fields{
+    margin-bottom: 30px;
+
+  }
+  .form-fields label{
+    color: #f108f1ee;
+    font-size: bold;
+  }
+  .form-field{
+    margin-bottom: 10px;
+  }
+  .form-footer{
+    position: absolute;
+    margin-top: 50px;
+    bottom: 10px;
+    right: 30px;
+    font-size: 12px;
+
+  }
+  .form-actions{
+    margin-top: '16px';
+    text-align: 'center'
+  }
+  .print-button{
+    background-color: green;
+     color: white;
+  }
+  /* Media queries for responsiveness */
+  @media (min-width: 992px) {
+    /* For desktop screens, display 4 fields per row */
+    .form-fields {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+  }
+
+  
+  @media (max-width: 991px) {
+    /* For medium and small screens, display 3 fields per row */
+    .form-fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    /* For small screens, display 2 fields per row */
+    .form-fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+  
+  /* Add more styles as needed for form fields, buttons, etc. */
+  
           </style>
         </head>
         <body>
           <div id="print-content">
             <h4>Real Estate Form</h4>
-            ${document.getElementById('form-content').innerHTML}
+            ${document.getElementById('form-container').innerHTML}
           </div>
         </body>
       </html>
@@ -130,8 +277,7 @@ export const RealEstateForm = () => {
   };
 
   return (
-    <div id="form-content">
-    <div className="form-container">
+    <div id="form-container">
       <div className="form-header">
         <h2>More Information</h2>
       </div>
@@ -142,44 +288,54 @@ export const RealEstateForm = () => {
             <span>{realEstate.name}</span>
           </div>
           <div className="form-field">
-            <label htmlFor="phone" >Phone:</label>
+            <label htmlFor="phone">Phone:</label>
             <span>{realEstate.phone}</span>
           </div>
           <div className="form-field">
-            <label htmlFor="location" >Location:</label>
-            <span>{realEstate.paymentUniqueId}</span>
+            <label htmlFor="location">Location:</label>
+            <span>{realEstate.location}</span>
           </div>
           <div className="form-field">
-            <label>HouseNo.:</label>
+            <label htmlFor="houseNo">HouseNo.:</label>
             <span>{realEstate.houseNo}</span>
           </div>
           <div className="form-field">
             <label htmlFor="pamentID">PayementId:</label>
-            <span>{realEstate.houseNo}</span>
+            <span>{realEstate.paymentUniqueId}</span>
           </div>
           <div className="form-field">
             <label htmlFor="religion">Religion:</label>
             <span>{realEstate.religion}</span>
           </div>
-         
+
           <div className="form-field">
-            <label htmlFor="familyyy">No. of Family:</label>
-            <span>{realEstate.religion}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="family">No. of Family::</label>
+            <label htmlFor="family">No. of Family:</label>
             <span>{realEstate.numberOfFamily}</span>
           </div>
           <div className="form-field">
             <label htmlFor="landSize">LandSize:</label>
             <span>{realEstate.landInSquareMetres}</span>
           </div>
-         
+          <div className="form-field">
+            <label htmlFor="landSize">Date of issue:</label>
+            <span> {new Date(realEstate.date).toLocaleDateString('en-GB')}</span>
+          </div>
         </form>
       )}
-       <div className="form-footer">
-          <p>Posted By: PeterSon</p>
-        </div>
+      <div>
+        <Button variant="contained" onClick={handleDownloadFile} startIcon={<GetAppIcon />} style={{ backgroundColor: 'blue' }}>
+          file
+        </Button>
+      </div>
+      <div className="form-actions">
+        <Button variant="contained" onClick={handlePrintForm} startIcon={<PrintIcon />} className="print-button">
+          Print Form
+        </Button>
+      </div>
+      <div className="form-footer">
+        <p>Posted By: PeterSon</p>
+      </div>
+
       {realEstate?.postedBy?.userName && (
         <div className="form-footer">
           <p>Posted By: {realEstate.postedBy.userName}</p>
@@ -187,22 +343,15 @@ export const RealEstateForm = () => {
       )}
       {realEstate?.fileAttachment && (
         <div className="form-actions">
-          <button
-            className="download-button"
-            onClick={handleDownloadFile}
-          >
+          <button className="download-button" onClick={handleDownloadFile}>
             {realEstate.fileAttachment.name}
           </button>
-          <button
-            className="print-button"
-            onClick={handlePrintForm}
-          >
+          <button className="print-button" onClick={handlePrintForm}>
             Print Form
           </button>
         </div>
       )}
     </div>
-  </div>
   );
 };
 
