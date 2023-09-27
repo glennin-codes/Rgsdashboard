@@ -25,7 +25,7 @@ import { useSelector } from 'react-redux';
 import PrintIcon from '@mui/icons-material/Print';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router';
-import { printData } from 'views/pages/data/SingleData';
+import { printData } from 'ui-component/PrintData';
 const DisplayAll = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -88,7 +88,6 @@ const DisplayAll = () => {
       const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`);
       const result = await response.json();
 const data =result.data;
-setIsLoading(false)
       // Print the data without navigating to the page
       printData(data);
     } catch (error) {
