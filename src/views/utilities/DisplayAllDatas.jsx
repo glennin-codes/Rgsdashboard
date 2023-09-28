@@ -26,10 +26,11 @@ import PrintIcon from '@mui/icons-material/Print';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router';
 import { printData } from 'ui-component/PrintData';
+import { CountryDropdown } from 'ui-component/DropDownFilter';
 const DisplayAll = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const [value, setValue] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -42,8 +43,8 @@ const DisplayAll = () => {
       console.log({ start: startDate, end: endDate });
       const startDateString = startDate ? startDate.toISOString() : '';
       const endDateString = endDate ? endDate.toISOString() : '';
-      console.log("start" ,startDateString )
-      console.log("end" ,endDateString)
+      console.log('start', startDateString);
+      console.log('end', endDateString);
       const response = await fetch(
         `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}`
       );
@@ -87,7 +88,7 @@ const DisplayAll = () => {
       // Fetch the data for the selected dataset using the ID
       const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`);
       const result = await response.json();
-const data =result.data;
+      const data = result.data;
       // Print the data without navigating to the page
       printData(data);
     } catch (error) {
@@ -113,7 +114,13 @@ const data =result.data;
               setEndDate={setEndDate}
             />
           </Grid>
+         
         )}
+        <Grid item xs={12}>
+          <CountryDropdown />
+          
+
+        </Grid>
         -
       </Grid>
       <div>
@@ -150,13 +157,12 @@ const data =result.data;
                           backgroundColor: 'lightblue',
                           fontWeight: '500',
                           fontSize: '16px',
-                          padding:4,
+                          padding: 4,
                           borderRadius: 10,
                           color: 'purple'
                         }}
                       >
-                        {new Date(item.date).toLocaleDateString('en-GB')
-                        }
+                        {new Date(item.date).toLocaleDateString('en-GB')}
                       </div>
                     </TableCell>
 
@@ -190,7 +196,7 @@ const data =result.data;
             Rows per page:
           </Typography>
           <Select value={limit} onChange={handleLimitChange}>
-            {[10, 20, 30].map((pageSize) => (
+            {[5, 10, 20].map((pageSize) => (
               <MenuItem key={pageSize} value={pageSize}>
                 {pageSize} rows per page
               </MenuItem>

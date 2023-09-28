@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
@@ -26,6 +26,7 @@ const App = () => {
   const {  role = '', isWorkingHours } = decodedData || {};
   const pathLocation = useLocation();
   const isMasterRegisterRoute = pathLocation.pathname.includes('master-register');
+  const [currentHour, setCurrentHour] = useState(new Date().getHours());
 
   useEffect(() => {
     if (checkTokenExpiryAndWorkingHours()) {
@@ -49,8 +50,8 @@ const App = () => {
   useEffect(() => {
     // Create an interval for periodic checks
     const checkWorkingHoursInterval = setInterval(() => {
+      setCurrentHour(new Date().getHours());
       const now = new Date();
-      const currentHour = now.getHours();
       const dayOfWeek = now.getDay();
 
       // Check if it's a regular user outside working hours or on weekends
@@ -68,7 +69,7 @@ const App = () => {
       // Clean up the interval when the component unmounts
       clearInterval(checkWorkingHoursInterval);
     };
-  }, [dispatch, isAuthenticated, role, isWorkingHours]);
+  }, [dispatch, isAuthenticated, role, isWorkingHours,currentHour]);
 
   return (
     <StyledEngineProvider injectFirst>
