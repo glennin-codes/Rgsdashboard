@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import MenuItem from '@mui/material/MenuItem';
+// import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { List, ListItem, ListItemText, Typography, Box, ButtonBase, ListItemButton } from '@mui/material';
+import { List, ListItemText, Typography, ButtonBase, ListItemButton } from '@mui/material';
 
 export const CountryDropdown = () => {
   const [selectedTown, setSelectedTown] = useState('');
@@ -17,7 +17,7 @@ export const CountryDropdown = () => {
     setSelectedTown(town);
     setSelectedCountry(countryName);
   };
-
+console.log(selectedTown,selectedCountry)
   const dropdownWidth = '200px'; // Adjust the width as needed
 
   return (
