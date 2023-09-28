@@ -1,0 +1,104 @@
+/* LandOwnershipForm.css */
+
+/* Container for the form */
+.form-container{
+    position: relative;
+     padding: 20px;
+     background-color: #fff;
+     border-radius: 5px;
+     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+   }
+   
+   /* Headings */
+   .form-title {
+     grid-column: span 2; /* Make the title span both columns */
+     text-align: center;
+     font-size: 24px;
+     margin-bottom: 40px;
+ 
+ }
+ .form-column{
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     grid-gap: 10px;
+   }
+   
+   /* Form fields */
+   .form-field {
+     margin-bottom: 20px;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+   }
+   
+   /* Form labels */
+   .form-field label {
+     margin-bottom: 5px;
+     font-weight: bold;
+     text-align: center;
+     margin-right: 5px;
+     font-size: 14px;
+     width: 80px;
+     max-width: 80px;
+     color: #333; /* Dark text color */
+     
+   }
+   
+   /* Form inputs */
+   .form-field input {
+     width: 100%;
+     padding: 10px;
+     margin-right: 2px;
+     border: 1px solid #ccc; /* Light gray border */
+     border-radius: 5px;
+     font-size: 16px;
+     flex:1;
+   }
+   
+   /* Submit button */
+   .form-button {
+     /* Span two columns for the submit button */
+     margin-top: 20px;
+     text-align: right;
+     position:absolute;
+     right: 10px;
+     bottom: 10px;
+     font-size: 16px;
+     background-color: #007bff; /* Blue background color */
+     color: #fff; /* White text color */
+     border: none;
+     border-radius: 5px;
+     padding: 10px 20px;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+   
+     /* Hover effect */
+     &:hover {
+       background-color: #0056b3; /* Darker blue on hover */
+     }
+   }
+   .form-column2{
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     grid-gap: 10px;
+   }
+   .sub-name{
+     text-align:center;
+     font-size: 14px;
+ 
+ 
+   }
+   /* Responsive adjustments for smaller screens */
+   @media (max-width: 768px) {
+     .form-column{
+       grid-template-columns: repeat(1, 1fr);/* Switch to a single column layout for smaller screens */
+     }
+     .form-column2 {
+       grid-template-columns: repeat(2, 1fr);/* Switch to a single column layout for smaller screens */
+     }
+   
+     .form-button {
+       grid-column: span 1; /* Reset the button to span one column */
+     }
+   }
+   
