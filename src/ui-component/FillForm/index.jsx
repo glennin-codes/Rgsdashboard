@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LandOwnershipForm.css'; // Import your external CSS for styling
+import './LandOwnership.css'; // Import your external CSS for styling
 
 export default function LandOwnershipForm() {
   const [values, setValues] = useState({
