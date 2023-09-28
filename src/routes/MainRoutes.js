@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import PrintData from 'ui-component/PrintData';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
@@ -44,10 +45,15 @@ const MainRoutes = {
           path: 'all',
           element: <DisplayAll />
         },
+        // {
+        //   path: 'all/single/:id',
+        //   element: <SingleForm/>
+        // }
         {
           path: 'all/single/:id',
-          element: <SingleForm/>
+          element: <PrintData/>
         }
+      
       ]
     },
     {

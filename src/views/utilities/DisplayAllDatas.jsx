@@ -25,7 +25,7 @@ import { useSelector } from 'react-redux';
 import PrintIcon from '@mui/icons-material/Print';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router';
-import { printData } from 'ui-component/PrintData';
+import PrintData from 'ui-component/PrintData';
 import { CountryDropdown } from 'ui-component/DropDownFilter';
 const DisplayAll = () => {
   const [data, setData] = useState([]);
@@ -90,7 +90,7 @@ const DisplayAll = () => {
       const result = await response.json();
       const data = result.data;
       // Print the data without navigating to the page
-      printData(data);
+      // PrintData(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -121,7 +121,7 @@ const DisplayAll = () => {
           
 
         </Grid>
-        -
+        
       </Grid>
       <div>
         {data.length > 0 && (

@@ -37,6 +37,7 @@
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
     "react-scripts": "^5.0.1",
+    "react-to-print": "^2.14.13",
     "simplebar-react": "^3.2.4",
     "yup": "^0.32.11"
   },
