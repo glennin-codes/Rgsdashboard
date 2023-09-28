@@ -35,11 +35,11 @@ export const printData = (data) => {
 
             <form
             class="form-fields"
-            style={{
-              border: '2px solid red',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '16px',
+            style="
+              border: px solid red;
+              display: 'grid';
+              grid-template-columns: repeat(3, 1fr);
+              gap: 16px;"
             }}
           >
           <div class="form-field">
