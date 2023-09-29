@@ -77,7 +77,7 @@ export default function PrintData({ data, shouldPrint, setShouldPrint }) {
             <input type="text" id="mudMar" name="mudMar" defaultValue={values.name} />
           </div>
           <div className="form-title">
-            <h6>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h6>
+            <h5>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h5>
           </div>
 
           <div className="form-column2">
@@ -131,7 +131,7 @@ export default function PrintData({ data, shouldPrint, setShouldPrint }) {
 
             {/* Submit button */}
           </div>
-          <div className="title-el">
+          <div className="subtitle-el">
             <h4>Warqaddaan xaq waxaad ugu leedahay muddo laba iyo toban (12) bilood ah</h4>
             <h4>oo maantaka bilaabata, fasax la&#39;aan inaad dhulka dhistid.</h4>
           </div>

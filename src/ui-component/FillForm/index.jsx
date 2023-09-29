@@ -82,7 +82,7 @@ export default function LandOwnershipForm() {
           <input type="text" id="mudMar" name="mudMar" value={values.mudMar} onChange={handleChange} />
         </div>
         <div className="form-title">
-          <h6>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h6>
+          <h5>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h5>
         </div>
 
         <div className="form-column2">
@@ -136,7 +136,7 @@ export default function LandOwnershipForm() {
 
           {/* Submit button */}
         </div>
-        <div className="title-el">
+        <div className="subtitle-el">
           <h4>Warqaddaan xaq waxaad ugu leedahay muddo laba iyo toban (12) bilood ah</h4>
           <h4>oo maantaka bilaabata, fasax la&#39;aan inaad dhulka dhistid.</h4>
         </div>
@@ -157,8 +157,8 @@ export default function LandOwnershipForm() {
         </div>
         <div className="form-footer">
           <div className="footer-item">
-            <h5>XASAN MACALIN CALI IBRAAHIM</h5>
-            <h6>Agaasimaha Waaxda Dhulka</h6>
+            <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+            <h5>Agaasimaha Waaxda Dhulka</h5>
             <input type="text" id="Agaasimaha" name="Agaasimaha" value={values.Agaasimaha} onChange={handleChange} />
           </div>
           <div className="footer-item">

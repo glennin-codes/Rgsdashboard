@@ -14,23 +14,26 @@
    .title-el{
     align-items: center;
     text-align: center;
-   margin-Bottom:10px;
+  
    }
    .title-el h2,
 .title-el h4,
 .title-el h3 {
   margin: 0;
-  padding-bottom: 5px;
+  padding: 0;
 }
-   .title-el h4 {
-    margin: 0;
-    padding-bottom: 5px;
+   .title-el {
+   padding-bottom: 2px;
+   margin-bottom: 5px;
   }
-   /* Headings */
+.subtitle-el{
+  align-items: center;
+  text-align: center;
+} /* Headings */
    .form-title {
      grid-column: span 2; /* Make the title span both columns */
      text-align: center;
-     font-size: 24px;
+     font-size: 16px;
      margin-bottom: 10px;
  }
  .form-title h1 ,
@@ -46,6 +49,12 @@
      display: grid;
      grid-template-columns: repeat(2, 1fr);
      grid-gap: 10px;
+     margin-bottom: 10px;
+   }
+   .form-column1 .form-field{
+    padding:0;
+    margin: 0;
+  
    }
    
    /* Form fields */
