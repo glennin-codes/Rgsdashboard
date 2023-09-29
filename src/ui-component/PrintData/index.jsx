@@ -1,52 +1,47 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../FillForm/LandOwnership.css'; // Import your external CSS for styling
 import { useReactToPrint } from 'react-to-print';
 
-export default function PrintData(data) {
-  const [values, setValues] = useState({
-    No: '',
-    BollectarioNo: '',
-    Tirsi: '',
-    BolletaNo: '',
-    Taariikh: '',
-    mudan: '',
-    Sanadka: '',
-    Xaafadda: '',
-    vacant: '',
-    mudMar: '',
-    X: '',
-    kunaYaal: '',
-    Degmada: '',
-    SoohdintiisuTahay: '',
-    Waqooyi: '',
-    Galbeed: '',
-    Bari: '',
-    kofuur: '',
-    lacagNo: '',
-    ee: '',
-    Agaasimaha: '',
-    Duqa: ''
-  });
-  const componentRef = useRef(null);
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+export default function PrintData({
+  data,
+  shouldPrint,
+  setShouldPrint
+}) {
+  const [values, setValues] = useState('');
+  const componentRef = useRef();
+  useEffect(() => {
+    if (data) {
+      setValues(data);
+    }
+  }, [data]);
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(values);
   };
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    documentTittle: 'form-data',
-    onAfterPrint: () => console.log('document printed')
+  const print= useReactToPrint({
+   content: () => componentRef.current,
+    documentTitle: 'form-data',
+    onAfterPrint: () => {
+      console.log('document printed successful');
+     
+      setShouldPrint(false); // Reset shouldPrint state
+    }
   });
+if(shouldPrint){
+   print();
+}
+
+
+
 
   return (
-    <div>
+    <div
+    style={{
+      display:"none"
+    }}
+    >
       <form
         onSubmit={handleSubmit}
         ref={componentRef}
@@ -58,33 +53,33 @@ export default function PrintData(data) {
         <div className="form-container">
           <div className="title-el">
             <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-            <h4>DOWLADA HOOSE EE DEGMADA BAYDHABO</h4>
+            <h4>DOWLADA HOOSE EE DEGMADA {data?.location}</h4>
             <h3>WAAXDA DHULKA</h3>
           </div>
           <div className="form-column1">
             <div className="form-field">
               <label htmlFor="siro">No:</label>
-              <input className="input-test" type="number" id="No" name="No" value={values.No} onChange={handleChange} />
+              <input className="input-test" type="text" id="No" name="No" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="BollectarioNo">Bollectario No:</label>
-              <input type="number" id="BollectarioNo" name="BollectarioNo" value={values.BollectarioNo} onChange={handleChange} />
+              <input type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="Tirisi">Soo Gelidda Warqadda Tirsi:</label>
-              <input type="text" id="Tirsi" name="Tirsi" value={values.Tirsi} onChange={handleChange} />
+              <input type="text" id="Tirsi" name="Tirsi" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="BolletaNo">Bolleta No:</label>
-              <input type="text" id="BolletaNo" name="BolletaNo" value={values.BolletaNo} onChange={handleChange} />
+              <input type="text" id="BolletaNo" name="BolletaNo" defaultValue={values.paymentUniqueId}  />
             </div>
             <div className="form-field">
               <label htmlFor="Taariikh">Taariikh:</label>
-              <input type="text" id="Taariikh" name="Taariikh" value={values.Taariikh} onChange={handleChange} />
+              <input type="text" id="Taariikh" name="Taariikh" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="Sanadka">Sanadka:</label>
-              <input type="text" id="Sanadka" name="Sanadka" value={values.Sanadka} onChange={handleChange} />
+              <input type="text" id="Sanadka" name="Sanadka" defaultValue={values.numberOfFamily}  />
             </div>
           </div>
           <div className="form-title">
@@ -92,7 +87,7 @@ export default function PrintData(data) {
           </div>
           <div className="form-field">
             <label htmlFor="mudMar">Mud. / M ar.</label>
-            <input type="text" id="mudMar" name="mudMar" value={values.mudMar} onChange={handleChange} />
+            <input type="text" id="mudMar" name="mudMar" defaultValue={values.name}  />
           </div>
           <div className="form-title">
             <h6>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h6>
@@ -101,50 +96,50 @@ export default function PrintData(data) {
           <div className="form-column2">
             <div className="form-field">
               <label htmlFor="vacant"> </label>
-              <input type="text" id="vacant" name="vacant" value={values.vacant} onChange={handleChange} />
+              <input type="text" id="vacant" name="vacant" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="X"> X :</label>
-              <input type="text" id="X" name="X" value={values.X} onChange={handleChange} />
+              <input type="text" id="X" name="X" defaultValue={values.landInSquareMetres}  />
             </div>
             <div className="sub-name">
               <p>oo u uko dhiso / dhisto cad dhul ah oo la eg</p>
             </div>
             <div className="form-field">
               <label htmlFor="vacant"> </label>
-              <input type="text" id="vacant" name="vacant" value={values.vacant} onChange={handleChange} />
+              <input type="text" id="vacant" name="vacant" defaultValue={values.location}  />
             </div>
             <div className="form-field">
               <label htmlFor="X"> kuna yaal:</label>
-              <input type="text" id="kunaYaal" name="kunaYaal" value={values.kunaYaal} onChange={handleChange} />
+              <input type="text" id="kunaYaal" name="kunaYaal" defaultValue={values.paymentUniqueId}  />
             </div>
             <div className="form-field">
               <label htmlFor="Dagmada">Degmada:</label>
-              <input type="text" id="Degmada" name="Degmada" value={values.Degmada} onChange={handleChange} />
+              <input type="text" id="Degmada" name="Degmada" defaultValue={values.paymentUniqueId}  />
             </div>
             <div className="form-field">
               <label htmlFor="Xaafadda">Xaafadda:</label>
-              <input type="text" id="Xaafadda" name="Xaafadda" value={values.Xaafadda} onChange={handleChange} />
+              <input type="text" id="Xaafadda" name="Xaafadda" defaultValue={values.houseNo}  />
             </div>
             <div className="form-field">
               <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
-              <input type="text" id="SoohdintiisuTahay" name="SoohdintiisuTahay" value={values.SoohdintiisuTahay} onChange={handleChange} />
+              <input type="text" id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={values.location}  />
             </div>
             <div className="form-field">
               <label htmlFor="Waqooyi">X. Waqooyi:</label>
-              <input type="text" id="Waqooyi" name="Waqooyi" value={values.Waqooyi} onChange={handleChange} />
+              <input type="text" id="Waqooyi" name="Waqooyi" defaultValue={values.houseNo}  />
             </div>
             <div className="form-field">
               <label htmlFor="Galbeed">X. Galbeed:</label>
-              <input type="text" id="Galbeed" name="Galbeed" value={values.Galbeed} onChange={handleChange} />
+              <input type="text" id="Galbeed" name="Galbeed" defaultValue={values.numberOfFamily}  />
             </div>
             <div className="form-field">
               <label htmlFor="Bari">X. Bari:</label>
-              <input type="text" id="Bari" name="Bari" value={values.Bari} onChange={handleChange} />
+              <input type="text" id="Bari" name="Bari" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="kofuur">iyo X. Koofur:</label>
-              <input type="text" id="kofuur" name="kofuur" value={values.kofuur} onChange={handleChange} />
+              <input type="text" id="kofuur" name="kofuur" defaultValue={values.houseNo}  />
             </div>
 
             {/* Submit button */}
@@ -157,34 +152,34 @@ export default function PrintData(data) {
           <div className="form-column1">
             <div className="form-field">
               <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
-              <input type="text" id="lacagNo" name="lacagNo" value={values.lacagNo} onChange={handleChange} />
+              <input type="text" id="lacagNo" name="lacagNo" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="ee">ee:</label>
-              <input type="text" id="ee" name="ee" value={values.ee} onChange={handleChange} />
+              <input type="text" id="ee" name="ee" defaultValue={values.name}  />
             </div>
             <div className="form-field">
               <label htmlFor="ee">Taariikh:</label>
-              <input type="text" id="Taariikh" name="Taariikh" value={values.Taariikh} onChange={handleChange} />
+              <input type="text" id="Taariikh" name="Taariikh" defaultValue={new Date(values.date).toLocaleDateString('en-GB')}  />
             </div>
           </div>
           <div className="form-footer">
             <div className="footer-item">
               <h5>XASAN MACALIN CALI IBRAAHIM</h5>
               <h6>Agaasimaha Waaxda Dhulka</h6>
-              <input type="text" id="Agaasimaha" name="Agaasimaha" value={values.Agaasimaha} onChange={handleChange} />
+              <input type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={values.name}  />
             </div>
             <div className="footer-item">
               <h4>CABDULLAAHI CALI WATIIN</h4>
               <h5>Duqa Magaalada</h5>
-              <input type="text" id="Duqa" name="Duqa" value={values.Duqa} onChange={handleChange} />
+              <input type="text" id="Duqa" name="Duqa" defaultValue={values.name}  />
             </div>
           </div>
-          <div>
-            <button onClick={handlePrint} className="form-button no-print" type="submit">
+          {/* <div>
+            <button className="form-button no-print" type="submit">
               print
             </button>
-          </div>
+          </div> */}
         </div>
       </form>
     </div>

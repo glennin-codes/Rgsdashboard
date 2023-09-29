@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Table,
   TableBody,
@@ -25,8 +25,9 @@ import { useSelector } from 'react-redux';
 import PrintIcon from '@mui/icons-material/Print';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router';
-import PrintData from 'ui-component/PrintData';
+import { useReactToPrint } from 'react-to-print';
 import { CountryDropdown } from 'ui-component/DropDownFilter';
+import PrintData from 'ui-component/PrintData';
 const DisplayAll = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -37,7 +38,11 @@ const DisplayAll = () => {
   const [endDate, setEndDate] = useState(null);
   const searchByDate = useSelector((state) => state.dateRange.dateSearch);
   const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [printableData, setPrintableData] = useState(null);
+  const [shouldPrint, setShouldPrint] = useState(false);
   const navigate = useNavigate();
+
+
   const fetchData = async () => {
     try {
       console.log({ start: startDate, end: endDate });
@@ -80,8 +85,9 @@ const DisplayAll = () => {
     navigate(`/datas/all/single/${id}`);
   };
 
+
   // Function to handle printing
-  const handlePrint = async (id) => {
+  const HandlePrint = async (id) => {
     setIsLoading(true); // Set loading state
 
     try {
@@ -89,14 +95,18 @@ const DisplayAll = () => {
       const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`);
       const result = await response.json();
       const data = result.data;
-      // Print the data without navigating to the page
-      // PrintData(data);
+      setPrintableData(data);
+
+      setShouldPrint(true); 
+
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
       setIsLoading(false); // Reset loading state
     }
   };
+
+   
   return (
     <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
       <Grid container spacing={2}>
@@ -114,14 +124,10 @@ const DisplayAll = () => {
               setEndDate={setEndDate}
             />
           </Grid>
-         
         )}
         <Grid item xs={12}>
           <CountryDropdown />
-          
-
         </Grid>
-        
       </Grid>
       <div>
         {data.length > 0 && (
@@ -179,7 +185,7 @@ const DisplayAll = () => {
                       {isLoading ? (
                         <p>locading</p>
                       ) : (
-                        <IconButton onClick={() => handlePrint(item._id)} aria-label="Print">
+                        <IconButton onClick={() => HandlePrint(item._id)} aria-label="Print">
                           <PrintIcon />
                         </IconButton>
                       )}
@@ -213,6 +219,9 @@ const DisplayAll = () => {
           </IconButton>
         </Box>
       </div>
+      {printableData && (
+        <PrintData shouldPrint={shouldPrint} data={printableData}  setShouldPrint={ setShouldPrint} />
+      )}
     </MainCard>
   );
 };
