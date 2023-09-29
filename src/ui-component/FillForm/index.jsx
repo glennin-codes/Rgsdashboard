@@ -11,7 +11,8 @@ export default function LandOwnershipForm() {
     mudan: '',
     Sanadka: '',
     Xaafadda: '',
-    vacant: '',
+    vacant1: '',
+    vacant2: '',
     mudMar: '',
     X: '',
     kunaYaal: '',
@@ -49,7 +50,7 @@ export default function LandOwnershipForm() {
         </div>
         <div className="form-column1">
           <div className="form-field">
-            <label htmlFor="siro">No:</label>
+            <label htmlFor="No">No:</label>
             <input className="input-test" type="number" id="No" name="No" value={values.No} onChange={handleChange} />
           </div>
           <div className="form-field">
@@ -57,7 +58,7 @@ export default function LandOwnershipForm() {
             <input type="number" id="BollectarioNo" name="BollectarioNo" value={values.BollectarioNo} onChange={handleChange} />
           </div>
           <div className="form-field">
-            <label htmlFor="Tirisi">Soo Gelidda Warqadda Tirsi:</label>
+            <label htmlFor="Tirsi">Soo Gelidda Warqadda Tirsi:</label>
             <input type="text" id="Tirsi" name="Tirsi" value={values.Tirsi} onChange={handleChange} />
           </div>
           <div className="form-field">
@@ -86,8 +87,8 @@ export default function LandOwnershipForm() {
 
         <div className="form-column2">
           <div className="form-field">
-            <label htmlFor="vacant"> </label>
-            <input type="text" id="vacant" name="vacant" value={values.vacant} onChange={handleChange} />
+            <label htmlFor="vacant1"> </label>
+            <input type="text" id="vacant1" name="vacant1" value={values.vacant1} onChange={handleChange} />
           </div>
           <div className="form-field">
             <label htmlFor="X"> X :</label>
@@ -98,10 +99,10 @@ export default function LandOwnershipForm() {
           </div>
           <div className="form-field">
             <label htmlFor="vacant"> </label>
-            <input type="text" id="vacant" name="vacant" value={values.vacant} onChange={handleChange} />
+            <input type="text" id="vacant2" name="vacant2" value={values.vacant2} onChange={handleChange} />
           </div>
           <div className="form-field">
-            <label htmlFor="X"> kuna yaal:</label>
+            <label htmlFor="kunaYaal"> kuna yaal:</label>
             <input type="text" id="kunaYaal" name="kunaYaal" value={values.kunaYaal} onChange={handleChange} />
           </div>
           <div className="form-field">

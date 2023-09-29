@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../FillForm/LandOwnership.css'; // Import your external CSS for styling
 import { useReactToPrint } from 'react-to-print';
-
-export default function PrintData({
-  data,
-  shouldPrint,
-  setShouldPrint
-}) {
+import PropTypes from 'prop-types';
+export default function PrintData({ data, shouldPrint, setShouldPrint }) {
   const [values, setValues] = useState('');
   const componentRef = useRef();
   useEffect(() => {
@@ -14,36 +10,27 @@ export default function PrintData({
       setValues(data);
     }
   }, [data]);
-  
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(values);
-  };
-  const print= useReactToPrint({
-   content: () => componentRef.current,
+  const print = useReactToPrint({
+    content: () => componentRef.current,
     documentTitle: 'form-data',
     onAfterPrint: () => {
       console.log('document printed successful');
-     
-      setShouldPrint(false); // Reset shouldPrint state
+
+      setShouldPrint(false);
     }
   });
-if(shouldPrint){
-   print();
-}
-
-
-
+  if (shouldPrint) {
+    print();
+  }
 
   return (
     <div
-    style={{
-      display:"none"
-    }}
+      style={{
+        display: 'none'
+      }}
     >
       <form
-        onSubmit={handleSubmit}
         ref={componentRef}
         style={{
           width: '100%',
@@ -58,28 +45,28 @@ if(shouldPrint){
           </div>
           <div className="form-column1">
             <div className="form-field">
-              <label htmlFor="siro">No:</label>
-              <input className="input-test" type="text" id="No" name="No" defaultValue={values.name}  />
+              <label htmlFor="No">No:</label>
+              <input className="input-test" type="text" id="No" name="No" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="BollectarioNo">Bollectario No:</label>
-              <input type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={values.name}  />
+              <input type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="Tirisi">Soo Gelidda Warqadda Tirsi:</label>
-              <input type="text" id="Tirsi" name="Tirsi" defaultValue={values.name}  />
+              <input type="text" id="Tirsi" name="Tirsi" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="BolletaNo">Bolleta No:</label>
-              <input type="text" id="BolletaNo" name="BolletaNo" defaultValue={values.paymentUniqueId}  />
+              <input type="text" id="BolletaNo" name="BolletaNo" defaultValue={values.paymentUniqueId} />
             </div>
             <div className="form-field">
               <label htmlFor="Taariikh">Taariikh:</label>
-              <input type="text" id="Taariikh" name="Taariikh" defaultValue={values.name}  />
+              <input type="text" id="Taariikh" name="Taariikh" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="Sanadka">Sanadka:</label>
-              <input type="text" id="Sanadka" name="Sanadka" defaultValue={values.numberOfFamily}  />
+              <input type="text" id="Sanadka" name="Sanadka" defaultValue={values.numberOfFamily} />
             </div>
           </div>
           <div className="form-title">
@@ -87,7 +74,7 @@ if(shouldPrint){
           </div>
           <div className="form-field">
             <label htmlFor="mudMar">Mud. / M ar.</label>
-            <input type="text" id="mudMar" name="mudMar" defaultValue={values.name}  />
+            <input type="text" id="mudMar" name="mudMar" defaultValue={values.name} />
           </div>
           <div className="form-title">
             <h6>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h6>
@@ -96,50 +83,50 @@ if(shouldPrint){
           <div className="form-column2">
             <div className="form-field">
               <label htmlFor="vacant"> </label>
-              <input type="text" id="vacant" name="vacant" defaultValue={values.name}  />
+              <input type="text" id="vacant" name="vacant" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="X"> X :</label>
-              <input type="text" id="X" name="X" defaultValue={values.landInSquareMetres}  />
+              <input type="text" id="X" name="X" defaultValue={values.landInSquareMetres} />
             </div>
             <div className="sub-name">
               <p>oo u uko dhiso / dhisto cad dhul ah oo la eg</p>
             </div>
             <div className="form-field">
-              <label htmlFor="vacant"> </label>
-              <input type="text" id="vacant" name="vacant" defaultValue={values.location}  />
+              <label htmlFor="vacant2"> </label>
+              <input type="text" id="vacant2" name="vacant2" defaultValue={values.location} />
             </div>
             <div className="form-field">
-              <label htmlFor="X"> kuna yaal:</label>
-              <input type="text" id="kunaYaal" name="kunaYaal" defaultValue={values.paymentUniqueId}  />
+              <label htmlFor="kunaYaal"> kuna yaal:</label>
+              <input type="text" id="kunaYaal" name="kunaYaal" defaultValue={values.paymentUniqueId} />
             </div>
             <div className="form-field">
               <label htmlFor="Dagmada">Degmada:</label>
-              <input type="text" id="Degmada" name="Degmada" defaultValue={values.paymentUniqueId}  />
+              <input type="text" id="Degmada" name="Degmada" defaultValue={values.paymentUniqueId} />
             </div>
             <div className="form-field">
               <label htmlFor="Xaafadda">Xaafadda:</label>
-              <input type="text" id="Xaafadda" name="Xaafadda" defaultValue={values.houseNo}  />
+              <input type="text" id="Xaafadda" name="Xaafadda" defaultValue={values.houseNo} />
             </div>
             <div className="form-field">
               <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
-              <input type="text" id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={values.location}  />
+              <input type="text" id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={values.location} />
             </div>
             <div className="form-field">
               <label htmlFor="Waqooyi">X. Waqooyi:</label>
-              <input type="text" id="Waqooyi" name="Waqooyi" defaultValue={values.houseNo}  />
+              <input type="text" id="Waqooyi" name="Waqooyi" defaultValue={values.houseNo} />
             </div>
             <div className="form-field">
               <label htmlFor="Galbeed">X. Galbeed:</label>
-              <input type="text" id="Galbeed" name="Galbeed" defaultValue={values.numberOfFamily}  />
+              <input type="text" id="Galbeed" name="Galbeed" defaultValue={values.numberOfFamily} />
             </div>
             <div className="form-field">
               <label htmlFor="Bari">X. Bari:</label>
-              <input type="text" id="Bari" name="Bari" defaultValue={values.name}  />
+              <input type="text" id="Bari" name="Bari" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="kofuur">iyo X. Koofur:</label>
-              <input type="text" id="kofuur" name="kofuur" defaultValue={values.houseNo}  />
+              <input type="text" id="kofuur" name="kofuur" defaultValue={values.houseNo} />
             </div>
 
             {/* Submit button */}
@@ -152,36 +139,36 @@ if(shouldPrint){
           <div className="form-column1">
             <div className="form-field">
               <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
-              <input type="text" id="lacagNo" name="lacagNo" defaultValue={values.name}  />
+              <input type="text" id="lacagNo" name="lacagNo" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="ee">ee:</label>
-              <input type="text" id="ee" name="ee" defaultValue={values.name}  />
+              <input type="text" id="ee" name="ee" defaultValue={values.name} />
             </div>
             <div className="form-field">
               <label htmlFor="ee">Taariikh:</label>
-              <input type="text" id="Taariikh" name="Taariikh" defaultValue={new Date(values.date).toLocaleDateString('en-GB')}  />
+              <input type="text" id="Taariikh" name="Taariikh" defaultValue={new Date(values.date).toLocaleDateString('en-GB')} />
             </div>
           </div>
           <div className="form-footer">
             <div className="footer-item">
-              <h5>XASAN MACALIN CALI IBRAAHIM</h5>
-              <h6>Agaasimaha Waaxda Dhulka</h6>
-              <input type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={values.name}  />
+              <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+              <h5>Agaasimaha Waaxda Dhulka</h5>
+              <input type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={values.name} />
             </div>
             <div className="footer-item">
               <h4>CABDULLAAHI CALI WATIIN</h4>
               <h5>Duqa Magaalada</h5>
-              <input type="text" id="Duqa" name="Duqa" defaultValue={values.name}  />
+              <input type="text" id="Duqa" name="Duqa" defaultValue={values.name} />
             </div>
           </div>
-          {/* <div>
-            <button className="form-button no-print" type="submit">
-              print
-            </button>
-          </div> */}
         </div>
       </form>
     </div>
   );
 }
+PrintData.propTypes = {
+  data: PropTypes.object,
+  shouldPrint: PropTypes.bool,
+  setShouldPrint: PropTypes.func,
+};

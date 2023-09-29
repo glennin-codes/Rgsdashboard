@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Table,
   TableBody,
@@ -25,7 +25,6 @@ import { useSelector } from 'react-redux';
 import PrintIcon from '@mui/icons-material/Print';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router';
-import { useReactToPrint } from 'react-to-print';
 import { CountryDropdown } from 'ui-component/DropDownFilter';
 import PrintData from 'ui-component/PrintData';
 const DisplayAll = () => {
@@ -42,8 +41,7 @@ const DisplayAll = () => {
   const [shouldPrint, setShouldPrint] = useState(false);
   const navigate = useNavigate();
 
-
-  const fetchData = async () => {
+  const fetchData =useCallback( async () => {
     try {
       console.log({ start: startDate, end: endDate });
       const startDateString = startDate ? startDate.toISOString() : '';
@@ -61,10 +59,13 @@ const DisplayAll = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+  },[
+    page, limit, value,startDate, endDate
+  ]);
   useEffect(() => {
     fetchData();
-  }, [page, limit, value, endDate]);
+  }, [fetchData]);
+
   console.log(endDate);
 
   const handlePageChange = (newPage) => {
@@ -85,7 +86,6 @@ const DisplayAll = () => {
     navigate(`/datas/all/single/${id}`);
   };
 
-
   // Function to handle printing
   const HandlePrint = async (id) => {
     setIsLoading(true); // Set loading state
@@ -97,8 +97,7 @@ const DisplayAll = () => {
       const data = result.data;
       setPrintableData(data);
 
-      setShouldPrint(true); 
-
+      setShouldPrint(true);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -106,7 +105,6 @@ const DisplayAll = () => {
     }
   };
 
-   
   return (
     <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
       <Grid container spacing={2}>
@@ -219,9 +217,7 @@ const DisplayAll = () => {
           </IconButton>
         </Box>
       </div>
-      {printableData && (
-        <PrintData shouldPrint={shouldPrint} data={printableData}  setShouldPrint={ setShouldPrint} />
-      )}
+      {printableData && <PrintData shouldPrint={shouldPrint} data={printableData} setShouldPrint={setShouldPrint} />}
     </MainCard>
   );
 };
