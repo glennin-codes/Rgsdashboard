@@ -131,6 +131,7 @@ export default function LandOwnershipForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const token = getDataFromLocalStorage('token');
 
     if (token) {
@@ -150,6 +151,7 @@ export default function LandOwnershipForm() {
         }
       });
       if (response.status === 200) {
+        setLoading(false);
         handleSnackbarOpen('Success: Form submitted successfully');
         setValues({
           No: '',
@@ -179,6 +181,7 @@ export default function LandOwnershipForm() {
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (e) {
+      setLoading(false);
       console.log(e);
       if (err?.response?.status === 401) {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
@@ -189,6 +192,7 @@ export default function LandOwnershipForm() {
       } else {
         handleSnackbarOpen('Error: Network problem, check your connections and try again');
       }
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -534,9 +538,9 @@ export default function LandOwnershipForm() {
                   className="form-button " 
                   type="button"
                   onClick={handleSubmit}
-                  disabled={!values.Duqa}
+                  disabled={!values.Duqa || loading}
               >
-                Submit
+               {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
               </Button>
         </div>
         <Snackbar
