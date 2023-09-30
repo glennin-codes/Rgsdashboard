@@ -7,6 +7,12 @@ import MuiAlert from '@mui/material/Alert';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import { getEmptyFields } from 'utils/getEmptyFields';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import 'dayjs/locale/en-gb';
+// import CustomDatePicker from 'ui-component/calenderPiker/customPicker';
 
 export default function LandOwnershipForm() {
   const [values, setValues] = useState({
@@ -90,6 +96,13 @@ export default function LandOwnershipForm() {
         // Prevent focusing on the next input if the current one is empty
         return;
       }
+      if (nextInputName === 'Taariikh') {
+        const currentDate = new Date().toLocaleDateString('en-GB'); // Get the current date in dd/mm/yyyy format
+        setValues({
+          ...values,
+          [nextInputName]: currentDate, // Update the Taariikh field with the formatted date
+        });
+      }
       setInputEnabled((prevInputEnabled) => ({
         ...prevInputEnabled,
         [nextInputName]: true,
@@ -132,68 +145,78 @@ export default function LandOwnershipForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const token = getDataFromLocalStorage('token');
+    const emptyFields = getEmptyFields(values);
+    if (emptyFields.length === 0) {
+      const token = getDataFromLocalStorage('token');
 
-    if (token) {
-      const { name, id } = decodeToken(token);
-      
-      setValues({
-        ...values,
-        name,
-        id
-      });
-    }
-
-    try {
-      const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      if (response.status === 200) {
-        setLoading(false);
-        handleSnackbarOpen('Success: Form submitted successfully');
+      if (token) {
+        const { name, id } = decodeToken(token);
+        
         setValues({
-          No: '',
-          BollectarioNo: '',
-          Tirsi: '',
-          BolletaNo: '',
-          Taariikh: '',
-          Sanadka: '',
-          Xaafadda: '',
-          vacant1: '',
-          vacant2: '',
-          mudMar: '',
-          X: '',
-          kunaYaal: '',
-          Degmada: '',
-          SoohdintiisuTahay: '',
-          Waqooyi: '',
-          Galbeed: '',
-          Bari: '',
-          kofuur: '',
-          lacagNo: '',
-          ee: '',
-          Agaasimaha: '',
-          Duqa: ''
+          ...values,
+          name,
+          id,
+          Sanadka: values.Taariikh.split('/')[2],
+  
         });
       }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (e) {
-      setLoading(false);
-      console.log(e);
-      if (err?.response?.status === 401) {
-        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
-      } else if (err?.response?.status === 403) {
-        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
-      } else if (err?.response?.status === 500) {
-        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
-      } else {
-        handleSnackbarOpen('Error: Network problem, check your connections and try again');
+  
+      try {
+        const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (response.status === 200) {
+          setLoading(false);
+          handleSnackbarOpen('Success: Form submitted successfully');
+          setValues({
+            No: '',
+            BollectarioNo: '',
+            Tirsi: '',
+            BolletaNo: '',
+            Taariikh: '',
+            Sanadka: "",
+            Xaafadda: '',
+            vacant1: '',
+            vacant2: '',
+            mudMar: '',
+            X: '',
+            kunaYaal: '',
+            Degmada: '',
+            SoohdintiisuTahay: '',
+            Waqooyi: '',
+            Galbeed: '',
+            Bari: '',
+            kofuur: '',
+            lacagNo: '',
+            ee: '',
+            Agaasimaha: '',
+            Duqa: ''
+          });
+        }
+  
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {
+        setLoading(false);
+        console.log(e);
+        if (err?.response?.status === 401) {
+          handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+        } else if (err?.response?.status === 403) {
+          handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+        } else if (err?.response?.status === 500) {
+          handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+        } else {
+          handleSnackbarOpen('Error: Network problem, check your connections and try again');
+        }
+  
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    } else {
+      const errorMessage = `Error : The following ${emptyFields.length > 1 ? 'fields are' : 'field is'} empty: ${emptyFields.join(', ')}`;
+      handleSnackbarOpen(errorMessage);
+      setLoading(false);
     }
   };
 
@@ -262,17 +285,18 @@ export default function LandOwnershipForm() {
           </div>
           <div className="form-field">
                 <label htmlFor="Taariikh">Taariikh:</label>
-                <input 
-                    type="text" 
-                    id="Taariikh"
-                    name="Taariikh" 
-                    value={values.Taariikh} 
-                    onChange={handleChange}
-                    ref={TaariikhRef}
-                    onKeyDown={(e) => handleInputKeyDown(e, 'Taariikh','mudMar', mudMarRef)}
-                    disabled={!inputEnabled.Taariikh}
-                    
-                />
+
+                  <input 
+                      type="text" 
+                      id="Taariikh"
+                      name="Taariikh" 
+                      value={values.Taariikh} 
+                      // onChange={handleChange}
+                      ref={TaariikhRef}
+                      onKeyDown={(e) => handleInputKeyDown(e, 'Taariikh','mudMar', mudMarRef)}
+                      disabled={!inputEnabled.Taariikh}
+                      
+                  />
           </div>
           <div className="form-field">
                 <label htmlFor="Sanadka">Sanadka:</label>
@@ -280,10 +304,7 @@ export default function LandOwnershipForm() {
                     type="text" 
                     id="Sanadka" 
                     name="Sanadka" 
-                    defaultValue={values.Taariikh}
-                    
-                    // ref={SanadkaRef}
-                    // onKeyDown={(e) => handleInputKeyDown(e, 'Sanadka','mudMar', mudMarRef)}
+                    defaultValue={values.Taariikh.split('/')[2]}
                     disabled={!inputEnabled.Sanadka}
 
                 />
