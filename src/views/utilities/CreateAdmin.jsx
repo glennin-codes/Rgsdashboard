@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Grid, Paper } from '@mui/material';
+import { Container, TextField, Button, Grid, IconButton } from '@mui/material';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import MainCard from 'ui-component/cards/MainCard';
 import { generateRandomPassword } from 'utils/GeneratePassword';
@@ -7,6 +7,7 @@ import PhotoUpload from 'ui-component/PhotoUpload';
 import axios from 'axios';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 import CustomSnackbar from 'ui-component/SnackBar';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const initialState = {
   name: '',
@@ -23,7 +24,15 @@ export function CreateAdmin() {
   const [errorMessage, setErrorMessage] = useState('');
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -70,65 +79,94 @@ export function CreateAdmin() {
   };
   return (
     <MainCard title="Register an Admin">
-      <Container maxWidth="sm">
-        <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+       <Container maxWidth="sm"
+      sx={{
+        position:'relative'
+      }}
+      >
+        {/* <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}> */}
           <form
             onSubmit={handleSubmit}
             style={{
               marginTop: '20px'
             }}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={2}  >
               <Grid item xs={12}>
-                <TextField label="Name" name="name" fullWidth variant="outlined" value={formData.name} onChange={handleInputChange} />
+                <TextField required label="Name" name="name" fullWidth variant="standard" value={formData.name} onChange={handleInputChange} />
               </Grid>
-              <Grid item xs={12}>
+      <Grid item xs={12}>
                 <TextField
-                  label="Location"
+                
+                  label="Location(optional)"
                   name="location"
                   fullWidth
-                  variant="outlined"
+                  variant="standard"
                   value={formData.location}
                   onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField label="Phone" name="phone" fullWidth variant="outlined" value={formData.phone} onChange={handleInputChange} />
+                <TextField  label="Phone(optional)" name="phone" fullWidth variant="standard" value={formData.phone} onChange={handleInputChange} />
               </Grid>
               <Grid item xs={12}>
-                <TextField label="Email" name="email" fullWidth variant="outlined" value={formData.email} onChange={handleInputChange} />
+                <TextField  autoComplete="username" required label="Email" name="email" fullWidth variant="standard" value={formData.email} onChange={handleInputChange} />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+               required
                   label="Password"
                   name="password"
                   fullWidth
-                  variant="outlined"
-                  type="password"
+                  variant="standard"
+                  type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={handleInputChange}
+                  autoComplete="current-password"
                   InputProps={{
                     endAdornment: (
-                      <Button onClick={handleGeneratePassword} variant="contained">
+                    <>
+                     <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                      size="large"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                      <AnimateButton>
+                      <Button 
+                      color="secondary" 
+                      onClick={handleGeneratePassword} 
+                      variant="outlined"
+                      >
                         Generate
                       </Button>
+                      </AnimateButton>
+                    </>
                     )
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item 
+              xs={12}
+              sx={{
+                marginTop:'10px'
+              }} 
+              >
                 <PhotoUpload setFormData={setFormData} formData={formData} />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end'}}   >
                 <AnimateButton>
-                  <Button type="submit" variant="contained" color="secondary" fullWidth>
-                    Register
+                  <Button type="submit" variant="contained" color="secondary" position='end' >
+                    Create Admin
                   </Button>
                 </AnimateButton>
               </Grid>
             </Grid>
           </form>
-        </Paper>
+        {/* </Paper> */}
         <CustomSnackbar
           openSuccessSnackbar={openSuccessSnackbar}
           openErrorSnackbar={openErrorSnackbar}

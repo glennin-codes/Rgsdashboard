@@ -1,16 +1,38 @@
-import { Drawer } from '@mui/material';
+import { Drawer, IconButton } from '@mui/material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import React, { useState } from 'react';
-import { Container, TextField, Button, Grid, Paper } from '@mui/material';
+import { Container, TextField, Button, Grid } from '@mui/material';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { generateRandomPassword } from 'utils/GeneratePassword';
 import PhotoUpload from 'ui-component/PhotoUpload';
 import axios from 'axios';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 import CustomSnackbar from 'ui-component/SnackBar';
+import { Select, MenuItem, FormControl,InputLabel } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
+const locations = [
+  'Afgooye',
+  'Awdheegle',
+  'Baraawe',
+  'Kuntuwaarey',
+  'Marka',
+  'Qoryooley',
+  'Wanlaweyn',
+  'Sablaale',
+  'Baydhabo',
+  'Buurhakabo',
+  'Bardaale',
+  'Diinsoor',
+  'Qansax-dheere',
+  'Hudur',
+  'Waajid',
+  'Tayeeglow',
+  'Ceel-Barde',
+  'Rabdhure',
+];
 const initialState = {
   name: '',
   location: '',
@@ -26,7 +48,15 @@ const CreateEmployee = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -73,65 +103,107 @@ const CreateEmployee = () => {
   return (
     <MainCard title="Register an Employee">
       <Drawer />
-      <Container maxWidth="sm">
-        <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+      <Container maxWidth="sm"
+      sx={{
+        position:'relative'
+      }}
+      >
+        {/* <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}> */}
           <form
             onSubmit={handleSubmit}
             style={{
               marginTop: '20px'
             }}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={2}  >
               <Grid item xs={12}>
-                <TextField label="Name" name="name" fullWidth variant="outlined" value={formData.name} onChange={handleInputChange} />
+                <TextField required label="Name" name="name" fullWidth variant="standard" value={formData.name} onChange={handleInputChange} />
+              </Grid>
+              <Grid item xs={12}>
+      <FormControl
+      required
+       sx={{
+           width:"100%"
+          }} variant="standard">
+        <InputLabel>Location</InputLabel>
+        <Select
+          label="Location"
+          name="location"
+          sx={{
+              width:"50%"
+          }}
+          value={formData.location}
+          onChange={handleInputChange}
+        >
+          {locations.map((location, index) => (
+            <MenuItem key={index} value={location}>
+              {location}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Grid>
+              <Grid item xs={12}>
+                <TextField  label="Phone(optional)" name="phone" fullWidth variant="standard" value={formData.phone} onChange={handleInputChange} />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField  autoComplete="username"  required label="Email" name="email" fullWidth variant="standard" value={formData.email} onChange={handleInputChange} />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Location"
-                  name="location"
-                  fullWidth
-                  variant="outlined"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField label="Phone" name="phone" fullWidth variant="outlined" value={formData.phone} onChange={handleInputChange} />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField label="Email" name="email" fullWidth variant="outlined" value={formData.email} onChange={handleInputChange} />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+               required
                   label="Password"
                   name="password"
                   fullWidth
-                  variant="outlined"
-                  type="password"
+                  variant="standard"
+                  type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={handleInputChange}
+                  autoComplete="current-password"
                   InputProps={{
                     endAdornment: (
-                      <Button onClick={handleGeneratePassword} variant="contained">
+                    <>
+                     <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                      size="large"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                      <AnimateButton>
+                      <Button 
+                      color="secondary" 
+                      onClick={handleGeneratePassword} 
+                      variant="outlined"
+                      >
                         Generate
                       </Button>
+                      </AnimateButton>
+                    </>
                     )
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item 
+              xs={12}
+              sx={{
+                marginTop:'10px'
+              }} 
+              >
                 <PhotoUpload setFormData={setFormData} formData={formData} />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end'}}   >
                 <AnimateButton>
-                  <Button type="submit" variant="contained" color="secondary" fullWidth>
+                  <Button type="submit" variant="contained" color="secondary" position='end' >
                     Register Employee
                   </Button>
                 </AnimateButton>
               </Grid>
             </Grid>
           </form>
-        </Paper>
+        {/* </Paper> */}
         <CustomSnackbar
           openSuccessSnackbar={openSuccessSnackbar}
           openErrorSnackbar={openErrorSnackbar}
