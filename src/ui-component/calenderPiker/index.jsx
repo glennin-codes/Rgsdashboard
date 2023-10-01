@@ -17,17 +17,20 @@ export const DateRangePicker = ({ fetchData, startDate,setStartDate,endDate, set
   return (
     <Box
     sx={{
-     
+   
+    
       marginTop: {
       xs:5,
       sm:2
-      }
+      },
+     
     }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <DatePicker
           sx={{
             marginRight: 2,
+           
             marginBottom: {
               xs: 2,
               small: 2

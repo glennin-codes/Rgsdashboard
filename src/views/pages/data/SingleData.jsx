@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Paper from '@mui/material/Paper';
 
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import PrintIcon from '@mui/icons-material/Print';
-import './FormComponent.css';
-
-
+import { Alert } from '@mui/material';
+import SimpleBackdrop from './BackDrop';
+import PrintData from 'ui-component/PrintData';
+import '../../../ui-component/FillForm/LandOwnership.css';
+import MainCard from 'ui-component/cards/MainCard';
 export const RealEstateForm = () => {
   const [realEstate, setRealEstate] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [shouldPrint, setShouldPrint] = useState(false);
   const { id } = useParams();
   useEffect(() => {
+    setIsLoading(true);
     // 6504a24d4bb17035693cff4e
     // Make a GET request to your API endpoint to fetch a single data entry
     axios
@@ -22,216 +27,220 @@ export const RealEstateForm = () => {
 
         console.log(data.date);
         setRealEstate(data);
+        setIsLoading(false);
       })
       .catch((e) => {
+        setIsLoading(false);
         console.log(e);
+        if (e?.response && e?.response?.data && e?.response?.data?.message) {
+          setError(e.response.data.message);
+        }
+
+        setError('check your connections');
       });
   }, [id]);
 
-  const handleDownloadFile = () => {
-    // You can implement file download logic here
-    if (realEstate && realEstate.fileAttachment) {
-      window.open(realEstate.fileAttachment.fileUrl, '_blank');
-    }
-  };
-
-  const handlePrintForm = () => {
-    // Create a new window for printing
-    const printWindow = window.open('', '_blank');
-
-    // Check if the window was successfully opened
-    if (printWindow) {
-      // Write the content to be printed to the new window
-      printWindow.document.open();
-      printWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Form</title>
-          <style>
-           
-            body {
-              font-family: Arial, sans-serif;
-              margin: 20px; 
-            }
-            h4 {
-              text-align: center;
-              margin-bottom: 20px;
-            }
-            /* Default styles for the form container */
-#form-container {
-    padding: 16px;
-    background: white;
-    margin: 0 auto;
-    width: 80%;
-    font-size: 18px;
-    font-family:' ubuntu';
-    position: relative;
-   
-  }
-  .form-header{
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .form-fields{
-    margin-bottom: 30px;
-
-  }
-  .form-fields label{
-    color: #f108f1ee;
-    font-size: bold;
-  }
-  .form-field{
-    margin-bottom: 10px;
-  }
-  .form-footer{
-    position: absolute;
-    margin-top: 50px;
-    bottom: 10px;
-    right: 30px;
-    font-size: 12px;
-
-  }
-  .form-actions{
-    margin-top: '16px';
-    text-align: 'center'
-  }
-  .print-button{
-    background-color: green;
-     color: white;
-  }
-  /* Media queries for responsiveness */
-  @media (min-width: 992px) {
-    /* For desktop screens, display 4 fields per row */
-    .form-fields {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-  }
-
-  
-  @media (max-width: 991px) {
-    /* For medium and small screens, display 3 fields per row */
-    .form-fields {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-  }
-  
-  @media (max-width: 767px) {
-    /* For small screens, display 2 fields per row */
-    .form-fields {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-  }
-  
-  /* Add more styles as needed for form fields, buttons, etc. */
-  
-          </style>
-        </head>
-        <body>
-          <div id="print-content">
-            <h4>Form Data </h4>
-            ${document.getElementById('form-container').innerHTML}
-          </div>
-        </body>
-      </html>
-    `);
-      printWindow.document.close();
-
-      // Wait for the content to be fully loaded, then initiate printing
-      printWindow.onload = () => {
-        printWindow.print();
-        printWindow.close();
-      };
-    } else {
-      alert('Unable to open a print window. Please enable pop-ups.');
-    }
-  };
-
   return (
-    <div id="form-container">
-      <div className="form-header">
-        <h2>More Information</h2>
-      </div>
-      <Paper>
-      {realEstate && (
-     
-        <form className="form-fields">
-          <div className="form-field">
-            <label htmlFor="name">Name:</label>
-            <span>{realEstate.name}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="phone">Phone:</label>
-            <span>{realEstate.phone}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="location">Location:</label>
-            <span>{realEstate.location}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="houseNo">HouseNo.:</label>
-            <span>{realEstate.houseNo}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="pamentID">PayementId:</label>
-            <span>{realEstate.paymentUniqueId}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="religion">Religion:</label>
-            <span>{realEstate.religion}</span>
-          </div>
+    <>
+      <MainCard title="More Information">
+        <div
+          id="form-container"
+          style={{
+            boxShadow: 'none',
+            width: '100%'
+          }}
+        >
+          {error && <Alert severity="error">{error}</Alert>}
 
-          <div className="form-field">
-            <label htmlFor="family">No. of Family:</label>
-            <span>{realEstate.numberOfFamily}</span>
+          {isLoading ? (
+            <SimpleBackdrop open={isLoading} />
+          ) : (
+            realEstate && (
+              <form>
+                <div
+                  className="form-container"
+                  style={{
+                    boxShadow: 'none',
+                    width: '100%'
+                  }}
+                >
+                  <div className="title-el">
+                    <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
+                    <h4>DOWLADA HOOSE EE DEGMADA &quot;location&quot;</h4>
+                    <h3>WAAXDA DHULKA</h3>
+                  </div>
+                  <div className="form-column1">
+                    <div className="form-field">
+                      <label htmlFor="No">No:</label>
+                      <input className="input-test" type="text" id="No" name="No" defaultValue={realEstate.No} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="BollectarioNo">Bollectario No:</label>
+                      <input type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={realEstate.BollectarioNo} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Tirisi">Soo Gelidda Warqadda Tirsi:</label>
+                      <input type="text" id="Tirsi" name="Tirsi" defaultValue={realEstate.Tirsi} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="BolletaNo">Bolleta No:</label>
+                      <input type="text" id="BolletaNo" name="BolletaNo" defaultValue={realEstate.BolletaNo} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Taariikh">Taariikh:</label>
+                      <input type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Sanadka">Sanadka:</label>
+                      <input type="text" id="Sanadka" name="Sanadka" defaultValue={realEstate.Sanadka} />
+                    </div>
+                  </div>
+                  <div className="form-title">
+                    <h4>WARQADDA LAHAANSHAHA DHULKA</h4>
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="mudMar">Mud. / M ar.</label>
+                    <input type="text" id="mudMar" name="mudMar" defaultValue={realEstate.mudMar} />
+                  </div>
+                  <div className="form-title">
+                    <h5>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h5>
+                  </div>
+
+                  <div className="form-column2">
+                    <div className="form-field">
+                      <label htmlFor="vacant1"> </label>
+                      <input type="text" id="vacant1" name="vacant1" defaultValue={realEstate.vacant1} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="X"> X :</label>
+                      <input type="text" id="X" name="X" defaultValue={realEstate.X} />
+                    </div>
+                    <div className="sub-name">
+                      <p>oo u uko dhiso / dhisto cad dhul ah oo la eg</p>
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="vacant2"> </label>
+                      <input type="text" id="vacant2" name="vacant2" defaultValue={realEstate.vacant2} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="kunaYaal"> kuna yaal:</label>
+                      <input type="text" id="kunaYaal" name="kunaYaal" defaultValue={realEstate.kunaYaal} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Dagmada">Degmada:</label>
+                      <input type="text" id="Degmada" name="Degmada" defaultValue={realEstate.Degmada} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Xaafadda">Xaafadda:</label>
+                      <input type="text" id="Xaafadda" name="Xaafadda" defaultValue={realEstate.Xaafadda} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
+                      <input type="text" id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={realEstate.SoohdintiisuTahay} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Waqooyi">X. Waqooyi:</label>
+                      <input type="text" id="Waqooyi" name="Waqooyi" defaultValue={realEstate.Waqooyi} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Galbeed">X. Galbeed:</label>
+                      <input type="text" id="Galbeed" name="Galbeed" defaultValue={realEstate.Galbeed} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="Bari">X. Bari:</label>
+                      <input type="text" id="Bari" name="Bari" defaultValue={realEstate.Bari} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="kofuur">iyo X. Koofur:</label>
+                      <input type="text" id="kofuur" name="kofuur" defaultValue={realEstate.kofuur} />
+                    </div>
+
+                    {/* Submit button */}
+                  </div>
+                  <div className="subtitle-el">
+                    <h4>Warqaddaan xaq waxaad ugu leedahay muddo laba iyo toban (12) bilood ah</h4>
+                    <h4>oo maantaka bilaabata, fasax la&#39;aan inaad dhulka dhistid.</h4>
+                  </div>
+
+                  <div className="form-column1">
+                    <div className="form-field">
+                      <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
+                      <input type="text" id="lacagNo" name="lacagNo" defaultValue={realEstate.lacagNo} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="ee">ee:</label>
+                      <input type="text" id="ee" name="ee" defaultValue={realEstate.ee} />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="ee">Taariikh:</label>
+                      <input type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
+                    </div>
+                  </div>
+                  <div className="form-footer">
+                    <div className="footer-item">
+                      <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+                      <h5>Agaasimaha Waaxda Dhulka</h5>
+                      <input type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={realEstate.Agaasimaha} />
+                    </div>
+                    <div className="footer-item">
+                      <h4>CABDULLAAHI CALI WATIIN</h4>
+                      <h5>Duqa Magaalada</h5>
+                      <input type="text" id="Duqa" name="Duqa" defaultValue={realEstate.Duqa} />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            )
+          )}
+
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'raw',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Button variant="contained" startIcon={<GetAppIcon />} style={{ backgroundColor: 'blue' }}>
+              file
+            </Button>
+            <Button
+              variant="inherit"
+              sx={{
+                color: 'magenta'
+              }}
+              onClick={() => {
+                setShouldPrint(true);
+              }}
+              startIcon={<PrintIcon />}
+              className="print-button"
+            >
+              Print Form
+            </Button>
           </div>
-          <div className="form-field">
-            <label htmlFor="landSize">LandSize:</label>
-            <span>{realEstate.landInSquareMetres}</span>
-          </div>
-          <div className="form-field">
-            <label htmlFor="landSize">Date of issue:</label>
-            <span> {new Date(realEstate.date).toLocaleDateString('en-GB')}</span>
-          </div>
-        </form>
-      )}
-      <div>
-        <Button variant="contained" onClick={handleDownloadFile} startIcon={<GetAppIcon />} style={{ backgroundColor: 'blue' }}>
-          file
-        </Button>
-      </div>
-      <div className="form-actions">
-        <Button variant="contained" onClick={handlePrintForm} startIcon={<PrintIcon />} className="print-button">
-          Print Form
-        </Button>
-      </div>
-      <div className="form-footer">
+          {/* <div className="form-footer">
         <p>Posted By: PeterSon</p>
-      </div>
+      </div> */}
 
-      {realEstate?.postedBy?.userName && (
-        <div className="form-footer">
-          <p>Posted By: {realEstate.postedBy.userName}</p>
+          {realEstate?.postedBy?.userName && (
+            <div className="form-footer">
+              <p>Posted By: {realEstate.postedBy.userName}</p>
+            </div>
+          )}
+          {realEstate?.fileAttachment && (
+            <div className="form-actions">
+              <button className="download-button" onClick={handleDownloadFile}>
+                {realEstate.fileAttachment.name}
+              </button>
+              <button className="print-button" onClick={handlePrintForm}>
+                Print Form
+              </button>
+            </div>
+          )}
+
+          <PrintData data={realEstate} shouldPrint={shouldPrint} setShouldPrint={setShouldPrint} />
         </div>
-      )}
-      {realEstate?.fileAttachment && (
-        <div className="form-actions">
-          <button className="download-button" onClick={handleDownloadFile}>
-            {realEstate.fileAttachment.name}
-          </button>
-          <button className="print-button" onClick={handlePrintForm}>
-            Print Form
-          </button>
-        </div>
-        
-      )}
-      </Paper>
-    </div>
+      </MainCard>
+    </>
   );
 };
 
