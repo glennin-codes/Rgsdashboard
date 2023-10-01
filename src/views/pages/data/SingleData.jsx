@@ -93,7 +93,7 @@ export const RealEstateForm = () => {
                     </div>
                     <div className="form-field">
                       <label htmlFor="Sanadka">Sanadka:</label>
-                      <input  disabled   type="text" id="Sanadka" name="Sanadka" defaultValue={realEstate.Sanadka} />
+                      <input  disabled  type="text" id="Sanadka" name="Sanadka" defaultValue={realEstate.Taariikh.split('/')[2]} />
                     </div>
                   </div>
                   <div className="form-title">
@@ -101,7 +101,7 @@ export const RealEstateForm = () => {
                   </div>
                   <div className="form-field">
                     <label htmlFor="mudMar">Mud. / M ar.</label>
-                    <input  disabled   type="text" id="mudMar" name="mudMar" defaultValue={realEstate.mudMar} />
+                    <input  disabled  type="text" id="mudMar" name="mudMar" defaultValue={realEstate.mudMar} />
                   </div>
                   <div className="form-title">
                     <h5>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h5>
