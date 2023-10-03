@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PropTypes from 'prop-types';
-import { Snackbar } from '@mui/material';
+import { CircularProgress, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 export default function UserDeleteModal({ open, onClose, onDelete, snackbarOpen, handleSnackbarClose, snackbarMessage }) {
   return (
