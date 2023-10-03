@@ -45,7 +45,7 @@ export default function UserDeleteModal({ open, onClose, onDelete, snackbarOpen,
               
             }}
             variant="outlined"
-            disable={loading}
+            disabled={loading}
             sx={{
               border: '1px solid magenta',
               borderRadius: '10px',

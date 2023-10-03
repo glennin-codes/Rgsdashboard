@@ -134,10 +134,38 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
           </Container>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+              variant="outlined"
+           onClick={handleClose} 
+           color="primary"
+           sx={{
+            borderRadius: '10px',
+            marginRight: '10px',
+            '&:hover': {
+              backgroundColor: 'purple',
+              color: 'white',
+              transform: 'scale(1.1)' // Scale the button on hover
+            }
+          }}
+           >
             Cancel
           </Button>
-          <Button onClick={handleUpdate} color="primary" disabled={loading}>
+          <Button
+           onClick={handleUpdate} 
+          color="primary" 
+         variant="outlined"
+         disabled={loading}
+         sx={{
+           border: '1px solid purple',
+           borderRadius: '10px',
+           transition: 'transform 0.2s', // Add transition for smooth scaling
+           '&:hover': {
+             backgroundColor: 'magenta',
+             color: 'white',
+             transform: 'scale(1.1)' // Scale the button on hover
+           }
+         }}
+         >
             {loading ? <CircularProgress size={24} color="inherit" /> : ' Update'}
           </Button>
         </DialogActions>

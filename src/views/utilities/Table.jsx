@@ -7,6 +7,7 @@ import UserDeleteModal from 'ui-component/Modal/DeleteModal';
 import { setRefreshUpdate } from 'Redux/RefreshSlice';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 
 const columns = ['Name', 'Location', 'Role', 'Phone', 'Email', 'Actions'];
 
@@ -52,7 +53,7 @@ const ResponsiveTable = ({ data }) => {
   };
 
   const handleDeleteUser = async() => {
-    console.log('User deleted');
+    
     setLoading(true);
     const token = getDataFromLocalStorage('token');
 
@@ -66,7 +67,7 @@ const ResponsiveTable = ({ data }) => {
         setLoading(false);
         handleSnackbarOpen('Success: Deleted  successfully');
        dispatch(setRefreshUpdate());
-       handleCloseDeleteModal()
+       handleCloseDeleteModal();
 
       }
     } catch (err) {
