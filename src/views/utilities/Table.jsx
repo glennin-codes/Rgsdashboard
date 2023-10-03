@@ -3,6 +3,10 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, IconB
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateUserModal from 'ui-component/Modal/update';
+import UserDeleteModal from 'ui-component/Modal/DeleteModal';
+import { setRefreshUpdate } from 'Redux/RefreshSlice';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const columns = ['Name', 'Location', 'Role', 'Phone', 'Email', 'Actions'];
 
@@ -11,15 +15,76 @@ const ResponsiveTable = ({ data }) => {
   const [page, setPage] = useState(0);
   const [displayedData, setDisplayedData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const[id,setId]=useState('')
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     phone: "",
     email: "",
     password:"",
+    id:""
   });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const dispatch=useDispatch();
+  const handleSnackbarOpen = (message) => {
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
+ 
+ 
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleOpenDeleteModal = (_id) => {
+    setIsDeleteModalOpen(true);
+    setId(_id)
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    
+  };
+
+  const handleDeleteUser = async() => {
+    console.log('User deleted');
+    setLoading(true);
+    const token = getDataFromLocalStorage('token');
+
+    try {
+      const response = await axios.delete(`https://plum-inquisitive-bream.cyclic.cloud/api/employees/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (response.status === 200) {
+        setLoading(false);
+        handleSnackbarOpen('Success: Deleted  successfully');
+       dispatch(setRefreshUpdate());
+       handleCloseDeleteModal()
+
+      }
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+      if (err?.response?.status === 401) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 403) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 404) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 500) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else {
+        handleSnackbarOpen('Error: Network problem, check your connections and try again');
+      }
+    }
+  };
   useEffect(() => {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
@@ -37,6 +102,7 @@ const handleData=(datas)=>{
   phone: datas?.phone,
   email:datas?.email,
   password: datas?.password,
+  id:datas?._id
 })
     setIsModalOpen(true);
 
@@ -86,7 +152,12 @@ const handleData=(datas)=>{
                   >
                     <EditIcon  />
                   </IconButton>
-                  <IconButton color="error">
+                  <IconButton 
+                  color="error"
+                  onClick={()=>{
+                    handleOpenDeleteModal(row._id)
+                  }}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -111,8 +182,16 @@ const handleData=(datas)=>{
       open={isModalOpen}
       handleClose={handleCloseModal}
       formData={formData}
-      setFormData
+      setFormData={setFormData}
     />
+      <UserDeleteModal
+        open={isDeleteModalOpen}
+        onClose={handleCloseDeleteModal}
+        onDelete={handleDeleteUser}
+        snackbarOpen={snackbarOpen}
+        handleSnackbarClose={handleSnackbarClose}
+        snackbarMessage={snackbarMessage}
+      />
     </>
     
   );

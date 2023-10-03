@@ -3,7 +3,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import customizationReducer from 'store/customizationReducer';
 import roleSlice from './RoleSlyce';
-import dateRangeReducer from "./dateRangeSlice"
+import dateRangeReducer from "./dateRangeSlice";
+import refreshReducer from './RefreshSlice';
 const authStore = configureStore({
   reducer: {
 
@@ -11,6 +12,7 @@ const authStore = configureStore({
     auth: authReducer,
     role:roleSlice,
     dateRange: dateRangeReducer,
+    refresh:refreshReducer,
 
   },
 });

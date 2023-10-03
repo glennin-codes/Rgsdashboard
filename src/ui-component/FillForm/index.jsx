@@ -8,11 +8,6 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getEmptyFields } from 'utils/getEmptyFields';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// import 'dayjs/locale/en-gb';
-// import CustomDatePicker from 'ui-component/calenderPiker/customPicker';
 
 export default function LandOwnershipForm() {
   const [values, setValues] = useState({
@@ -196,9 +191,9 @@ export default function LandOwnershipForm() {
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (e) {
+      } catch (err) {
         setLoading(false);
-        console.log(e);
+        console.log(err);
         if (err?.response?.status === 401) {
           handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
         } else if (err?.response?.status === 403) {
