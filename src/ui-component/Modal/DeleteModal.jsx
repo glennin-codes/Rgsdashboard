@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import PropTypes from 'prop-types';
 import { CircularProgress, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-export default function UserDeleteModal({ open, onClose, onDelete, snackbarOpen, handleSnackbarClose, snackbarMessage }) {
+export default function UserDeleteModal({ open, onClose, onDelete, snackbarOpen, handleSnackbarClose, snackbarMessage ,loading}) {
   return (
     <>
       <Dialog
@@ -85,5 +85,6 @@ UserDeleteModal.propTypes = {
   onDelete:PropTypes.func,
   snackbarOpen:PropTypes.bool,
   handleSnackbarClose:PropTypes.func,
-  snackbarMessage:PropTypes.string
+  snackbarMessage:PropTypes.string,
+  loading:PropTypes.bool
 };

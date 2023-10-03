@@ -191,6 +191,7 @@ const handleData=(datas)=>{
         snackbarOpen={snackbarOpen}
         handleSnackbarClose={handleSnackbarClose}
         snackbarMessage={snackbarMessage}
+        loading={loading}
       />
     </>
     
