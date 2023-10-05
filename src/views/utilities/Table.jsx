@@ -12,10 +12,11 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PendingIcon from '@mui/icons-material/HourglassEmpty';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-
+import './Table.css'
 const columns = ['Name', 'Location', 'Role', 'Phone', 'Email','status','Actions'];
 
 const ResponsiveTable = ({ data }) => {
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const [displayedData, setDisplayedData] = useState([]);
@@ -45,8 +46,8 @@ const ResponsiveTable = ({ data }) => {
    const getStatusIcon = (accountExpiration) => {
     if (!accountExpiration) {
       return <CheckCircleOutlineIcon style={{ color: 'green' }} />;
-    } else if (new Date(accountExpiration) > currentDate) {
-      return <PendingIcon style={{ color: 'orange' }} />;
+      } else if (new Date(accountExpiration) > currentDate) {
+      return <PendingIcon className="spin" />;
     } else {
       return <ErrorOutlineIcon style={{ color: 'red' }} />;
     }
