@@ -110,7 +110,7 @@ const ResponsiveTable = ({ data }) => {
 
     try {
       const response = await axios.post(`https://plum-inquisitive-bream.cyclic.cloud/api/user/renewal`, {
-        id:id
+        id
       },{
         headers: {
           Authorization: `Bearer ${token}`
