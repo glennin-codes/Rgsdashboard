@@ -210,7 +210,7 @@ const handleData=(datas)=>{
                   >
                     <EditIcon  />
                   </IconButton>
-                 
+                  {row.accountExpiration && new Date(row.accountExpiration) < currentDate && (
                     <IconButton
                       color="secondary"
                       disabled={renewalLoading}
@@ -222,13 +222,15 @@ const handleData=(datas)=>{
                     >
                       <RefreshIcon  />
                     </IconButton>
-                
+                    )}
+                   
                   <IconButton 
                   color="error"
                   onClick={()=>{
                     handleOpenDeleteModal(row._id)
                   }}
                   >
+
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>

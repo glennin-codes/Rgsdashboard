@@ -87,6 +87,9 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
       } else if (err?.response?.status === 404) {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      
+      } else if (err?.response?.status === 409) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
       } else if (err?.response?.status === 500) {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
       } else {
@@ -102,10 +105,10 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
         <DialogContent>
           <Container>
             <TextField fullWidth label="Name" name="name" value={formData.name} onChange={handleInputChange} margin="normal" />
-            <TextField fullWidth label="Location" name="location" value={formData.location} onChange={handleInputChange} margin="normal" />
+        
             <FormControl
               margin="normal"
-              required
+             
               sx={{
                 width: '100%'
               }}
