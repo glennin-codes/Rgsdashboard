@@ -8,8 +8,12 @@ import { setRefreshUpdate } from 'Redux/RefreshSlice';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PendingIcon from '@mui/icons-material/HourglassEmpty';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-const columns = ['Name', 'Location', 'Role', 'Phone', 'Email', 'Actions'];
+const columns = ['Name', 'Location', 'Role', 'Phone', 'Email','status','Actions'];
 
 const ResponsiveTable = ({ data }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -36,11 +40,23 @@ const ResponsiveTable = ({ data }) => {
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
+  const currentDate = new Date(); 
 
+   const getStatusIcon = (accountExpiration) => {
+    if (!accountExpiration) {
+      return <CheckCircleOutlineIcon style={{ color: 'green' }} />;
+    } else if (new Date(accountExpiration) > currentDate) {
+      return <PendingIcon style={{ color: 'orange' }} />;
+    } else {
+      return <ErrorOutlineIcon style={{ color: 'red' }} />;
+    }
+  };
+  
  
  
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [renewalLoading, setRenewalLoading] = useState(false);
 
   const handleOpenDeleteModal = (_id) => {
     setIsDeleteModalOpen(true);
@@ -78,6 +94,45 @@ const ResponsiveTable = ({ data }) => {
       } else if (err?.response?.status === 403) {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
       } else if (err?.response?.status === 404) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 500) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else {
+        handleSnackbarOpen('Error: Network problem, check your connections and try again');
+      }
+    }
+  };
+
+  const handleRenewUser = async(id) => {
+    
+    setRenewalLoading(true);
+    const token = getDataFromLocalStorage('token');
+
+    try {
+      const response = await axios.post(`https://plum-inquisitive-bream.cyclic.cloud/api/user/renewal`, {
+        id:id
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (response.status === 200) {
+        setRenewalLoading(false);
+        handleSnackbarOpen('Success:  User renewed successfully');
+       dispatch(setRefreshUpdate());
+       handleCloseDeleteModal();
+
+      }
+    } catch (err) {
+      setRenewalLoading(false);
+      console.log(err);
+      if (err?.response?.status === 401) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 403) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 404) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 400) {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
       } else if (err?.response?.status === 500) {
         handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
@@ -138,6 +193,7 @@ const handleData=(datas)=>{
                 <TableCell>{row.role}</TableCell>
                 <TableCell>{row.phone}</TableCell>
                 <TableCell>{row.email}</TableCell>
+                <TableCell>{getStatusIcon(row.accountExpiration)}</TableCell>
                 <TableCell
                 sx={{
                   display: 'flex',
@@ -153,6 +209,19 @@ const handleData=(datas)=>{
                   >
                     <EditIcon  />
                   </IconButton>
+                 
+                    <IconButton
+                      color="secondary"
+                      disabled={renewalLoading}
+                      size="small"
+                      onClick={() => {
+                        handleRenewUser(row._id)
+                       
+                      }}
+                    >
+                      <RefreshIcon  />
+                    </IconButton>
+                
                   <IconButton 
                   color="error"
                   onClick={()=>{
