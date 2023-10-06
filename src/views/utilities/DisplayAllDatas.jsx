@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   Table,
   TableBody,
@@ -33,9 +33,10 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 const DisplayAll = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
-  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
   const [value, setValue] = useState('');
+  const [locationQuery, setLocationQuery] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const searchByDate = useSelector((state) => state.dateRange.dateSearch);
@@ -46,13 +47,17 @@ const DisplayAll = () => {
   const [loading, setLoading] = useState('');
   const navigate = useNavigate();
 
- const token = getDataFromLocalStorage('token');
-  const requestOptions = {
-    method: 'GET', 
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  }
+  const token = getDataFromLocalStorage('token');
+
+  // Wrap the initialization of requestOptions in useMemo
+  const requestOptions = useMemo(() => {
+    return {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+  }, [token]);
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
@@ -62,11 +67,10 @@ const DisplayAll = () => {
       console.log('start', startDateString);
       console.log('end', endDateString);
       const response = await fetch(
-        `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}`,
-     requestOptions
+        `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
+        requestOptions
       );
       if (response.status === 401) {
-      
         setError('Unauthorized: You are not authorized to access this resource.');
       } else if (response.status === 403) {
         setError('Forbidden: You do not have permission to access this resource.');
@@ -75,11 +79,12 @@ const DisplayAll = () => {
         const result = await response.json();
         setLoading(false);
         console.log(result);
-        setData(result);
-        console.log(result.length);
-        setTotalPages(Math.ceil(result.length / limit));
+        setData(result.items);
+        setTotalItems(result.totalItems);
+        if (page === Math.ceil(totalItems / limit) && data.length === limit) {
+          setLimit(limit * 2);
+        }
       } else {
-     
         console.error('Error:', response.status);
         setError('Something went wrong? we are working around to bring everything to its place');
       }
@@ -87,11 +92,10 @@ const DisplayAll = () => {
       setLoading(false);
       console.error('Error fetching data:', error);
       setError('Something went wrong! Check your connection and try again.');
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
-    
-  }, [page, limit, value, startDate, endDate]);
+  }, [page, limit, value, startDate, endDate, locationQuery, requestOptions, data.length, totalItems]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -99,12 +103,8 @@ const DisplayAll = () => {
   console.log(endDate);
 
   const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
+    if (newPage >= 1 && newPage <= Math.ceil(totalItems / limit)) {
       setPage(newPage);
-    }
-    // Increase the limit when reaching the end of the page
-    if (newPage === totalPages && data.length === limit) {
-      setLimit(limit * 2);
     }
   };
 
@@ -115,20 +115,20 @@ const DisplayAll = () => {
   const handleView = (id) => {
     navigate(`/datas/all/single/${id}`);
   };
- 
+
   // Function to handle printing
   const HandlePrint = async (id) => {
     setIsLoading(true); // Set loading state
 
     try {
       // Fetch the data for the selected dataset using the ID
-      const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, requestOptions);  
+      const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, requestOptions);
       if (response.status === 401) {
         setError('Unauthorized: You are not authorized to access this resource.');
       } else if (response.status === 403) {
         setError('Forbidden: You do not have permission to access this resource.');
-      } else if (response.status === 500){
-         setError('Something went wrong? we are working around to bring everything to its place')
+      } else if (response.status === 500) {
+        setError('Something went wrong? we are working around to bring everything to its place');
       } else if (response.ok) {
         const result = await response.json();
         const data = result.data;
@@ -148,31 +148,28 @@ const DisplayAll = () => {
 
   return (
     <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
-      
-      <Grid container spacing={5} >
-  {/* On extra-small screens (xs), display components in a column */}
-  <Grid item xs={12} >
-    <SearchSection value={value} setValue={setValue} fetchData={fetchData} />
-  </Grid>
-  {searchByDate && (
-    <Grid item xs={12} >
-      <DateRangePicker
-        fetchData={fetchData}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-      />
-      
-    <CountryDropdown />
+      <Grid container spacing={5}>
+        {/* On extra-small screens (xs), display components in a column */}
+        <Grid item xs={12}>
+          <SearchSection value={value} setValue={setValue} fetchData={fetchData} />
+        </Grid>
+        {searchByDate && (
+          <Grid item xs={12}>
+            <DateRangePicker
+              fetchData={fetchData}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />
 
-    </Grid>
-  )}
- 
-</Grid>
+            <CountryDropdown locationQuery={locationQuery} setLocationQuery={setLocationQuery} />
+          </Grid>
+        )}
+      </Grid>
 
       <div>
-      {error && <Alert severity="error">{error}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
         {loading ? (
           <SimpleBackdrop open={loading} />
         ) : data.length > 0 ? (
@@ -245,21 +242,24 @@ const DisplayAll = () => {
             Rows per page:
           </Typography>
           <Select value={limit} onChange={handleLimitChange}>
-            {[5, 10, 20].map((pageSize) => (
+            {[10, 15, 20].map((pageSize) => (
               <MenuItem key={pageSize} value={pageSize}>
                 {pageSize} rows per page
               </MenuItem>
             ))}
           </Select>
-          <IconButton onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-            <KeyboardArrowLeft />
-          </IconButton>
-          <Typography variant="body2" color="textSecondary">
-            Page {page} of {totalPages}
-          </Typography>
-          <IconButton onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
-            <KeyboardArrowRight />
-          </IconButton>
+
+          <Box display="flex" justifyContent="flex-end" alignItems="center" mt={2}>
+            <IconButton onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+              <KeyboardArrowLeft />
+            </IconButton>
+            <Typography variant="body2" color="textSecondary">
+              Page {page} of {Math.ceil(totalItems / limit)}
+            </Typography>
+            <IconButton onClick={() => handlePageChange(page + 1)} disabled={page === Math.ceil(totalItems / limit)}>
+              <KeyboardArrowRight />
+            </IconButton>
+          </Box>
         </Box>
       </div>
       {printableData && <PrintData shouldPrint={shouldPrint} data={printableData} setShouldPrint={setShouldPrint} />}
