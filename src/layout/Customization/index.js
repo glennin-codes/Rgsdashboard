@@ -3,19 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import {
-  Drawer,
-  Fab,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  Radio,
-  RadioGroup,
-  Slider,
-  Tooltip,
-  Typography
-} from '@mui/material';
+import { Drawer, Fab, FormControl, FormControlLabel, Grid, IconButton, Radio, RadioGroup, Tooltip } from '@mui/material';
 import { IconSettings } from '@tabler/icons';
 
 // third-party
@@ -24,13 +12,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { SET_BORDER_RADIUS, SET_FONT_FAMILY } from 'store/actions';
+import { SET_FONT_FAMILY } from 'store/actions';
 import { gridSpacing } from 'store/constant';
-
-// concat 'px'
-function valueText(value) {
-  return `${value}px`;
-}
 
 // ==============================|| LIVE CUSTOMIZATION ||============================== //
 
@@ -44,16 +27,6 @@ const Customization = () => {
   const handleToggle = () => {
     setOpen(!open);
   };
-
-  // state - border radius
-  const [borderRadius, setBorderRadius] = useState(customization.borderRadius);
-  const handleBorderRadius = (event, newValue) => {
-    setBorderRadius(newValue);
-  };
-
-  useEffect(() => {
-    dispatch({ type: SET_BORDER_RADIUS, borderRadius });
-  }, [dispatch, borderRadius]);
 
   let initialFont;
   switch (customization.fontFamily) {
@@ -171,8 +144,8 @@ const Customization = () => {
                 </FormControl>
               </SubCard>
             </Grid>
-            <Grid item xs={12}>
-              {/* border radius */}
+            {/* <Grid item xs={12}>
+            
               <SubCard title="Border Radius">
                 <Grid item xs={12} container spacing={2} alignItems="center" sx={{ mt: 2.5 }}>
                   <Grid item>
@@ -207,7 +180,7 @@ const Customization = () => {
                   </Grid>
                 </Grid>
               </SubCard>
-            </Grid>
+            </Grid> */}
           </Grid>
         </PerfectScrollbar>
       </Drawer>

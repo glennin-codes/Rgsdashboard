@@ -19,7 +19,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
+// import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import SearchSection from 'layout/MainLayout/Header/SearchSection';
 import { DateRangePicker } from 'ui-component/calenderPiker';
 import { useSelector } from 'react-redux';
@@ -81,9 +81,9 @@ const DisplayAll = () => {
         console.log(result);
         setData(result.items);
         setTotalItems(result.totalItems);
-        if (page === Math.ceil(totalItems / limit) && data.length === limit) {
-          setLimit(limit * 2);
-        }
+        // if (page === Math.ceil(totalItems / limit) && data.length === limit) {
+        //   setLimit(limit * 2);
+        // }
       } else {
         console.error('Error:', response.status);
         setError('Something went wrong? we are working around to bring everything to its place');
@@ -94,8 +94,9 @@ const DisplayAll = () => {
       setError('Something went wrong! Check your connection and try again.');
     } finally {
       setLoading(false);
-    }
-  }, [page, limit, value, startDate, endDate, locationQuery, requestOptions, data.length, totalItems]);
+    } 
+    // data.length, totalItems
+  }, [page, limit, value, startDate, endDate, locationQuery, requestOptions ]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -146,8 +147,8 @@ const DisplayAll = () => {
     }
   };
 
-  return (
-    <MainCard title="display all datas" secondary={<SecondaryAction link="https://glenayienda.tech" />}>
+ return (       // secondary={<SecondaryAction link="https://glenayienda.tech" />}
+    <MainCard title="display all datas" >
       <Grid container spacing={5}>
         {/* On extra-small screens (xs), display components in a column */}
         <Grid item xs={12}>

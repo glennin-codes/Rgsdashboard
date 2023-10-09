@@ -66,8 +66,7 @@ export const RealEstateForm = () => {
                   }}
                 >
                   <div className="title-el">
-                    <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-                    <h4>DOWLADA HOOSE EE DEGMADA &quot;location&quot;</h4>
+                    <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2><h4>DOWLADA HOOSE EE DEGMADA {realEstate.location || 'Location'}</h4>
                     <h3>WAAXDA DHULKA</h3>
                   </div>
                   <div className="form-column1">

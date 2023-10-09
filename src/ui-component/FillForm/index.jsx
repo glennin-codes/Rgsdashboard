@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './LandOwnership.css'; // Import your external CSS for styling
 import axios from 'axios';
 import { decodeToken } from 'utils/decodeToken';
@@ -10,6 +10,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { getEmptyFields } from 'utils/getEmptyFields';
 
 export default function LandOwnershipForm() {
+  const [tokenData, setTokenData] = useState(null);
+
   const [values, setValues] = useState({
     No: '',
     BollectarioNo: '',
@@ -84,6 +86,14 @@ export default function LandOwnershipForm() {
   const AgaasimahaRef = useRef(null);
   const DuqaRef = useRef(null);
 
+  useEffect(() => {
+    const token = getDataFromLocalStorage('token');
+    if (token) {
+      const decodedTokenData = decodeToken(token);
+      setTokenData(decodedTokenData);
+    }
+  }, []);
+  
   const handleInputKeyDown = (e, fieldName, nextInputName, nextInputRef) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -107,21 +117,6 @@ export default function LandOwnershipForm() {
     }
   };
 
-  // // Use useEffect to handle enabling/disabling input fields
-  // useEffect(() => {
-  //   // Iterate through input field names and disable if the previous field is not filled
-  //   const fieldNames = Object.keys(values);
-  //   for (let i = 1; i < fieldNames.length; i++) {
-  //     const currentFieldName = fieldNames[i];
-  //     const previousFieldName = fieldNames[i - 1];
-  //     if (values[previousFieldName].trim() === '') {
-  //       setInputEnabled((prevInputEnabled) => ({
-  //         ...prevInputEnabled,
-  //         [currentFieldName]: false
-  //       }));
-  //     }
-  //   }
-  // }, [values]);
   const handleSnackbarOpen = (message) => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
@@ -143,19 +138,20 @@ export default function LandOwnershipForm() {
     const emptyFields = getEmptyFields(values);
     if (emptyFields.length === 0) {
       const token = getDataFromLocalStorage('token');
-
-      if (token) {
-        const { name, id } = decodeToken(token);
-
-        setValues({
-          ...values,
-          name,
-          id,
-          Sanadka: values.Taariikh.split('/')[2]
-        });
-      }
-
       try {
+        
+    const { name, id, location } = tokenData;
+          setValues({
+            ...values,
+            name,
+            id,
+            location,
+            Sanadka: values.Taariikh.split('/')[2]
+          });
+          console.log('values inside if statement block', values);
+       
+
+     
         const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -218,7 +214,7 @@ export default function LandOwnershipForm() {
       <div className="form-container">
         <div className="title-el">
           <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-          <h4>DOWLADA HOOSE EE DEGMADA &quot;location&quot;</h4>
+          <h4>DOWLADA HOOSE EE DEGMADA {tokenData?.location}</h4>
           <h3>WAAXDA DHULKA</h3>
         </div>
         <div className="form-column1">
