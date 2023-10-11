@@ -64,8 +64,9 @@ const DisplayAll = () => {
       console.log({ start: startDate, end: endDate });
       const startDateString = startDate ? startDate.toISOString() : '';
       const endDateString = endDate ? endDate.toISOString() : '';
-      console.log('start', startDateString);
-      console.log('end', endDateString);
+    
+      console.log('end', locationQuery);
+
       const response = await fetch(
         `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
         requestOptions
@@ -101,7 +102,7 @@ const DisplayAll = () => {
     fetchData();
   }, [fetchData]);
 
-  console.log(endDate);
+ 
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= Math.ceil(totalItems / limit)) {

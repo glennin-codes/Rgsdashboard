@@ -12,7 +12,7 @@ const DisplayAll = Loadable(lazy(() => import('views/utilities/DisplayAllDatas')
 const SingleForm = Loadable(lazy(() => import('views/pages/data/SingleData')));
 const Employees = Loadable(lazy(() => import('views/utilities/Employees')));
 const PayrollStats= Loadable(lazy(() => import('views/utilities/payrolStats')));
-
+const Profile=Loadable(lazy(()=>import ('views/pages/Profile')));
 const CreateEmployee = Loadable(lazy(() => import('views/utilities/CreateEmployee')));
 const CreateAdmin = Loadable(lazy(() => import('views/utilities/CreateAdmin')));
 
@@ -80,6 +80,11 @@ const MainRoutes = {
         {
           path: 'createEmployee',
           element: <CreateEmployee />
+        }
+        ,
+        {
+          path: 'profile',
+          element: <Profile/>
         }
       ]
     },
