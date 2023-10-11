@@ -33,7 +33,7 @@ const ProfilePage = () => {
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
-  const handleFetchUser = useCallback( async (id) => {
+  const handleFetchUser = useCallback(async (id) => {
     setLoading(true);
     const token = getDataFromLocalStorage('token');
 
@@ -45,9 +45,7 @@ const ProfilePage = () => {
       });
       if (response.status === 200) {
         setLoading(false);
-        //     handleSnackbarOpen('Success: Deleted  successfully');
-        //    dispatch(setRefreshUpdate());
-
+       
         const { person } = response.data;
         console.log(person);
         setValues({
@@ -75,12 +73,12 @@ const ProfilePage = () => {
         handleSnackbarOpen('Error: Network problem, check your connections and try again');
       }
     }
-  },[]);
+  }, []);
   const handleUpdate = async (id) => {
-    console.log("clicked")
+    console.log('clicked');
     setIsLoading(true);
     const token = getDataFromLocalStorage('token');
-
+    console.log('values after handle update is called', values);
     try {
       const response = await axios.patch(`https://plum-inquisitive-bream.cyclic.cloud/api/user/profile/${id}`, values, {
         headers: {
@@ -115,42 +113,38 @@ const ProfilePage = () => {
     if (token) {
       const decodedTokenData = decodeToken(token);
       handleFetchUser(decodedTokenData.id);
-      console.log(decodedTokenData);
     }
-  }, [
-    refreshUpdateId,
-      handleFetchUser 
-  ]);
+  }, [refreshUpdateId, handleFetchUser]);
   return (
     <>
-    {loading ? (
-          <SimpleBackdrop open={loading} />
-        ) :(
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8
-        }}
-      >
-        <Container maxWidth="lg">
-          <Stack spacing={3}>
-            <div>
-              <Typography variant="h4">Account</Typography>
-            </div>
-            <div>
-              <Grid container spacing={3}>
-                <Grid xs={12} md={6} lg={4}>
-                  <AccountProfile values={values} setValues={setValues} />
+      {loading ? (
+        <SimpleBackdrop open={loading} />
+      ) : (
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            py: 8
+          }}
+        >
+          <Container maxWidth="lg">
+            <Stack spacing={3}>
+              <div>
+                <Typography variant="h4">Account</Typography>
+              </div>
+              <div>
+                <Grid container spacing={3}>
+                  <Grid xs={12} md={6} lg={4}>
+                    <AccountProfile values={values} setValues={setValues} />
+                  </Grid>
+                  <Grid xs={12} md={6} lg={8}>
+                    <AccountProfileDetails values={values} setValues={setValues} handleUpdate={handleUpdate} isLoading={isLoading} />
+                  </Grid>
                 </Grid>
-                <Grid xs={12} md={6} lg={8}>
-                  <AccountProfileDetails values={values} setValues={setValues} handleUpdate={handleUpdate} isLoading={isLoading} />
-                </Grid>
-              </Grid>
-            </div>
-          </Stack>
-        </Container>
-      </Box>
+              </div>
+            </Stack>
+          </Container>
+        </Box>
       )}
       <Snackbar
         open={snackbarOpen}
@@ -167,7 +161,6 @@ const ProfilePage = () => {
           {snackbarMessage}
         </MuiAlert>
       </Snackbar>
-        
     </>
   );
 };

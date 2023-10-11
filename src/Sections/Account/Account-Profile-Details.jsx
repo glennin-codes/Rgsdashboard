@@ -19,23 +19,22 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate}) => {
   
 
-  const handleChange = useCallback(
-    (event) => {
-      setValues((prevState) => ({
-        ...prevState,
-        [event.target.name]: event.target.value
-      }));
-    },
-    []
-  );
+  const handleChange =  (event) => {
+      setValues({ ...values, [event.target.name]: event.target.value });
+    };
+ 
+  
+console.log('values before handle update is called ',values)
+const handleSubmit = useCallback(
+  async (event) => {
+    event.preventDefault();
+    
+    // Use the current state (values) directly here
+    await handleUpdate(values.id);
+  },
+  [values, handleUpdate]
+);
 
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-      handleUpdate(values.id)
-    },
-    []
-  );
 
   return (
     <form
