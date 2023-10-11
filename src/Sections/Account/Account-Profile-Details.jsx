@@ -9,27 +9,12 @@ import {
   Divider,
   TextField,
   Unstable_Grid2 as Grid,
-  Typography
+  Typography,
+  CircularProgress
 } from '@mui/material';
+import AnimateButton from 'ui-component/extended/AnimateButton';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  },
-  {
-    value: 'los-angeles',
-    label: 'Los Angeles'
-  }
-];
+
 
 export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate}) => {
   
@@ -77,8 +62,9 @@ export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate})
                   fullWidth
                   helperText="Please specify the first name"
                   label="First name"
-                  name="firstName"
+                  name="name"
                   onChange={handleChange}
+                  type='text'
                   required
                   value={values.name}
                 />
@@ -93,6 +79,7 @@ export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate})
                   label="Email Address"
                   name="email"
                   onChange={handleChange}
+                  type='email'
                   required
                   value={values.email}
                 />
@@ -118,6 +105,7 @@ export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate})
                   fullWidth
                   label="Location"
                   name="location"
+                  type='text'
                   onChange={handleChange}
                   required
                   value={values.location}
@@ -170,13 +158,13 @@ export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate})
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button 
-          variant="contained"
-          type='submit'
-          
-          >
-            {isLoading? 'Updating ...':'Save details'}
-          </Button>
+        <AnimateButton>
+                <Button disabled={isLoading} size="large" type="submit" fullWidth variant="contained" color="secondary">
+                {isLoading?(<CircularProgress size={24} sx={{
+                  color:'green'
+                }} />):'Save Details'}  
+                </Button>
+              </AnimateButton>
         </CardActions>
       </Card>
     </form>

@@ -77,6 +77,7 @@ const ProfilePage = () => {
     }
   },[]);
   const handleUpdate = async (id) => {
+    console.log("clicked")
     setIsLoading(true);
     const token = getDataFromLocalStorage('token');
 
@@ -143,7 +144,7 @@ const ProfilePage = () => {
                   <AccountProfile values={values} setValues={setValues} />
                 </Grid>
                 <Grid xs={12} md={6} lg={8}>
-                  <AccountProfileDetails values={values} setValues={setValues} handleUpdate={handleUpdate} loading={isLoading} />
+                  <AccountProfileDetails values={values} setValues={setValues} handleUpdate={handleUpdate} isLoading={isLoading} />
                 </Grid>
               </Grid>
             </div>

@@ -10,14 +10,7 @@ import {
   } from '@mui/material';
   import User1 from 'assets/images/users/user-round.svg';
 
-  const user = {
-    avatar: User1,
-    city: 'Los Angeles',
-    country: 'USA',
-    jobTitle: 'Senior Developer',
-    name: 'Anika Visser',
-    timezone: 'GTM-7'
-  };
+ 
 
   export const AccountProfile = ({values}) => (
     <Card>
@@ -30,7 +23,7 @@ import {
           }}
         >
           <Avatar
-            src={user.avatar}
+            src={values.photo || User1}
             sx={{
               height: 80,
               mb: 2,
