@@ -60,7 +60,7 @@ const handleSubmit = useCallback(
                 <TextField
                   fullWidth
                   helperText="Please specify the first name"
-                  label="First name"
+                  label="Name"
                   name="name"
                   onChange={handleChange}
                   type='text'
@@ -134,6 +134,7 @@ const handleSubmit = useCallback(
                   label="Confirm Password"
                   name="country"
                   onChange={handleChange}
+                  type='password'
                   required
                   value={values.password}
                 />
@@ -144,6 +145,7 @@ const handleSubmit = useCallback(
               >
                 <TextField
                   fullWidth
+                  type='password'
                   label="Password"
                   name="country"
                   onChange={handleChange}
