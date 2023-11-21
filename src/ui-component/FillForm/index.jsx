@@ -10,7 +10,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { getEmptyFields } from 'utils/getEmptyFields';
 
 export default function LandOwnershipForm() {
- 
   const [values, setValues] = useState({
     No: '',
     BollectarioNo: '',
@@ -34,9 +33,9 @@ export default function LandOwnershipForm() {
     ee: '',
     Agaasimaha: '',
     Duqa: '',
-    location:'',
-    id:'',
-    name:''
+    location: '',
+    id: '',
+    name: ''
   });
   const [inputEnabled, setInputEnabled] = useState({
     No: true, // Enable the first input field initially
@@ -92,18 +91,16 @@ export default function LandOwnershipForm() {
     const token = getDataFromLocalStorage('token');
     if (token) {
       const decodedTokenData = decodeToken(token);
-    
-      
+
       setValues({
         ...values,
-        name:decodedTokenData?.name,
-        id:decodedTokenData?.id,
-        location:decodedTokenData?.location
-        
+        name: decodedTokenData?.name,
+        id: decodedTokenData?.id,
+        location: decodedTokenData?.location
       });
     }
   }, []);
-  
+
   const handleInputKeyDown = (e, fieldName, nextInputName, nextInputRef) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -115,7 +112,7 @@ export default function LandOwnershipForm() {
         const currentDate = new Date().toLocaleDateString('en-GB'); // Get the current date in dd/mm/yyyy format
         setValues({
           ...values,
-          Sanadka:currentDate.split('/')[2],
+          Sanadka: currentDate.split('/')[2],
           [nextInputName]: currentDate // Update the Taariikh field with the formatted date
         });
       }
@@ -142,8 +139,6 @@ export default function LandOwnershipForm() {
       [event.target.name]: event.target.value
     });
   };
-  console.log('values ', values
-  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -152,10 +147,8 @@ export default function LandOwnershipForm() {
     if (emptyFields.length === 0) {
       const token = getDataFromLocalStorage('token');
       try {
-        
-    
-          console.log('values ', values);
-    const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
+        console.log('values ', values);
+        const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
           headers: {
             Authorization: `Bearer ${token}`
           }
