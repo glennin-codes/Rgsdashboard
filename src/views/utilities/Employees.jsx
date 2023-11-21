@@ -1,4 +1,4 @@
-import { Drawer } from '@mui/material';
+import { Drawer, LinearProgress } from '@mui/material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -39,7 +39,7 @@ const Table = () => {
   return (
     <MainCard title="employees list ">
       <Drawer />
-      {Array.isArray(data) && data.length > 0 ? <ResponsiveTable data={data} /> : <p>Loading...</p>}
+      {Array.isArray(data) && data.length > 0 ? <ResponsiveTable data={data} /> :  <LinearProgress sx={{ width: '100%', }} />}
     </MainCard>
   );
 };

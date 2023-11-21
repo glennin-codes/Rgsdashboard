@@ -13,7 +13,8 @@ import {
   Box,
   Typography,
   Grid,
-  Alert
+  Alert,
+  LinearProgress
 } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
@@ -28,7 +29,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router';
 import { CountryDropdown } from 'ui-component/DropDownFilter';
 import PrintData from 'ui-component/PrintData';
-import SimpleBackdrop from 'views/pages/data/BackDrop';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 const DisplayAll = () => {
   const [data, setData] = useState([]);
@@ -173,7 +173,8 @@ const DisplayAll = () => {
       <div>
         {error && <Alert severity="error">{error}</Alert>}
         {loading ? (
-          <SimpleBackdrop open={loading} />
+          <LinearProgress sx={{ width: '100%', }} />
+
         ) : data.length > 0 ? (
           <TableContainer component={Paper}>
             <Table>
