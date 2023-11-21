@@ -10,8 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { getEmptyFields } from 'utils/getEmptyFields';
 
 export default function LandOwnershipForm() {
-  const [tokenData, setTokenData] = useState(null);
-
+ 
   const [values, setValues] = useState({
     No: '',
     BollectarioNo: '',
@@ -34,7 +33,10 @@ export default function LandOwnershipForm() {
     lacagNo: '',
     ee: '',
     Agaasimaha: '',
-    Duqa: ''
+    Duqa: '',
+    location:'',
+    id:'',
+    name:''
   });
   const [inputEnabled, setInputEnabled] = useState({
     No: true, // Enable the first input field initially
@@ -90,7 +92,15 @@ export default function LandOwnershipForm() {
     const token = getDataFromLocalStorage('token');
     if (token) {
       const decodedTokenData = decodeToken(token);
-      setTokenData(decodedTokenData);
+    
+      
+      setValues({
+        ...values,
+        name:decodedTokenData?.name,
+        id:decodedTokenData?.id,
+        location:decodedTokenData?.location
+        
+      });
     }
   }, []);
   
@@ -105,6 +115,7 @@ export default function LandOwnershipForm() {
         const currentDate = new Date().toLocaleDateString('en-GB'); // Get the current date in dd/mm/yyyy format
         setValues({
           ...values,
+          Sanadka:currentDate.split('/')[2],
           [nextInputName]: currentDate // Update the Taariikh field with the formatted date
         });
       }
@@ -131,6 +142,8 @@ export default function LandOwnershipForm() {
       [event.target.name]: event.target.value
     });
   };
+  console.log('values ', values
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -140,19 +153,9 @@ export default function LandOwnershipForm() {
       const token = getDataFromLocalStorage('token');
       try {
         
-    const { name, id, location } = tokenData;
-          setValues({
-            ...values,
-            name,
-            id,
-            location,
-            Sanadka: values.Taariikh.split('/')[2]
-          });
-          console.log('values inside if statement block', values);
-       
-
-     
-        const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
+    
+          console.log('values ', values);
+    const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -214,7 +217,7 @@ export default function LandOwnershipForm() {
       <div className="form-container">
         <div className="title-el">
           <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-          <h4>DOWLADA HOOSE EE DEGMADA {tokenData?.location}</h4>
+          <h4>DOWLADA HOOSE EE DEGMADA {values?.location}</h4>
           <h3>WAAXDA DHULKA</h3>
         </div>
         <div className="form-column1">

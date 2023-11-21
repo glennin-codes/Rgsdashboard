@@ -59,7 +59,7 @@ const handleSubmit = useCallback(
               >
                 <TextField
                   fullWidth
-                  helperText="Please specify the first name"
+                  helperText="Please fill in your full Name"
                   label="Name"
                   name="name"
                   onChange={handleChange}

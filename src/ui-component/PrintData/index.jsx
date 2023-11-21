@@ -40,7 +40,7 @@ export default function PrintData({ data, shouldPrint, setShouldPrint }) {
         <div className="form-container">
           <div className="title-el">
             <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-            <h4>DOWLADA HOOSE EE DEGMADA {values.location || 'Location'}</h4>
+            <h4>DOWLADA HOOSE EE DEGMADA {data?.location || 'Location'}</h4>
 
             <h3>WAAXDA DHULKA</h3>
           </div>
