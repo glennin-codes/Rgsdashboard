@@ -20,6 +20,7 @@ const ProfilePage = () => {
     phone: '',
     location: '',
     password: '',
+    checkpassword:'',
     role: '',
     id: ''
   });
@@ -49,11 +50,12 @@ const ProfilePage = () => {
         const { person } = response.data;
         console.log(person);
         setValues({
+          ...values,
           name: person.name,
           email: person.email,
           phone: person.phone,
           location: person.location,
-          password: person.password,
+         
           role: person.role,
           id: person._id
         });

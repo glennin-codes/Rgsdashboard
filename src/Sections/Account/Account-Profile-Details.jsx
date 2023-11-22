@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -17,12 +17,24 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 
 
 export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate}) => {
-  
+  const [error,setError]=useState('');
 
   const handleChange =  (event) => {
       setValues({ ...values, [event.target.name]: event.target.value });
     };
- 
+useEffect(
+  ()=>{
+    if(values.password && values.checkpassword){
+      if(values.password !== values.checkpassword){
+        setError('passwords do not match')
+      }
+      else{
+        setError('')
+      }
+    }
+       
+  },[values?.checkpassword,values?.password]
+)
   
 console.log('values before handle update is called ',values)
 const handleSubmit = useCallback(
@@ -118,41 +130,49 @@ const handleSubmit = useCallback(
              <Typography
                 color="text.secondary"
                 variant="body2"
-                
-
          >
                 Change Password
          </Typography>
 
         </Grid>
-              <Grid
+        <Grid
                 xs={12}
                 md={6}
               >
                 <TextField
-                  fullWidth
-                  label="Confirm Password"
-                  name="country"
-                  onChange={handleChange}
-                  type='password'
-                  required
-                  value={values.password}
-                />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
+                color={
+                  error?'error':'primary'
+                }
                   fullWidth
                   type='password'
                   label="Password"
-                  name="country"
+                  name="checkpassword"
                   onChange={handleChange}
                   required
-                  value={values.password}
+                  value={values.checkpassword}
+                  helperText={error?error:""}
                 />
               </Grid>
+
+              <Grid
+                xs={12}
+                md={6}
+              >
+                <TextField
+                 color={
+                  error?'error':'primary'
+                }
+                  fullWidth
+                  label="Confirm Password"
+                  name="password"
+                  onChange={handleChange}
+                  type='password'
+                  required
+                  value={values.password}
+                  helperText={error?error:""}
+                />
+              </Grid>
+              
              
             </Grid>
           </Box>

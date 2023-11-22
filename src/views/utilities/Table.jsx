@@ -154,7 +154,7 @@ const ResponsiveTable = ({ data }) => {
 const handleData=(datas)=>{
   console.log(datas);
 
- setFormData({ name:datas?.name,
+ setFormData({ ...formData, name:datas?.name,
   location: datas?.location,
   phone: datas?.phone,
   email:datas?.email,
