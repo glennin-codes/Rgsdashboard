@@ -17,7 +17,7 @@ const CreateEmployee = Loadable(lazy(() => import('views/utilities/CreateEmploye
 const CreateAdmin = Loadable(lazy(() => import('views/utilities/CreateAdmin')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+const PostPreview = Loadable(lazy(() => import('views/PreviewPosts')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 const MainRoutes = {
@@ -90,8 +90,8 @@ const MainRoutes = {
     },
    
     {
-      path: 'listings',
-      element: <SamplePage />
+      path: 'previews',
+      element: <PostPreview />
     }
   ]
 };

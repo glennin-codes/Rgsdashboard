@@ -5,15 +5,15 @@ import { IconBrandChrome, IconHelp } from '@tabler/icons';
 const icons = { IconBrandChrome, IconHelp };
 
 const other = {
-  id: 'listings',
+  id: 'previews',
   type: 'group',
   children: [
     {
-      id: 'show property Listings',
-      title: 'Property Listing',
+      id: 'Post Preview',
+      title: 'Post Previews',
       type: 'item',
 
-      url: 'listings',
+      url: 'previews',
 
       icon: icons.IconBrandChrome,
       breadcrumbs: false

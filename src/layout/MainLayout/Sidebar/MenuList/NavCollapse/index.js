@@ -93,7 +93,11 @@ const NavCollapse = ({ menu, level }) => {
   return (
     <>
       <ListItemButton
-      disabled={menu.user ? true : false}
+       disabled={
+        menu.user && menu.title !== "Post Previews"
+          ? true
+          : false
+      }
         sx={{
           borderRadius: `${customization.borderRadius}px`,
           mb: 0.5,
