@@ -73,15 +73,22 @@ const DisplayAll = () => {
       );
       if (response.status === 401) {
         setError('Unauthorized: You are not authorized to access this resource.');
+      }  else if (response.status === 404) {
+        const info = await response.json();
+        console.log(info.message);
       } else if (response.status === 403) {
         setError('Forbidden: You do not have permission to access this resource.');
       } else if (response.ok) {
+
         // Handle other successful responses
         const result = await response.json();
         setLoading(false);
         console.log(result);
+        
         setData(result.items);
+
         setTotalItems(result.totalItems);
+
         // if (page === Math.ceil(totalItems / limit) && data.length === limit) {
         //   setLimit(limit * 2);
         // }
@@ -171,7 +178,22 @@ const DisplayAll = () => {
       </Grid>
 
       <div>
-        {error && <Alert severity="error">{error}</Alert>}
+        {error &&  <Alert
+            severity="error"
+            sx={{
+              mb: 2,
+              mt: 2,
+              width: '100%',
+              borderRadius: 2,
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            {error}
+          </Alert>}
         {loading ? (
           <LinearProgress sx={{ width: '100%', }} />
 
