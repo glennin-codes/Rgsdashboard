@@ -21,7 +21,7 @@ const LogoSection = () => {
         color="inherit"
 
       >
-        RGS
+          KGS
       </Typography>
     </ButtonBase>
   );

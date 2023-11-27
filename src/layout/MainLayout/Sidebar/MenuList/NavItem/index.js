@@ -67,7 +67,7 @@ const NavItem = ({ item, level }) => {
   return (
     <ListItemButton
       {...listItemProps}
-      disabled={item.user ? true : item.disabled}
+      disabled={item.user && item.title !== "Post Previews" ? true : item.disabled}
       sx={{
         borderRadius: `${customization.borderRadius}px`,
         mb: 0.5,
