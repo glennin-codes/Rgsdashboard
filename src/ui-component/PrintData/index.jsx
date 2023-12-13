@@ -28,7 +28,7 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
   }
 
   return (
-    <div ref={componentRef} className="form--el">
+    <div   ref={componentRef} className="form--el">
       <div className="container--el">
         <div className="main-tittle--el">
           <h4>DOWLADA HOOSE EE DEGMADA {data?.location || 'Location'}</h4>
@@ -164,7 +164,11 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
               <label htmlFor="ee">Taariikh</label>
               <input type="text" id="Taariikh" name="Taariikh" defaultValue={values.Taariikh} />
             </div>
-        <div className="footer--el">
+        <div className="footer--el"
+        style={{
+          marginTop:"30px"
+        }}
+        >
           <div className="footer-item">
             <h4>CABDULLAAHI CALI WATIIN</h4>
             <h5>Duqa Magaalada</h5>

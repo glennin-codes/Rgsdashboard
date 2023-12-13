@@ -1,13 +1,12 @@
-.form--el{
-  padding:20px;
+.form--el {
+  padding: 20px;
   width: 8.5in;
   max-width: 8.5in;
   height: 11in;
-       color:black;
-        background-color:#ffff;
-       
-        overflow: hidden;
-      
+  color: black;
+  background-color: #ffff;
+  overflow: hidden;
+  display: none;
 }
 /* @media print {
     .form--el { 
@@ -17,38 +16,38 @@
 } */
 
 @page {
-    size: A4;
-  }
-  
-.container--el{
-    margin-top: 100px;
- 
-    max-width: 100%;
-    width:100%;
-    max-width: 100%;
-}
-.main-tittle--el{
-    text-align: center;
-    margin-bottom: 30px;
-    text-transform: uppercase;
+  size: A4;
 }
 
-.main-tittle--el h4{
-font-size: medium;
+.container--el {
+  margin-top: 100px;
+
+  max-width: 100%;
+  width: 100%;
+  max-width: 100%;
 }
-.main-tittle--el h3{
-font-size: large;
-font-weight: bold;
+.main-tittle--el {
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
 }
 
-.InputSet-As{
-    display: grid;
-     grid-template-columns: repeat(2, 1fr);
-     grid-gap: 20px;
-     width: 100%;
-    font-weight: 500;
-    margin-bottom: 30px;
-    max-width: 100%;
+.main-tittle--el h4 {
+  font-size: medium;
+}
+.main-tittle--el h3 {
+  font-size: large;
+  font-weight: bold;
+}
+
+.InputSet-As {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  width: 100%;
+  font-weight: 500;
+  margin-bottom: 30px;
+  max-width: 100%;
 }
 .col--1,
 .col--2 {
@@ -57,236 +56,222 @@ font-weight: bold;
   gap: 20px; /* Adjust the gap value as needed */
   align-items: center;
 }
-.fields--el{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.fields--el {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.field--el{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    flex-direction: row;
-    gap: 10px;
+.field--el {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  gap: 10px;
 }
-.field--el label{
-    width:10%;
-   margin-right: 15px;
+.field--el label {
+  width: 10%;
+  margin-right: 15px;
 }
-.tilt-away--el{
-    display: flex;
-    width: 100%;
-    gap: 10px;
-    flex-direction: row;
-    align-items: center;
+.tilt-away--el {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
 }
-.tilt-away--el p{
-    width: 10%;
-    margin-right: 15px;
-}
-
-.col-1{
-    width: 55%;
-}
-.col-2{
-    width: 70%;
+.tilt-away--el p {
+  width: 10%;
+  margin-right: 15px;
 }
 
-.break--el{
-    display:flex;
-    flex-direction: column;
-    gap: 10px;
+.col-1 {
+  width: 55%;
+}
+.col-2 {
+  width: 70%;
+}
+
+.break--el {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .form-field--el input,
-.fig-x--el input ,
+.fig-x--el input,
 .fig--b-field--el input,
 .fig-field--el input,
 .fig--c-field--el input,
 .fig--3-field--el input,
 .fig--d-field--el input,
 .fig--3-field2--el input,
-.fig--4-field--el input ,
+.fig--4-field--el input,
 .fig--b-fieldDeg--el input,
-.input--el{
-    padding-top: 8px;
-    padding-bottom: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 1px solid #000;
-   font-size: 14px;
-   text-indent: 2px;
-   overflow: hidden;
-
+.input--el {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #000;
+  font-size: 14px;
+  text-indent: 2px;
+  overflow: hidden;
 }
 
-.form-field--el{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    max-width: 100%;
-    width: 100%;
-    gap: 10px;
-
-
+.form-field--el {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 100%;
+  width: 100%;
+  gap: 10px;
 }
-.form-field--el label{
-    width: 10%;
-    margin-right: 15px;
-    font-weight: 500;
+.form-field--el label {
+  width: 10%;
+  margin-right: 15px;
+  font-weight: 500;
 }
-.form-field--el input{
-   flex: 1;
-   width: 100%;
+.form-field--el input {
+  flex: 1;
+  width: 100%;
 }
-.tittle--el{
-    flex: end;
-    font-size: medium;
-    margin-bottom: 20px;
-margin-top: 30px;
+.tittle--el {
+  flex: end;
+  font-size: medium;
+  margin-bottom: 20px;
+  margin-top: 30px;
 }
-.field2--el{
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    width: 100%;
-    max-width: 100%;
+.field2--el {
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  max-width: 100%;
 }
-.fig--a{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    max-width: 100%;
-    
+.fig--a {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  max-width: 100%;
 }
 
-
-.fig-x--el{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+.fig-x--el {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 .fig--b,
 .fig--d,
-.fig--c{
-    display: flex;
-    flex-direction: row;
-   width: 100%;
-   max-width: 100%;
-   gap:2px;
+.fig--c {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%;
+  gap: 2px;
 }
 .fig--c-field--el,
 .fig--3-field--el,
 .fig--d-field--el,
 .fig--3-field2--el,
 .fig--b-fieldDeg--el,
-.fig--b-field--el{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap:4px;
- 
+.fig--b-field--el {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
 }
 
-.fig--b-fieldDeg--el{
-    flex:1;
+.fig--b-fieldDeg--el {
+  flex: 1;
 }
 .X,
 .kofuur,
-.degmada{
-    flex: 1;
-   width: 100%;
+.degmada {
+  flex: 1;
+  width: 100%;
 }
 .fig--c-field--el label,
 .fig--3-field--el label,
 .fig--d-field--el label,
 .fig--b-fieldDeg--el label,
-.fig--b-field--el label{
-    width: max-content;
+.fig--b-field--el label {
+  width: max-content;
 }
-.input-c--el{
-    width:180px;
+.input-c--el {
+  width: 180px;
 }
-.input-d--el{
-    width: 180px;
+.input-d--el {
+  width: 180px;
 }
 /* .input-b--el{
     width: 130%;
 } */
 
-.subtitles--el{
-    text-align: center;
-    font-size: small;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    font-weight: bold;
-    
-} 
-.field3--el{
-    display: flex;
-    flex-direction: row;
-    font-weight: 500;
-    width: 100%;
-   gap: 4px;
+.subtitles--el {
+  text-align: center;
+  font-size: small;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+.field3--el {
+  display: flex;
+  flex-direction: row;
+  font-weight: 500;
+  width: 100%;
+  gap: 4px;
 }
 
-.fig--3-field2--el{
-    flex: 1;
+.fig--3-field2--el {
+  flex: 1;
 }
-.fig-3-input2--el{
-    width: 100px;
+.fig-3-input2--el {
+  width: 100px;
 }
-.fig-3-input2--el{
-   flex: 1;
-   width: 100%;
-}
-
-.fig--4-field--el{
-    font-weight: 500;
-    gap:10px;
-    justify-content: flex-start;
-    margin-top: 30px;
-    margin-bottom: 50px;
-}
-.fig--4-field--el label{
-    margin-right: 10px;
+.fig-3-input2--el {
+  flex: 1;
+  width: 100%;
 }
 
+.fig--4-field--el {
+  font-weight: 500;
+  gap: 10px;
+  justify-content: flex-start;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.fig--4-field--el label {
+  margin-right: 10px;
+}
 
 .fig--4-field--el input {
-    width:140px;
-
+  width: 140px;
 }
-.footer--el{
-    display:flex;
-    justify-content:space-between;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 20px;
+.footer--el {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 20px;
 }
 .footer-item {
-    position: relative;
-   width: 100%;
-   align-items: center;
-   text-transform: uppercase;
-   
-   
-  }
-  .footer-item h5{
-    margin-top: 5px;
-    margin-bottom: 20px;
-  }
-  .footer-item h5::after {
-  
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 25%;
-    width:50%;
-    height: 1px; 
-    background-color: #000; 
-  }
-  
-
+  position: relative;
+  width: 100%;
+  align-items: center;
+  text-transform: uppercase;
+}
+.footer-item h5 {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+.footer-item h5::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 1px;
+  background-color: #000;
+}

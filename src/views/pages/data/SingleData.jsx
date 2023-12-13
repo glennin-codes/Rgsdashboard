@@ -182,16 +182,18 @@ export const RealEstateForm = () => {
                       <input disabled type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
                     </div>
                   </div>
-                  <div className="form-footer">
-                    <div className="footer-item">
-                      <h4>XASAN MACALIN CALI IBRAAHIM</h4>
-                      <h5>Agaasimaha Waaxda Dhulka</h5>
-                      <input disabled type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={realEstate.Agaasimaha} />
-                    </div>
+                  <div className="footer--el">
                     <div className="footer-item">
                       <h4>CABDULLAAHI CALI WATIIN</h4>
                       <h5>Duqa Magaalada</h5>
-                      <input disabled type="text" id="Duqa" name="Duqa" defaultValue={realEstate.Duqa} />
+                    </div>
+                    <div className="footer-item">
+                      <h4>something here too </h4>
+                      <h5> </h5>
+                    </div>
+                    <div className="footer-item">
+                      <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+                      <h5>Agaasimaha Waaxda Dhulka</h5>
                     </div>
                   </div>
                 </div>
@@ -207,7 +209,7 @@ export const RealEstateForm = () => {
             }}
           >
             <Button variant="contained" startIcon={<GetAppIcon />} style={{ backgroundColor: 'blue' }}>
-              file
+              Attached files
             </Button>
             <Button
               variant="inherit"
@@ -227,11 +229,11 @@ export const RealEstateForm = () => {
         <p>Posted By: PeterSon</p>
       </div> */}
 
-          {realEstate?.postedBy?.userName && (
+          {/* {realEstate?.postedBy?.userName && (
             <div className="form-footer">
               <p>Posted By: {realEstate.postedBy.userName}</p>
             </div>
-          )}
+          )} */}
           {realEstate?.fileAttachment && (
             <div className="form-actions">
               <button className="download-button" onClick={handleDownloadFile}>

@@ -494,7 +494,7 @@ export default function LandOwnershipForm() {
         </div>
         <div className="form-footer">
           <div className="footer-item">
-            <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+            <h4>{values.Agaasimaha}</h4>
             <h5>Agaasimaha Waaxda Dhulka</h5>
             <input
               type="text"
@@ -508,7 +508,7 @@ export default function LandOwnershipForm() {
             />
           </div>
           <div className="footer-item">
-            <h4>CABDULLAAHI CALI WATIIN</h4>
+            <h4>{values.Duqa}</h4>
             <h5>Duqa Magaalada</h5>
             <input
               type="text"
