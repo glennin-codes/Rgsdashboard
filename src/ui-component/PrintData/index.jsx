@@ -85,23 +85,76 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
               <label htmlFor="vacant1"> </label>
               <input type="text" id="vacant1" name="vacant1" defaultValue={values.vacant1} />
             </div>
-            <div className="fig-field--el">
-              <label htmlFor="X"> X :</label>
+            <div className="fig-x--el">
+              <label htmlFor="X"> X ,</label>
               <input type="text" id="X" name="X" defaultValue={values.X} />
               <p>oo u uko dhiso / dhisto cad dhul ah oo la eg</p>
-            
             </div>
-            
-              
           </div>
+          <div className="fig--b">
+            <div className="fig--b-field--el">
+              {/* <label htmlFor="vacant2"> </label> */}
+              <input type="text" id="vacant2" name="vacant2" defaultValue={values.vacant2} />
+            </div>
+            <div className="fig--b-field--el">
+              <label htmlFor="kunaYaal"> kuna yaal:</label>
+              <input type="text" id="kunaYaal" name="kunaYaal" defaultValue={values.kunaYaal} />
+            </div>
+            <div className="fig--b-field--el">
+              <label htmlFor="Degmada">Degmada:</label>
+              <input type="text" id="Degmada" name="Degmada" className="degmada" defaultValue={values.Degmada} />
+            </div>
+          </div>
+          <div className="fig--c">
+            <div className="fig--c-field--el">
+              <label htmlFor="Xaafadda">Xaafadda:</label>
+              <input type="text"  className="input-c--el" id="Xaafadda" name="Xaafadda" defaultValue={values.Xaafadda} />
+            </div>
+            <div className="fig--c-field--el">
+              <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
+              <input type="text" className="input-c--el"  id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={values.SoohdintiisuTahay} />
+            </div>
+            <div className="fig--c-field--el">
+              <label htmlFor="Waqooyi">X. Waqooyi:</label>
+              <input type="text" id="Waqooyi"  className="X" name="Waqooyi" defaultValue={values.Waqooyi} />
+            </div>
+          </div>
+          <div className="fig--d">
+            <div className="fig--d-field--el">
+                <label htmlFor="Galbeed">X. Galbeed:</label>
+                <input type="text" className="input-d--el" id="Galbeed" name="Galbeed" defaultValue={values.Galbeed} />
+            </div>
+            <div className="fig--d-field--el">
+                <label htmlFor="Bari">X. Bari:</label>
+                <input type="text" className="input-d--el" id="Bari" name="Bari" defaultValue={values.Bari} />
+            </div>
+            <div className="fig--d-field--el">
+                <label htmlFor="kofuur">iyo X. Koofur:</label>
+                <input type="text" id="kofuur" name="kofuur" className="kofuur" defaultValue={values.kofuur} />
+            </div>
         </div>
+        </div>
+        
         {/* Your existing form code goes here */}
 
         <div className="subtitles--el">
           <h4>Warqaddaan xaq waxaad ugu leedahay muddo laba iyo toban (12) bilood ah</h4>
           <h4>oo maantaka bilaabata, fasax la&apos; aan inaad dhulka dhistid.</h4>
         </div>
-
+        <div className="field3--el">
+            <div className="fig--3-field--el">
+              <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
+              <input type="text" id="lacagNo" name="lacagNo" defaultValue={values.lacagNo} />
+            </div>
+            <div className="fig--3-field--el">
+              <label htmlFor="ee">ee:</label>
+              <input type="text" id="ee" name="ee" defaultValue={values.ee} />
+            </div>
+            <div className="fig--3-field--el">
+              <label htmlFor="ee">Taariikh:</label>
+              <input type="text" id="Taariikh" name="Taariikh" defaultValue={values.Taariikh} />
+            </div>
+        </div>
         <div className="footer--el">
           <div className="footer-item">
             <h4>CABDULLAAHI CALI WATIIN</h4>
