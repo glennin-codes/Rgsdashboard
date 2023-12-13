@@ -2,9 +2,10 @@
   padding:20px;
   width: 8.5in;
   max-width: 8.5in;
+  height: 11in;
        color:black;
         background-color:#ffff;
-        border:2px solid rebeccapurple ;
+       
         overflow: hidden;
       
 }
@@ -21,7 +22,7 @@
   
 .container--el{
     margin-top: 100px;
-    border:2px solid blue ;
+ 
     max-width: 100%;
     width:100%;
     max-width: 100%;
@@ -29,7 +30,7 @@
 .main-tittle--el{
     text-align: center;
     margin-bottom: 30px;
-
+    text-transform: uppercase;
 }
 
 .main-tittle--el h4{
@@ -101,14 +102,18 @@ font-weight: bold;
 .fig--b-field--el input,
 .fig-field--el input,
 .fig--c-field--el input,
+.fig--3-field--el input,
 .fig--d-field--el input,
+.fig--3-field2--el input,
+.fig--4-field--el input ,
+.fig--b-fieldDeg--el input,
 .input--el{
     padding-top: 8px;
     padding-bottom: 8px;
     font-weight: bold;
     text-transform: uppercase;
-    border: 1px solid black;
-   font-size: 16px;
+    border: 1px solid #000;
+   font-size: 14px;
    text-indent: 2px;
    overflow: hidden;
 
@@ -172,16 +177,21 @@ margin-top: 30px;
    gap:2px;
 }
 .fig--c-field--el,
+.fig--3-field--el,
 .fig--d-field--el,
+.fig--3-field2--el,
+.fig--b-fieldDeg--el,
 .fig--b-field--el{
     align-items: center;
     display: flex;
     flex-direction: row;
-    gap:2px;
+    gap:4px;
  
 }
 
-
+.fig--b-fieldDeg--el{
+    flex:1;
+}
 .X,
 .kofuur,
 .degmada{
@@ -189,7 +199,9 @@ margin-top: 30px;
    width: 100%;
 }
 .fig--c-field--el label,
+.fig--3-field--el label,
 .fig--d-field--el label,
+.fig--b-fieldDeg--el label,
 .fig--b-field--el label{
     width: max-content;
 }
@@ -199,6 +211,9 @@ margin-top: 30px;
 .input-d--el{
     width: 180px;
 }
+/* .input-b--el{
+    width: 130%;
+} */
 
 .subtitles--el{
     text-align: center;
@@ -211,12 +226,67 @@ margin-top: 30px;
 .field3--el{
     display: flex;
     flex-direction: row;
-    
+    font-weight: 500;
+    width: 100%;
+   gap: 4px;
+}
+
+.fig--3-field2--el{
+    flex: 1;
+}
+.fig-3-input2--el{
+    width: 100px;
+}
+.fig-3-input2--el{
+   flex: 1;
+   width: 100%;
+}
+
+.fig--4-field--el{
+    font-weight: 500;
+    gap:10px;
+    justify-content: flex-start;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.fig--4-field--el label{
+    margin-right: 10px;
+}
+
+
+.fig--4-field--el input {
+    width:140px;
+
 }
 .footer--el{
     display:flex;
     justify-content:space-between;
-    
-
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 20px;
 }
+.footer-item {
+    position: relative;
+   width: 100%;
+   align-items: center;
+   text-transform: uppercase;
+   
+   
+  }
+  .footer-item h5{
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+  .footer-item h5::after {
+  
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width:50%;
+    height: 1px; 
+    background-color: #000; 
+  }
+  
 

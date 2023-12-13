@@ -16,7 +16,7 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
   const print = useReactToPrint({
     content: () => componentRef.current,
 
-    documentTitle: 'form-data',
+    documentTitle: values.mudMar,
     onAfterPrint: () => {
       console.log('document printed successfully');
       setShouldPrint(false);
@@ -94,42 +94,50 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
           <div className="fig--b">
             <div className="fig--b-field--el">
               {/* <label htmlFor="vacant2"> </label> */}
-              <input type="text" id="vacant2" name="vacant2" defaultValue={values.vacant2} />
+              <input type="text" className="input-b--el" id="vacant2" name="vacant2" defaultValue={values.vacant2} />
             </div>
-            <div className="fig--b-field--el">
-              <label htmlFor="kunaYaal"> kuna yaal:</label>
-              <input type="text" id="kunaYaal" name="kunaYaal" defaultValue={values.kunaYaal} />
+            <div className="fig--b-field--el"
+            style={{
+              gap:"10px",
+            }}
+            >
+              <label htmlFor="kunaYaal"> kuna yaal</label>
+              <input type="text" className="input-b--el" id="kunaYaal" name="kunaYaal" defaultValue={values.kunaYaal} />
             </div>
-            <div className="fig--b-field--el">
-              <label htmlFor="Degmada">Degmada:</label>
+            <div className="fig--b-fieldDeg--el"
+             style={{
+              gap:"10px",
+            }}
+            >
+              <label htmlFor="Degmada">Degmada</label>
               <input type="text" id="Degmada" name="Degmada" className="degmada" defaultValue={values.Degmada} />
             </div>
           </div>
           <div className="fig--c">
             <div className="fig--c-field--el">
-              <label htmlFor="Xaafadda">Xaafadda:</label>
+              <label htmlFor="Xaafadda">Xaafadda</label>
               <input type="text"  className="input-c--el" id="Xaafadda" name="Xaafadda" defaultValue={values.Xaafadda} />
             </div>
             <div className="fig--c-field--el">
-              <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
+              <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay</label>
               <input type="text" className="input-c--el"  id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={values.SoohdintiisuTahay} />
             </div>
             <div className="fig--c-field--el">
-              <label htmlFor="Waqooyi">X. Waqooyi:</label>
+              <label htmlFor="Waqooyi">X. Waqooyi</label>
               <input type="text" id="Waqooyi"  className="X" name="Waqooyi" defaultValue={values.Waqooyi} />
             </div>
           </div>
           <div className="fig--d">
             <div className="fig--d-field--el">
-                <label htmlFor="Galbeed">X. Galbeed:</label>
+                <label htmlFor="Galbeed">X. Galbeed</label>
                 <input type="text" className="input-d--el" id="Galbeed" name="Galbeed" defaultValue={values.Galbeed} />
             </div>
             <div className="fig--d-field--el">
-                <label htmlFor="Bari">X. Bari:</label>
+                <label htmlFor="Bari">X. Bari</label>
                 <input type="text" className="input-d--el" id="Bari" name="Bari" defaultValue={values.Bari} />
             </div>
-            <div className="fig--d-field--el">
-                <label htmlFor="kofuur">iyo X. Koofur:</label>
+            <div className="fig--b-fieldDeg--el">
+                <label htmlFor="kofuur">iyo X. Koofur</label>
                 <input type="text" id="kofuur" name="kofuur" className="kofuur" defaultValue={values.kofuur} />
             </div>
         </div>
@@ -143,27 +151,32 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
         </div>
         <div className="field3--el">
             <div className="fig--3-field--el">
-              <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
-              <input type="text" id="lacagNo" name="lacagNo" defaultValue={values.lacagNo} />
+              <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. </label>
+              <input type="text" id="lacagNo"  className="fig-3-input1--el" name="lacagNo" defaultValue={values.lacagNo} />
             </div>
-            <div className="fig--3-field--el">
-              <label htmlFor="ee">ee:</label>
-              <input type="text" id="ee" name="ee" defaultValue={values.ee} />
+            <div className="fig--3-field2--el">
+              <label htmlFor="ee">ee</label>
+              <input type="text" className="fig-3-input2--el" id="ee" name="ee" defaultValue={values.ee} />
             </div>
-            <div className="fig--3-field--el">
-              <label htmlFor="ee">Taariikh:</label>
+           
+        </div>
+        <div className="fig--4-field--el">
+              <label htmlFor="ee">Taariikh</label>
               <input type="text" id="Taariikh" name="Taariikh" defaultValue={values.Taariikh} />
             </div>
-        </div>
         <div className="footer--el">
           <div className="footer-item">
             <h4>CABDULLAAHI CALI WATIIN</h4>
             <h5>Duqa Magaalada</h5>
           </div>
-
+              <div className="footer-item">
+                      <h4>something  here too </h4>
+                      <h5> {" "}</h5>
+              </div>
           <div className="footer-item">
             <h4>XASAN MACALIN CALI IBRAAHIM</h4>
             <h5>Agaasimaha Waaxda Dhulka</h5>
+
           </div>
         </div>
       </div>
