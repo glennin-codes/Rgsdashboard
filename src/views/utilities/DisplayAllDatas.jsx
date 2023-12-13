@@ -36,7 +36,7 @@ const DisplayAll = () => {
   const [limit, setLimit] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [value, setValue] = useState('');
-  const [locationQuery, setLocationQuery] = useState(null);
+  const [locationQuery, setLocationQuery] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const searchByDate = useSelector((state) => state.dateRange.dateSearch);

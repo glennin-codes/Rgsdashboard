@@ -13,6 +13,7 @@ import App from 'App';
 import 'assets/scss/style.scss';
 import config from './config';
 import authStore from 'Redux/authStore';
+
 // ==============================|| REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById('root');

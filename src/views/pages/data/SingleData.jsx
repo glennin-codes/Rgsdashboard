@@ -47,8 +47,7 @@ export const RealEstateForm = () => {
           id="form-container"
           style={{
             boxShadow: 'none',
-            width: '100%',
-          
+            width: '100%'
           }}
         >
           {error && <Alert severity="error">{error}</Alert>}
@@ -66,33 +65,34 @@ export const RealEstateForm = () => {
                   }}
                 >
                   <div className="title-el">
-                    <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2><h4>DOWLADA HOOSE EE DEGMADA {realEstate.location || 'Location'}</h4>
+                    <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
+                    <h4>DOWLADA HOOSE EE DEGMADA {realEstate.location || 'Location'}</h4>
                     <h3>WAAXDA DHULKA</h3>
                   </div>
                   <div className="form-column1">
                     <div className="form-field">
                       <label htmlFor="No">No:</label>
-                      <input  disabled   className="input-test" type="text" id="No" name="No" defaultValue={realEstate.No} />
+                      <input disabled className="input-test" type="text" id="No" name="No" defaultValue={realEstate.No} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="BollectarioNo">Bollectario No:</label>
-                      <input  disabled   type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={realEstate.BollectarioNo} />
+                      <input disabled type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={realEstate.BollectarioNo} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Tirisi">Soo Gelidda Warqadda Tirsi:</label>
-                      <input  disabled   type="text" id="Tirsi" name="Tirsi" defaultValue={realEstate.Tirsi} />
+                      <input disabled type="text" id="Tirsi" name="Tirsi" defaultValue={realEstate.Tirsi} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="BolletaNo">Bolleta No:</label>
-                      <input  disabled   type="text" id="BolletaNo" name="BolletaNo" defaultValue={realEstate.BolletaNo} />
+                      <input disabled type="text" id="BolletaNo" name="BolletaNo" defaultValue={realEstate.BolletaNo} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Taariikh">Taariikh:</label>
-                      <input  disabled   type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
+                      <input disabled type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Sanadka">Sanadka:</label>
-                      <input  disabled  type="text" id="Sanadka" name="Sanadka" defaultValue={realEstate.Taariikh.split('/')[2]} />
+                      <input disabled type="text" id="Sanadka" name="Sanadka" defaultValue={realEstate.Taariikh.split('/')[2]} />
                     </div>
                   </div>
                   <div className="form-title">
@@ -100,7 +100,7 @@ export const RealEstateForm = () => {
                   </div>
                   <div className="form-field">
                     <label htmlFor="mudMar">Mud. / M ar.</label>
-                    <input  disabled  type="text" id="mudMar" name="mudMar" defaultValue={realEstate.mudMar} />
+                    <input disabled type="text" id="mudMar" name="mudMar" defaultValue={realEstate.mudMar} />
                   </div>
                   <div className="form-title">
                     <h5>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h5>
@@ -109,50 +109,56 @@ export const RealEstateForm = () => {
                   <div className="form-column2">
                     <div className="form-field">
                       <label htmlFor="vacant1"> </label>
-                      <input  disabled   type="text" id="vacant1" name="vacant1" defaultValue={realEstate.vacant1} />
+                      <input disabled type="text" id="vacant1" name="vacant1" defaultValue={realEstate.vacant1} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="X"> X :</label>
-                      <input  disabled   type="text" id="X" name="X" defaultValue={realEstate.X} />
+                      <input disabled type="text" id="X" name="X" defaultValue={realEstate.X} />
                     </div>
                     <div className="sub-name">
                       <p>oo u uko dhiso / dhisto cad dhul ah oo la eg</p>
                     </div>
                     <div className="form-field">
                       <label htmlFor="vacant2"> </label>
-                      <input  disabled   type="text" id="vacant2" name="vacant2" defaultValue={realEstate.vacant2} />
+                      <input disabled type="text" id="vacant2" name="vacant2" defaultValue={realEstate.vacant2} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="kunaYaal"> kuna yaal:</label>
-                      <input  disabled   type="text" id="kunaYaal" name="kunaYaal" defaultValue={realEstate.kunaYaal} />
+                      <input disabled type="text" id="kunaYaal" name="kunaYaal" defaultValue={realEstate.kunaYaal} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Dagmada">Degmada:</label>
-                      <input  disabled   type="text" id="Degmada" name="Degmada" defaultValue={realEstate.Degmada} />
+                      <input disabled type="text" id="Degmada" name="Degmada" defaultValue={realEstate.Degmada} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Xaafadda">Xaafadda:</label>
-                      <input  disabled   type="text" id="Xaafadda" name="Xaafadda" defaultValue={realEstate.Xaafadda} />
+                      <input disabled type="text" id="Xaafadda" name="Xaafadda" defaultValue={realEstate.Xaafadda} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
-                      <input  disabled   type="text" id="SoohdintiisuTahay" name="SoohdintiisuTahay" defaultValue={realEstate.SoohdintiisuTahay} />
+                      <input
+                        disabled
+                        type="text"
+                        id="SoohdintiisuTahay"
+                        name="SoohdintiisuTahay"
+                        defaultValue={realEstate.SoohdintiisuTahay}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Waqooyi">X. Waqooyi:</label>
-                      <input  disabled   type="text" id="Waqooyi" name="Waqooyi" defaultValue={realEstate.Waqooyi} />
+                      <input disabled type="text" id="Waqooyi" name="Waqooyi" defaultValue={realEstate.Waqooyi} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Galbeed">X. Galbeed:</label>
-                      <input  disabled   type="text" id="Galbeed" name="Galbeed" defaultValue={realEstate.Galbeed} />
+                      <input disabled type="text" id="Galbeed" name="Galbeed" defaultValue={realEstate.Galbeed} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Bari">X. Bari:</label>
-                      <input  disabled   type="text" id="Bari" name="Bari" defaultValue={realEstate.Bari} />
+                      <input disabled type="text" id="Bari" name="Bari" defaultValue={realEstate.Bari} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="kofuur">iyo X. Koofur:</label>
-                      <input  disabled   type="text" id="kofuur" name="kofuur" defaultValue={realEstate.kofuur} />
+                      <input disabled type="text" id="kofuur" name="kofuur" defaultValue={realEstate.kofuur} />
                     </div>
 
                     {/* Submit button */}
@@ -165,27 +171,27 @@ export const RealEstateForm = () => {
                   <div className="form-column1">
                     <div className="form-field">
                       <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
-                      <input  disabled   type="text" id="lacagNo" name="lacagNo" defaultValue={realEstate.lacagNo} />
+                      <input disabled type="text" id="lacagNo" name="lacagNo" defaultValue={realEstate.lacagNo} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="ee">ee:</label>
-                      <input  disabled   type="text" id="ee" name="ee" defaultValue={realEstate.ee} />
+                      <input disabled type="text" id="ee" name="ee" defaultValue={realEstate.ee} />
                     </div>
                     <div className="form-field">
                       <label htmlFor="ee">Taariikh:</label>
-                      <input  disabled   type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
+                      <input disabled type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
                     </div>
                   </div>
                   <div className="form-footer">
                     <div className="footer-item">
                       <h4>XASAN MACALIN CALI IBRAAHIM</h4>
                       <h5>Agaasimaha Waaxda Dhulka</h5>
-                      <input  disabled   type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={realEstate.Agaasimaha} />
+                      <input disabled type="text" id="Agaasimaha" name="Agaasimaha" defaultValue={realEstate.Agaasimaha} />
                     </div>
                     <div className="footer-item">
                       <h4>CABDULLAAHI CALI WATIIN</h4>
                       <h5>Duqa Magaalada</h5>
-                      <input  disabled   type="text" id="Duqa" name="Duqa" defaultValue={realEstate.Duqa} />
+                      <input disabled type="text" id="Duqa" name="Duqa" defaultValue={realEstate.Duqa} />
                     </div>
                   </div>
                 </div>
@@ -236,10 +242,9 @@ export const RealEstateForm = () => {
               </button>
             </div>
           )}
-
-          <PrintData data={realEstate} shouldPrint={shouldPrint} setShouldPrint={setShouldPrint} />
         </div>
       </MainCard>
+      <PrintData data={realEstate} shouldPrint={shouldPrint} setShouldPrint={setShouldPrint} />
     </>
   );
 };

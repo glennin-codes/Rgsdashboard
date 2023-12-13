@@ -1,0 +1,157 @@
+.form--el{
+  padding:20px;
+  width: 8.5in;
+  max-width: 8.5in;
+       color:black;
+        background-color:#ffff;
+        border:2px solid rebeccapurple ;
+        overflow: hidden;
+      
+}
+/* @media print {
+    .form--el { 
+        width: 8.5in;
+        height: 11in;
+    }
+} */
+
+@page {
+    size: A4;
+  }
+  
+.container--el{
+    margin-top: 100px;
+    border:2px solid blue ;
+    overflow: hidden;
+    width:100%;
+    
+}
+.main-tittle--el{
+    text-align: center;
+    margin-bottom: 30px;
+
+}
+
+.main-tittle--el h4{
+font-size: medium;
+}
+.main-tittle--el h3{
+font-size: large;
+font-weight: bold;
+}
+.subtitles--el{
+    text-align: center;
+    font-size: small;
+}
+.InputSet-As{
+    display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     grid-gap: 20px;
+     margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+.col--1,
+.col--2 {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  gap: 20px; /* Adjust the gap value as needed */
+  align-items: center;
+}
+.fields--el{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.field--el{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+}
+.field--el label{
+    width:10%;
+   margin-right: 15px;
+}
+.tilt-away--el{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+}
+.tilt-away--el p{
+    width: 10%;
+    margin-right: 15px;
+}
+
+.col-1{
+    width: 55%;
+}
+.col-2{
+    width: 70%;
+}
+
+.break--el{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.form-field--el input,
+.fig-field--el input,
+.input--el{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border: 1px solid black;
+   font-size: 16px;
+   text-indent: 10px;
+    
+}
+
+.form-field--el{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    width: 100%;
+    gap: 10px;
+
+
+}
+.form-field--el label{
+    width: 10%;
+    margin-right: 15px;
+    font-weight: 500;
+}
+.form-field--el input{
+   flex: 1;
+}
+.tittle--el{
+    flex: end;
+    font-size: medium;
+    margin-bottom: 20px;
+margin-top: 30px;
+}
+.fig--a{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    
+}
+.fig-field--el{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.footer--el{
+    display:flex;
+    justify-content:space-between;
+    
+
+}
