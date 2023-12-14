@@ -170,7 +170,7 @@ const ProfileSection = () => {
                       </Grid>
                       <Grid item alignItems="center" >
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 ,color:"maroon" }}>
-                          {role === 'user' ? 'employee' : role === 'Admin' ? 'Admin' : 'master-Admin'}
+                          {role === 'user' ? 'employee' : role === 'admin' ? 'Admin' : 'master-Admin'}
                         </Typography>
                       </Grid>
                       <Grid item alignItems="center" >

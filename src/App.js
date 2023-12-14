@@ -12,7 +12,7 @@ import { decodeToken } from 'utils/decodeToken';
 import { AuthLogout, loginSuccess } from 'Redux/authSlice';
 import { checkTokenExpiryAndWorkingHours } from 'utils/checkTokenExpiry';
 import { useDispatch } from 'react-redux';
-import {  useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import Routes from 'routes'
 import { setRole } from 'Redux/RoleSlyce';
 
@@ -27,12 +27,16 @@ const App = () => {
   const pathLocation = useLocation();
   const isMasterRegisterRoute = pathLocation.pathname.includes('master-register');
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (checkTokenExpiryAndWorkingHours()) {
       dispatch(loginSuccess());
     } else {
-      dispatch(AuthLogout());
+      localStorage.removeItem('token');
+        // Log out the regular user
+        dispatch(AuthLogout());
+        navigate('/');
+     
     }
   }, [dispatch]);
   useEffect(() => {
@@ -54,14 +58,17 @@ const App = () => {
       const now = new Date();
       const dayOfWeek = now.getDay();
 
-      // Check if it's a regular user outside working hours or on weekends
+      // Check if it's a regular user outside working hours or on weekend that is friday
       if (
         role === 'user' &&
-        (!isWorkingHours || currentHour < 8 || currentHour >= 17) &&
-        (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0)
+        (!isWorkingHours || currentHour < 7 || currentHour >= 20) &&
+        (dayOfWeek === 5 )
       ) {
+
+        localStorage.removeItem('token');
         // Log out the regular user
         dispatch(AuthLogout());
+        navigate('/')
       }
     }, 5000);
 

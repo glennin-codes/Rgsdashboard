@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 function CountdownTimer() {
-  // Set the end time (5 PM)
+  // Set the end time (8 PM)
   const endTime = new Date();
-  endTime.setHours(17, 0, 0, 0);
+  endTime.setHours(20, 0, 0, 0);
 
   // Calculate the initial time remaining based on the current time
   const currentTime = new Date();

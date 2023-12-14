@@ -1,4 +1,4 @@
-import { Drawer, LinearProgress } from '@mui/material';
+import { Alert, Drawer, LinearProgress } from '@mui/material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -17,6 +17,8 @@ const Table = () => {
   console.log(refreshUpdateId);
   
   const [data, setData] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const token = getDataFromLocalStorage('token');
 
   // console.log(token);
@@ -31,15 +33,47 @@ const Table = () => {
       .then((response) => {
         setData(response?.data?.employees);
       })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+      .catch((err) => {
+         setLoading(false);
+      console.log(err);
+      if (err?.response?.status === 401) {
+        setError(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 403) {
+        setError(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 404) {
+        setError(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 500) {
+        setError(`Error: ${err?.response?.data?.message}`);
+      } else {
+        setError('Error: Network problem, check your connections and try again');
+      }
+    });
   }, [token,refreshUpdateId]);
 
   return (
     <MainCard title="employees list ">
       <Drawer />
-      {Array.isArray(data) && data.length > 0 ? <ResponsiveTable data={data} /> :  <LinearProgress sx={{ width: '100%', }} />}
+      {error && (
+          <Alert
+            severity="error"
+            sx={{
+              mb: 2,
+              mt: 2,
+              width: '100%',
+              borderRadius: 2,
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            {error}
+          </Alert>
+        )}
+        {loading &&  <LinearProgress sx={{ width: '100%', }} />}
+        
+      {Array.isArray(data) && data.length > 0 && <ResponsiveTable data={data} /> }
     </MainCard>
   );
 };

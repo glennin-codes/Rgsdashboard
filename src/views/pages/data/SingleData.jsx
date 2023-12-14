@@ -10,18 +10,25 @@ import SimpleBackdrop from './BackDrop';
 import PrintData from 'ui-component/PrintData';
 import '../../../ui-component/FillForm/LandOwnership.css';
 import MainCard from 'ui-component/cards/MainCard';
+import { getDataFromLocalStorage } from '../authentication/auth-forms/LocalStorage';
 export const RealEstateForm = () => {
   const [realEstate, setRealEstate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [shouldPrint, setShouldPrint] = useState(false);
   const { id } = useParams();
+  const token = getDataFromLocalStorage('token');
+
   useEffect(() => {
     setIsLoading(true);
     // 6504a24d4bb17035693cff4e
     // Make a GET request to your API endpoint to fetch a single data entry
     axios
-      .get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`)
+      .get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
       .then((response) => {
         const { data } = response.data;
 
