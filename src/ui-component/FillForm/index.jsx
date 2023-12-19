@@ -544,7 +544,7 @@ export default function LandOwnershipForm() {
         <div>
           
       {
-        !showUploadBtn && (
+        showUploadBtn && (
           <Button
           sx={{
             backgroundColor:"#FF9800",
