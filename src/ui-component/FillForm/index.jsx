@@ -8,7 +8,8 @@ import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/L
 import { Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getEmptyFields } from 'utils/getEmptyFields';
-
+import FileUploadModal from 'ui-component/Files/FileUploadModal ';
+import { CloudUpload} from '@mui/icons-material';
 export default function LandOwnershipForm() {
   const [values, setValues] = useState({
     No: '',
@@ -61,6 +62,7 @@ export default function LandOwnershipForm() {
     Agaasimaha: false,
     Duqa: false
   });
+  
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,6 +88,10 @@ export default function LandOwnershipForm() {
   const eeRef = useRef(null);
   const AgaasimahaRef = useRef(null);
   const DuqaRef = useRef(null);
+  ///file uploud states
+  const [modalOpen, setModalOpen] = useState(false);
+  const [showUploadBtn,setShowUploadBtn] =useState(false);
+  const [info,setInfo]=useState({});
 
   useEffect(() => {
     const token = getDataFromLocalStorage('token');
@@ -180,6 +186,12 @@ export default function LandOwnershipForm() {
             Agaasimaha: '',
             Duqa: ''
           });
+          setInfo(
+            response.data?.data
+          );
+          setModalOpen(true);
+          setShowUploadBtn(true);
+
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -203,6 +215,14 @@ export default function LandOwnershipForm() {
       handleSnackbarOpen(errorMessage);
       setLoading(false);
     }
+  };
+ 
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  }; 
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -522,13 +542,39 @@ export default function LandOwnershipForm() {
           </div>
         </div>
         <div>
-          <Button className="form-button " type="button" onClick={handleSubmit} disabled={!values.Duqa || loading}>
+          
+      {
+        !showUploadBtn && (
+          <Button
+          sx={{
+            backgroundColor:"#FF9800",
+
+            '&:hover': {
+              border: '1px solid #2196F3', // Border color on hover
+            },
+          }}
+          onClick={handleOpenModal}
+          variant="contained"
+          
+          startIcon={<CloudUpload />} 
+        >
+          Open File Upload
+        </Button>
+        )
+      }
+      <FileUploadModal open={modalOpen}  setShowUploadBtn={setShowUploadBtn}   onClose={handleCloseModal} info={info} />
+    </div>
+        <div>
+          <Button className="form-button " style={{
+            backgroundColor:'purple',
+            color:'white'
+          }} type="button" onClick={handleSubmit} disabled={!values.Duqa || loading}>
             {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
           </Button>
         </div>
         <Snackbar
           open={snackbarOpen}
-          autoHideDuration={6000} // Adjust as needed
+          autoHideDuration={6000} 
           onClose={handleSnackbarClose}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         >

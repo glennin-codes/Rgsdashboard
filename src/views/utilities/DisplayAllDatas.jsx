@@ -30,6 +30,7 @@ import { useNavigate } from 'react-router';
 import { CountryDropdown } from 'ui-component/DropDownFilter';
 import PrintData from 'ui-component/PrintData';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
+import axios from 'axios';
 const DisplayAll = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -62,47 +63,62 @@ const DisplayAll = () => {
     setLoading(true);
     try {
       console.log({ start: startDate, end: endDate });
-      const startDateString = startDate ? startDate.toISOString() : '';
+      const startDateString = startDate ? startDate.toISOString() : ''; 
       const endDateString = endDate ? endDate.toISOString() : '';
-    
-      console.log('end', locationQuery);
 
-      const response = await fetch(
+      console.log("start", startDateString);
+      console.log("end", endDateString);
+
+      console.log('location', locationQuery);
+
+      const response = await axios.get(
         `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
-        requestOptions
+        {  
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      if (response.status === 401) {
-        setError('Unauthorized: You are not authorized to access this resource.');
-      }  else if (response.status === 404) {
-        const info = await response.json();
-        console.log(info.message);
-      } else if (response.status === 403) {
-        setError('Forbidden: You do not have permission to access this resource.');
-      } else if (response.ok) {
-
-        // Handle other successful responses
-        const result = await response.json();
+  
+    if(response.status === 200){
+      setError('')
+        // Handle successful responses
+        const result = response.data;
         setLoading(false);
         console.log(result);
-        
+    
         setData(result.items);
-
         setTotalItems(result.totalItems);
-
-        // if (page === Math.ceil(totalItems / limit) && data.length === limit) {
-        //   setLimit(limit * 2);
-        // }
-      } else {
-        console.error('Error:', response.status);
-        setError('Something went wrong? we are working around to bring everything to its place');
-      }
+    }
+      
     } catch (error) {
       setLoading(false);
-      console.error('Error fetching data:', error);
-      setError('Something went wrong! Check your connection and try again.');
-    } finally {
-      setLoading(false);
-    } 
+      if (error.response) {
+        // The request was made, but the server responded with an error
+        const status = error.response.status;
+        if (status === 401) {
+          setError('Unauthorized: You are not authorized to access this resource.');
+        } else if (status === 403) {
+          setError('Forbidden: You do not have permission to access this resource.');
+        } else if (status === 404) {
+          const info = error.response.data;
+          console.log(info.message);
+          setError(error.response.message)
+        } else {
+          console.error('Error:', status);
+          setError(`Something went wrong? We are working around to bring everything to its place (Status: ${status})`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        setError('No response received. Check your connection and try again.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', error.message);
+        setError('Error setting up the request.Please  try again.');
+      }
+    }
+   
     // data.length, totalItems
   }, [page, limit, value, startDate, endDate, locationQuery, requestOptions ]);
   useEffect(() => {
