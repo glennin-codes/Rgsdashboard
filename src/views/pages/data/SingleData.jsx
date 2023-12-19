@@ -5,19 +5,34 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import PrintIcon from '@mui/icons-material/Print';
-import { Alert } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import SimpleBackdrop from './BackDrop';
 import PrintData from 'ui-component/PrintData';
 import '../../../ui-component/FillForm/LandOwnership.css';
 import MainCard from 'ui-component/cards/MainCard';
 import { getDataFromLocalStorage } from '../authentication/auth-forms/LocalStorage';
+import { saveAs } from 'file-saver';
+import MuiAlert from '@mui/material/Alert';
+
+
+
 export const RealEstateForm = () => {
   const [realEstate, setRealEstate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [shouldPrint, setShouldPrint] = useState(false);
+  const [downloadLoading, setDownloadLoading] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
   const { id } = useParams();
   const token = getDataFromLocalStorage('token');
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackBar(false);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,15 +52,66 @@ export const RealEstateForm = () => {
         setIsLoading(false);
       })
       .catch((e) => {
+        setOpenSnackBar(true);
         setIsLoading(false);
         console.log(e);
         if (e?.response && e?.response?.data && e?.response?.data?.message) {
           setError(e.response.data.message);
         }
 
-        setError('check your connections');
+        setError('check your connections and try again');
       });
   }, [id]);
+
+  const HandleDownload = async (userId) => {
+    setDownloadLoading(true);
+  
+    try {
+      const res = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/files/${userId}`);
+  
+      if (res.status === 200) {
+        setDownloadLoading(false);
+  
+       
+        saveAs(res.data, `${realEstate?.mudMar}.zip`);
+      }
+    } catch (error) {
+      setOpenSnackBar(true);
+      setDownloadLoading(false);
+      console.error(error);  
+      if (error.response) {
+        // The request was made, but the server responded with a status code
+        // that falls out of the range of 2xx
+        if (error.response.status === 400) {
+          console.error('Bad Request:', error.response.data);
+          setError(error.response?.data?.error);
+        } else if (error.response.status === 403) {
+          console.error('Forbidden:', error.response.data);
+          setError(error.response?.data?.error);
+        
+        } else if (error.response.status === 404) {
+          console.error('No files found:', error.response.data);
+          setError(error.response?.data?.error);
+        } else if (error?.response?.status === 500) {
+          console.error('Internal Server Error:', error.response?.data);
+          setError(error.response?.data?.error);
+        } else {
+          console.error('Unexpected Error:', error.response.data);
+          setError('An unexpected error occurred.');
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Network Error:', error.request);
+        setError('Network error. Please check your internet connection.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('General Error:', error);
+        setError(error.message);
+      }
+    
+    }
+  };
+  
 
   return (
     <>
@@ -215,7 +281,9 @@ export const RealEstateForm = () => {
               justifyContent: 'space-between'
             }}
           >
-            <Button variant="contained" startIcon={<GetAppIcon />} style={{ backgroundColor: 'blue' }}>
+            <Button variant="outlined" disabled={downloadLoading} startIcon={<GetAppIcon />} onClick={() => HandleDownload(id)}
+            sx={error ? { border: '1px solid red' } : {}}
+            >
               Attached files
             </Button>
             <Button
@@ -232,28 +300,22 @@ export const RealEstateForm = () => {
               Print Form
             </Button>
           </div>
-          {/* <div className="form-footer">
-        <p>Posted By: PeterSon</p>
-      </div> */}
-
-          {/* {realEstate?.postedBy?.userName && (
-            <div className="form-footer">
-              <p>Posted By: {realEstate.postedBy.userName}</p>
-            </div>
-          )} */}
-          {realEstate?.fileAttachment && (
-            <div className="form-actions">
-              <button className="download-button" onClick={handleDownloadFile}>
-                {realEstate.fileAttachment.name}
-              </button>
-              <button className="print-button" onClick={handlePrintForm}>
-                Print Form
-              </button>
-            </div>
-          )}
+         
+         
         </div>
       </MainCard>
       <PrintData data={realEstate} shouldPrint={shouldPrint} setShouldPrint={setShouldPrint} />
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        {/* severity={error ? 'error' : 'success'} */}
+        <MuiAlert onClose={handleSnackbarClose} severity='error' elevation={6} variant="filled">
+          {/* {error ? error : success} */} {error}
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 };
