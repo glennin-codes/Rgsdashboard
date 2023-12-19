@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Input, Button, IconButton, Grid, CircularProgress } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Cancel, Delete } from '@mui/icons-material';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
@@ -14,7 +14,6 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(null);
-  // const [uploadCancelToken, setUploadCancelToken] = useState(null);
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -36,6 +35,7 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
 
 
   const handleUpload = async () => {
+   
     try {
       setLoading(true);
       const formData = new FormData();
@@ -43,9 +43,7 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
       selectedFiles.forEach((file) => {
         formData.append('files', file);
       });
-      // const cancelToken = axios.CancelToken.source();
-      // setUploadCancelToken(cancelToken);
-
+     
       // Make a POST request to the API with the FormData
       const res = await axios.post(`https://plum-inquisitive-bream.cyclic.cloud/api/files/${info?.id}`, formData, {
         headers: {
@@ -57,6 +55,7 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
           // Update state with the progress percentage
           setUploadProgress(progressPercentage);
         }
+         
       });
 
       if (res.status === 200) {
@@ -99,28 +98,9 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
       }
     }
   };
-  // const handleCancelUpload = () => {
-  //   // Check if there's an ongoing upload and cancel it
-  //   if (uploadCancelToken) {
-  //     uploadCancelToken.cancel('Upload canceled by user');
-  //     setError('Upload canceled by user');
-  //     setUploadProgress(null);
-  //   }
+ 
 
-  //   // Reset upload progress
-  //   setUploadProgress(null);
-  // };
-
-  // // Cleanup the cancel token on component unmount
-  // useEffect(() => {
-  //   return () => {
-  //     if (uploadCancelToken) {
-  //       uploadCancelToken.cancel('Component unmounted');
-       
-  //     }
-   
-  //   };
-  // }, []);
+ 
 
   return (
     <>
@@ -190,21 +170,13 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
         <Button 
         onClick={onClose}
         variant="outlined"
+        startIcon={< Cancel size={24} color="error" />}
          sx={{ paddingLeft:{
           md:2},paddingRight:{md:2} }}>
           Close
         </Button>
       </Grid>
-      {/* <Grid item>
-        <Button 
-        disabled={!isLoading}
-        onClick={handleCancelUpload} 
-        variant="outlined"
-        startIcon={< Cancel color="error" />}
-        >
-          Cancel Upload
-        </Button>
-      </Grid> */}
+      
 
       <Grid item>
         <Button 

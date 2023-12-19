@@ -126,7 +126,9 @@ export default function LandOwnershipForm() {
         ...prevInputEnabled,
         [nextInputName]: true
       }));
-      nextInputRef.current.focus();
+      setTimeout(() => {
+        nextInputRef.current.focus();
+      }, 0);
       return false;
     }
   };
@@ -186,6 +188,32 @@ export default function LandOwnershipForm() {
             Agaasimaha: '',
             Duqa: ''
           });
+          
+          setInputEnabled({
+            No: true, // Enable the first input field initially
+            BollectarioNo: false,
+            Tirsi: false,
+            BolletaNo: false,
+            Taariikh: false,
+            Sanadka: false,
+            Xaafadda: false,
+            vacant1: false,
+            vacant2: false,
+            mudMar: false,
+            X: false,
+            kunaYaal: false,
+            Degmada: false,
+            SoohdintiisuTahay: false,
+            Waqooyi: false,
+            Galbeed: false,
+            Bari: false,
+            kofuur: false,
+            lacagNo: false,
+            ee: false,
+            Agaasimaha: false,
+            Duqa: false
+          });
+ 
           setInfo(
             response.data?.data
           );
