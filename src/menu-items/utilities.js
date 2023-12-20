@@ -1,7 +1,6 @@
 // assets
 import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
 import SettingsIcon from '@mui/icons-material/Settings';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PeopleIcon from '@mui/icons-material/People';
 // constant
 const icons = {
@@ -43,16 +42,16 @@ const utilities = {
       icon: PeopleIcon,
       breadcrumbs: false
     },
-    {
-      id: 'Payroll stats',
-      title: 'Payroll stats',
-      type: 'item',
+    // {
+    //   id: 'Payroll stats',
+    //   title: 'Payroll stats',
+    //   type: 'item',
 
-      url: '/datas/payrollstats',
+    //   url: '/datas/payrollstats',
       
-      icon: AttachMoneyIcon ,
-      breadcrumbs: false
-    },
+    //   icon: AttachMoneyIcon ,
+    //   breadcrumbs: false
+    // },
     {
       id: 'Managment',
       title: 'Managment',
