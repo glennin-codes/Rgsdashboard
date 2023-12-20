@@ -11,6 +11,7 @@ import MainCard from 'ui-component/cards/MainCard';
 const AuthCardWrapper = ({ children, ...other }) => (
   <MainCard
     sx={{
+      
       maxWidth: { xs: 400, lg: 475 },
       margin: { xs: 2.5, md: 3 },
       '& > *': {
@@ -21,7 +22,7 @@ const AuthCardWrapper = ({ children, ...other }) => (
     content={false}
     {...other}
   >
-    <Box sx={{ p: { xs: 2, sm: 3, xl: 5 } }}>{children}</Box>
+    <Box sx={{ p: { xs: 2, sm: 3, xl: 5 },backgroundColor:'green' }}>{children}</Box>
   </MainCard>
 );
 
