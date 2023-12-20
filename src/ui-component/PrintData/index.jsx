@@ -36,7 +36,7 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
       <div ref={componentRef} className="form--el">
         <div className="container--el">
           <div className="main-tittle--el">
-            <h4>DOWLADA HOOSE EE DEGMADA {data?.location || 'Location'}</h4>
+            <h4>DOWLADA HOOSE EE DEGMADA {data?.location === "Lafoole" || data?.location === "Jazira"? "Afgooye" : data?.location}</h4>
             <h3>WAAXDA DHULKA</h3>
           </div>
 
@@ -189,15 +189,15 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
             }}
           >
             <div className="footer-item">
-              <h4>CABDULLAAHI CALI WATIIN</h4>
+              <h4>{values.Agaasimaha}</h4>
               <h5>Duqa Magaalada</h5>
             </div>
-            <div className="footer-item">
+            {/* <div className="footer-item">
               <h4>something here too </h4>
               <h5> </h5>
-            </div>
+            </div> */}
             <div className="footer-item">
-              <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+              <h4>{values.Duqa}</h4>
               <h5>Agaasimaha Waaxda Dhulka</h5>
             </div>
           </div>

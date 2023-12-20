@@ -63,15 +63,18 @@ export const RealEstateForm = () => {
 
         setError('check your connections and try again');
       });
-  }, [id]);
+  }, [id,token]);
 
   const HandleDownload = async (userId) => {
     setDownloadLoading(true);
 
     try {
-      const res = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/files/${userId}`);
+      const res = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/files/${userId}`,{
+        responseType:'blob'
+      });
 
       if (res.status === 200) {
+        setError('')
         setDownloadLoading(false);
 
         saveAs(res.data, `${realEstate?.mudMar}.zip`);
@@ -84,17 +87,17 @@ export const RealEstateForm = () => {
         // The request was made, but the server responded with a status code
         // that falls out of the range of 2xx
         if (error.response.status === 400) {
-          console.error('Bad Request:', error.response.data);
+          console.error('Bad Request:', error.response.data.error);
           setError(error.response?.data?.error);
         } else if (error.response.status === 403) {
-          console.error('Forbidden:', error.response.data);
-          setError(error.response?.data?.error);
+          console.error('Forbidden:', error.response?.data?.message);
+          setError("Forbidden:your token has expired kindly login again");
         } else if (error.response.status === 404) {
           console.error('No files found:', error.response.data);
-          setError(error.response?.data?.error);
+          setError("No files found for the user");
         } else if (error?.response?.status === 500) {
           console.error('Internal Server Error:', error.response?.data);
-          setError(error.response?.data?.error);
+          setError("Internal Server Error:our engineers are working to make everything ok!");
         } else {
           console.error('Unexpected Error:', error.response.data);
           setError('An unexpected error occurred.');
@@ -133,6 +136,7 @@ export const RealEstateForm = () => {
       });
 
       if (res.status === 200) {
+        setError('');
         setUpdateLoading(false);
         setSuccess(res.data?.message);
         setOpenSnackBar(true);
@@ -175,7 +179,7 @@ export const RealEstateForm = () => {
                 >
                   <div className="title-el">
                     <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-                    <h4>DOWLADA HOOSE EE DEGMADA {realEstate.location || 'Location'}</h4>
+                    <h4>DOWLADA HOOSE EE DEGMADA {realEstate.location === "Lafoole" || realEstate.location === 'Jazira'?"Afgooye":realEstate.location }</h4>
                     <h3>WAAXDA DHULKA</h3>
                   </div>
                   <div className="form-column1">
@@ -458,7 +462,7 @@ export const RealEstateForm = () => {
               onClick={() => HandleDownload(id)}
               sx={error ? { border: '1px solid red' } : {}}
             >
-              Attached files
+              {downloadLoading?<CircularProgress size={24} /> : "Attached files"}
             </Button>
             <Button
               variant="inherit"

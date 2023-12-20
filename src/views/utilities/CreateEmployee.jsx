@@ -2,7 +2,7 @@ import { Drawer, IconButton } from '@mui/material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, TextField, Button, Grid } from '@mui/material';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { generateRandomPassword } from 'utils/GeneratePassword';
@@ -10,29 +10,10 @@ import PhotoUpload from 'ui-component/PhotoUpload';
 import axios from 'axios';
 import { getDataFromLocalStorage } from 'views/pages/authentication/auth-forms/LocalStorage';
 import CustomSnackbar from 'ui-component/SnackBar';
-import { Select, MenuItem, FormControl,InputLabel } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { CountryDropdown } from 'ui-component/DropDownFilter';
 
-const locations = [
-  'Afgooye',
-  'Awdheegle',
-  'Baraawe',
-  'Kuntuwaarey',
-  'Marka',
-  'Qoryooley',
-  'Wanlaweyn',
-  'Sablaale',
-  'Baydhabo',
-  'Buurhakabo',
-  'Bardaale',
-  'Diinsoor',
-  'Qansax-dheere',
-  'Hudur',
-  'Waajid',
-  'Tayeeglow',
-  'Ceel-Barde',
-  'Rabdhure',
-];
+
 const initialState = {
   name: '',
   location: '',
@@ -49,6 +30,7 @@ const CreateEmployee = () => {
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [location, setLocation] = useState('');
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -73,9 +55,18 @@ const CreateEmployee = () => {
   const handleErrorSnackbarClose = () => {
     setOpenErrorSnackbar(false);
   };
+  useEffect(() => {
+    if (location) {
+      setFormData((prevData) => ({
+        ...prevData,
+        location,
+      }));
+    }
+  }, [location]); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+ 
     const token = getDataFromLocalStorage('token');
 
     // Create an Axios instance with the default headers
@@ -120,28 +111,8 @@ const CreateEmployee = () => {
                 <TextField required label="Name" name="name" fullWidth variant="standard" value={formData.name} onChange={handleInputChange} />
               </Grid>
               <Grid item xs={12}>
-      <FormControl
-      required
-       sx={{
-           width:"100%"
-          }} variant="standard">
-        <InputLabel>Location</InputLabel>
-        <Select
-          label="Location"
-          name="location"
-          sx={{
-              width:"50%"
-          }}
-          value={formData.location}
-          onChange={handleInputChange}
-        >
-          {locations.map((location, index) => (
-            <MenuItem key={index} value={location}>
-              {location}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+              <CountryDropdown variant='standard' locationQuery={location} setLocationQuery={setLocation} />
+    
     </Grid>
               <Grid item xs={12}>
                 <TextField  label="Phone(optional)" name="phone" fullWidth variant="standard" value={formData.phone} onChange={handleInputChange} />

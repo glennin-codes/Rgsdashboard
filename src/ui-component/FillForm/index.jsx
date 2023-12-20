@@ -258,7 +258,7 @@ export default function LandOwnershipForm() {
       <div className="form-container">
         <div className="title-el">
           <h2>DOWLAD GOBOLEEDKA KOOFUR GALBEED</h2>
-          <h4>DOWLADA HOOSE EE DEGMADA {values?.location}</h4>
+          <h4>DOWLADA HOOSE EE DEGMADA {values?.location === "Lafoole" || values?.location === "Jazira" ? "Afgooye" : values?.location}</h4>
           <h3>WAAXDA DHULKA</h3>
         </div>
         <div className="form-column1">

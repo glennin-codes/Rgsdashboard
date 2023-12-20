@@ -188,7 +188,7 @@ const DisplayAll = () => {
               setEndDate={setEndDate}
             />
 
-            <CountryDropdown locationQuery={locationQuery} setLocationQuery={setLocationQuery} />
+            <CountryDropdown variant='outlined' locationQuery={locationQuery} setLocationQuery={setLocationQuery} />
           </Grid>
         )}
       </Grid>
