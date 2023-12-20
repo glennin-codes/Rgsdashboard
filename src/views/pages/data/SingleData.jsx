@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import PrintIcon from '@mui/icons-material/Print';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, CircularProgress, Snackbar } from '@mui/material';
 import SimpleBackdrop from './BackDrop';
 import PrintData from 'ui-component/PrintData';
 import '../../../ui-component/FillForm/LandOwnership.css';
@@ -13,8 +13,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { getDataFromLocalStorage } from '../authentication/auth-forms/LocalStorage';
 import { saveAs } from 'file-saver';
 import MuiAlert from '@mui/material/Alert';
-
-
+import { Edit } from '@mui/icons-material';
 
 export const RealEstateForm = () => {
   const [realEstate, setRealEstate] = useState(null);
@@ -23,6 +22,9 @@ export const RealEstateForm = () => {
   const [shouldPrint, setShouldPrint] = useState(false);
   const [downloadLoading, setDownloadLoading] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  //updating Data
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [success, setSuccess] = useState('');
   const { id } = useParams();
   const token = getDataFromLocalStorage('token');
 
@@ -39,9 +41,9 @@ export const RealEstateForm = () => {
     // 6504a24d4bb17035693cff4e
     // Make a GET request to your API endpoint to fetch a single data entry
     axios
-      .get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`,{
-        headers:{
-          Authorization:`Bearer ${token}`
+      .get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       })
       .then((response) => {
@@ -65,20 +67,19 @@ export const RealEstateForm = () => {
 
   const HandleDownload = async (userId) => {
     setDownloadLoading(true);
-  
+
     try {
       const res = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/files/${userId}`);
-  
+
       if (res.status === 200) {
         setDownloadLoading(false);
-  
-       
+
         saveAs(res.data, `${realEstate?.mudMar}.zip`);
       }
     } catch (error) {
       setOpenSnackBar(true);
       setDownloadLoading(false);
-      console.error(error);  
+      console.error(error);
       if (error.response) {
         // The request was made, but the server responded with a status code
         // that falls out of the range of 2xx
@@ -88,7 +89,6 @@ export const RealEstateForm = () => {
         } else if (error.response.status === 403) {
           console.error('Forbidden:', error.response.data);
           setError(error.response?.data?.error);
-        
         } else if (error.response.status === 404) {
           console.error('No files found:', error.response.data);
           setError(error.response?.data?.error);
@@ -108,10 +108,46 @@ export const RealEstateForm = () => {
         console.error('General Error:', error);
         setError(error.message);
       }
-    
     }
   };
-  
+
+  // handle updates
+  const handleInputChange = (name, value) => {
+    setRealEstate({
+      ...realEstate,
+      [name]: value
+    });
+  };
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setUpdateLoading(true);
+
+      // Make a PATCH request to update the data
+      const res = await axios.patch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, realEstate, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (res.status === 200) {
+        setUpdateLoading(false);
+        setSuccess(res.data?.message);
+        setOpenSnackBar(true);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error updating data:', error);
+      setOpenSnackBar(true);
+      if (e?.response && e?.response?.data && e?.response?.data?.error) {
+        setError(e.response.data.error);
+      }
+
+      setError('check your connections and try again');
+    }
+  };
 
   return (
     <>
@@ -145,27 +181,66 @@ export const RealEstateForm = () => {
                   <div className="form-column1">
                     <div className="form-field">
                       <label htmlFor="No">No:</label>
-                      <input disabled className="input-test" type="text" id="No" name="No" defaultValue={realEstate.No} />
+                      <input
+                        onChange={(e) => handleInputChange('No', e.target.value)}
+                        className="input-test"
+                        type="text"
+                        id="No"
+                        name="No"
+                        value={realEstate.No}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="BollectarioNo">Bollectario No:</label>
-                      <input disabled type="text" id="BollectarioNo" name="BollectarioNo" defaultValue={realEstate.BollectarioNo} />
+                      <input
+                        onChange={(e) => handleInputChange('BollectarioNo', e.target.value)}
+                        type="text"
+                        id="BollectarioNo"
+                        name="BollectarioNo"
+                        value={realEstate.BollectarioNo}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Tirisi">Soo Gelidda Warqadda Tirsi:</label>
-                      <input disabled type="text" id="Tirsi" name="Tirsi" defaultValue={realEstate.Tirsi} />
+                      <input
+                        onChange={(e) => handleInputChange('Tirsi', e.target.value)}
+                        type="text"
+                        id="Tirsi"
+                        name="Tirsi"
+                        value={realEstate.Tirsi}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="BolletaNo">Bolleta No:</label>
-                      <input disabled type="text" id="BolletaNo" name="BolletaNo" defaultValue={realEstate.BolletaNo} />
+                      <input
+                        onChange={(e) => handleInputChange('BolletaNo', e.target.value)}
+                        type="text"
+                        id="BolletaNo"
+                        name="BolletaNo"
+                        value={realEstate.BolletaNo}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Taariikh">Taariikh:</label>
-                      <input disabled type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
+                      <input
+                        disabled
+                        onChange={(e) => handleInputChange('Taariikh', e.target.value)}
+                        type="text"
+                        id="Taariikh"
+                        name="Taariikh"
+                        value={realEstate.Taariikh}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Sanadka">Sanadka:</label>
-                      <input disabled type="text" id="Sanadka" name="Sanadka" defaultValue={realEstate.Taariikh.split('/')[2]} />
+                      <input
+                        disabled
+                        onChange={(e) => handleInputChange('Sanadka', e.target.value)}
+                        type="text"
+                        id="Sanadka"
+                        name="Sanadka"
+                        value={realEstate.Taariikh.split('/')[2]}
+                      />
                     </div>
                   </div>
                   <div className="form-title">
@@ -173,7 +248,13 @@ export const RealEstateForm = () => {
                   </div>
                   <div className="form-field">
                     <label htmlFor="mudMar">Mud. / M ar.</label>
-                    <input disabled type="text" id="mudMar" name="mudMar" defaultValue={realEstate.mudMar} />
+                    <input
+                      onChange={(e) => handleInputChange('mudMar', e.target.value)}
+                      type="text"
+                      id="mudMar"
+                      name="mudMar"
+                      value={realEstate.mudMar}
+                    />
                   </div>
                   <div className="form-title">
                     <h5>ha / Marwada kor ku qoran waxaa loo oggolaaday inuu/inay dhisto cariish, Baraako ama Guri Dhagax ah Mudana</h5>
@@ -182,56 +263,110 @@ export const RealEstateForm = () => {
                   <div className="form-column2">
                     <div className="form-field">
                       <label htmlFor="vacant1"> </label>
-                      <input disabled type="text" id="vacant1" name="vacant1" defaultValue={realEstate.vacant1} />
+                      <input
+                        onChange={(e) => handleInputChange('vacant1', e.target.value)}
+                        type="text"
+                        id="vacant1"
+                        name="vacant1"
+                        value={realEstate.vacant1}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="X"> X :</label>
-                      <input disabled type="text" id="X" name="X" defaultValue={realEstate.X} />
+                      <input onChange={(e) => handleInputChange('X', e.target.value)} type="text" id="X" name="X" value={realEstate.X} />
                     </div>
                     <div className="sub-name">
                       <p>oo u uko dhiso / dhisto cad dhul ah oo la eg</p>
                     </div>
                     <div className="form-field">
                       <label htmlFor="vacant2"> </label>
-                      <input disabled type="text" id="vacant2" name="vacant2" defaultValue={realEstate.vacant2} />
+                      <input
+                        onChange={(e) => handleInputChange('vacant2', e.target.value)}
+                        type="text"
+                        id="vacant2"
+                        name="vacant2"
+                        value={realEstate.vacant2}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="kunaYaal"> kuna yaal:</label>
-                      <input disabled type="text" id="kunaYaal" name="kunaYaal" defaultValue={realEstate.kunaYaal} />
+                      <input
+                        onChange={(e) => handleInputChange('kunaYaal', e.target.value)}
+                        type="text"
+                        id="kunaYaal"
+                        name="kunaYaal"
+                        value={realEstate.kunaYaal}
+                      />
                     </div>
                     <div className="form-field">
-                      <label htmlFor="Dagmada">Degmada:</label>
-                      <input disabled type="text" id="Degmada" name="Degmada" defaultValue={realEstate.Degmada} />
+                      <label htmlFor="Degmada">Degmada:</label>
+                      <input
+                        onChange={(e) => handleInputChange('Degmada', e.target.value)}
+                        type="text"
+                        id="Degmada"
+                        name="Degmada"
+                        value={realEstate.Degmada}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Xaafadda">Xaafadda:</label>
-                      <input disabled type="text" id="Xaafadda" name="Xaafadda" defaultValue={realEstate.Xaafadda} />
+                      <input
+                        onChange={(e) => handleInputChange('Xaafadda', e.target.value)}
+                        type="text"
+                        id="Xaafadda"
+                        name="Xaafadda"
+                        value={realEstate.Xaafadda}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="SoohdintiisuTahay">Soohdintiisu Tahay:</label>
                       <input
-                        disabled
+                        onChange={(e) => handleInputChange('SoohdintiisuTahay', e.target.value)}
                         type="text"
                         id="SoohdintiisuTahay"
                         name="SoohdintiisuTahay"
-                        defaultValue={realEstate.SoohdintiisuTahay}
+                        value={realEstate.SoohdintiisuTahay}
                       />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Waqooyi">X. Waqooyi:</label>
-                      <input disabled type="text" id="Waqooyi" name="Waqooyi" defaultValue={realEstate.Waqooyi} />
+                      <input
+                        onChange={(e) => handleInputChange('Waqooyi', e.target.value)}
+                        type="text"
+                        id="Waqooyi"
+                        name="Waqooyi"
+                        value={realEstate.Waqooyi}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Galbeed">X. Galbeed:</label>
-                      <input disabled type="text" id="Galbeed" name="Galbeed" defaultValue={realEstate.Galbeed} />
+                      <input
+                        onChange={(e) => handleInputChange('Galbeed', e.target.value)}
+                        type="text"
+                        id="Galbeed"
+                        name="Galbeed"
+                        value={realEstate.Galbeed}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="Bari">X. Bari:</label>
-                      <input disabled type="text" id="Bari" name="Bari" defaultValue={realEstate.Bari} />
+                      <input
+                        onChange={(e) => handleInputChange('Bari', e.target.value)}
+                        type="text"
+                        id="Bari"
+                        name="Bari"
+                        value={realEstate.Bari}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="kofuur">iyo X. Koofur:</label>
-                      <input disabled type="text" id="kofuur" name="kofuur" defaultValue={realEstate.kofuur} />
+                      <input
+                        onChange={(e) => handleInputChange('kofuur', e.target.value)}
+                        type="text"
+                        id="kofuur"
+                        name="kofuur"
+                        value={realEstate.kofuur}
+                      />
                     </div>
 
                     {/* Submit button */}
@@ -244,29 +379,64 @@ export const RealEstateForm = () => {
                   <div className="form-column1">
                     <div className="form-field">
                       <label htmlFor="lacagNo"> Warqadadda lacag qabashada No. :</label>
-                      <input disabled type="text" id="lacagNo" name="lacagNo" defaultValue={realEstate.lacagNo} />
+                      <input
+                        onChange={(e) => handleInputChange('lacagNo', e.target.value)}
+                        type="text"
+                        id="lacagNo"
+                        name="lacagNo"
+                        value={realEstate.lacagNo}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="ee">ee:</label>
-                      <input disabled type="text" id="ee" name="ee" defaultValue={realEstate.ee} />
+                      <input
+                        onChange={(e) => handleInputChange('ee', e.target.value)}
+                        type="text"
+                        id="ee"
+                        name="ee"
+                        value={realEstate.ee}
+                      />
                     </div>
                     <div className="form-field">
                       <label htmlFor="ee">Taariikh:</label>
-                      <input disabled type="text" id="Taariikh" name="Taariikh" defaultValue={realEstate.Taariikh} />
+                      <input
+                        disabled
+                        onChange={(e) => handleInputChange('Taariikh', e.target.value)}
+                        type="text"
+                        id="Taariikh"
+                        name="Taariikh"
+                        value={realEstate.Taariikh}
+                      />
                     </div>
                   </div>
-                  <div className="footer--el">
+                  <div className="form-footer">
                     <div className="footer-item">
-                      <h4>CABDULLAAHI CALI WATIIN</h4>
-                      <h5>Duqa Magaalada</h5>
-                    </div>
-                    <div className="footer-item">
-                      <h4>something here too </h4>
-                      <h5> </h5>
-                    </div>
-                    <div className="footer-item">
-                      <h4>XASAN MACALIN CALI IBRAAHIM</h4>
+                      <h4>{realEstate.Agaasimaha}</h4>
                       <h5>Agaasimaha Waaxda Dhulka</h5>
+                      <input
+                        style={{
+                          marginBottom: '20px'
+                        }}
+                        type="text"
+                        id="Agaasimaha"
+                        name="Agaasimaha"
+                        value={realEstate.Agaasimaha}
+                        onChange={(e) => handleInputChange('Agaasimaha', e.target.value)}
+                      />
+                    </div>
+                    <div className="footer-item">
+                      <h4>{realEstate.Duqa}</h4>
+                      <h5>Duqa Magaalada</h5>
+                      <input
+                        style={{
+                          marginBottom: '20px'
+                        }}
+                        type="text"
+                        id="Duqa"
+                        name="Duqa"
+                        value={realEstate.Duqa}
+                        onChange={(e) => handleInputChange('Duqa', e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -281,8 +451,12 @@ export const RealEstateForm = () => {
               justifyContent: 'space-between'
             }}
           >
-            <Button variant="outlined" disabled={downloadLoading} startIcon={<GetAppIcon />} onClick={() => HandleDownload(id)}
-            sx={error ? { border: '1px solid red' } : {}}
+            <Button
+              variant="outlined"
+              disabled={downloadLoading}
+              startIcon={<GetAppIcon />}
+              onClick={() => HandleDownload(id)}
+              sx={error ? { border: '1px solid red' } : {}}
             >
               Attached files
             </Button>
@@ -294,14 +468,24 @@ export const RealEstateForm = () => {
               onClick={() => {
                 setShouldPrint(true);
               }}
-              startIcon={<PrintIcon />}
+              startIcon={<PrintIcon size={24} />}
               className="print-button"
             >
               Print Form
             </Button>
+            <Button
+              disabled={updateLoading}
+              sx={{
+                color: 'purple'
+              }}
+              variant="outlined"
+              onClick={handleSubmit}
+              startIcon={<Edit size={24} color="primary" />}
+              className="print-button"
+            >
+              {updateLoading ? <CircularProgress size={24} /> : 'Update Data'}
+            </Button>
           </div>
-         
-         
         </div>
       </MainCard>
       <PrintData data={realEstate} shouldPrint={shouldPrint} setShouldPrint={setShouldPrint} />
@@ -311,9 +495,8 @@ export const RealEstateForm = () => {
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        {/* severity={error ? 'error' : 'success'} */}
-        <MuiAlert onClose={handleSnackbarClose} severity='error' elevation={6} variant="filled">
-          {/* {error ? error : success} */} {error}
+        <MuiAlert onClose={handleSnackbarClose} severity={error ? 'error' : 'success'} elevation={6} variant="filled">
+          {error ? error : success}
         </MuiAlert>
       </Snackbar>
     </>

@@ -543,8 +543,14 @@ export default function LandOwnershipForm() {
         <div className="form-footer">
           <div className="footer-item">
             <h4>{values.Agaasimaha}</h4>
-            <h5>Agaasimaha Waaxda Dhulka</h5>
+            <h5
+           
+            >Agaasimaha Waaxda Dhulka</h5>
             <input
+             style={{
+              marginBottom:"20px"
+            }}
+
               type="text"
               id="Agaasimaha"
               name="Agaasimaha"
@@ -559,6 +565,10 @@ export default function LandOwnershipForm() {
             <h4>{values.Duqa}</h4>
             <h5>Duqa Magaalada</h5>
             <input
+             style={{
+              marginBottom:"20px"
+            }}
+            
               type="text"
               id="Duqa"
               name="Duqa"
