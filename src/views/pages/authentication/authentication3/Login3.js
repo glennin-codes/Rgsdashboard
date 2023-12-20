@@ -26,34 +26,33 @@ const Login = () => {
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
-                  <Grid item  gap={4} sx={{ mb: 3,display:"flex",flexDirection:'raw', alignItems:'center'}}>
+                  <Grid item  gap={1} sx={{ mb: 3,display:"flex",flexDirection:'raw', alignItems:'center'}}>
                     <Logo />
                   
-                  <Grid item xs={12}
-                  sx={{
-                    textTransform:"uppercase"
-                  }}
-                  >
-                    {/* "dowlladahahoose" in bold */}
-                    <Typography variant="body1" fontWeight="bold"
-                         sx={{color:'white', mb:0,paddingBottom:0}}
-                    >
-                      dowlladahahoose
-                    </Typography>
-                    {/* "KGS" in bold and larger size */}
-                    <Typography variant={matchDownSM ? 'h2' : 'h1'} fontWeight="bold" sx={{
-                      fontSize: {
-                        xs:"2rem",
-                        sm:"2.5rem",
-                        md:'4rem',
-                        lg:'4rem'
-                      },
-                      color:'white'
-                    }}
-                    >
-                      KGS
-                    </Typography>
-                  </Grid>
+                    <Grid item xs={12} sx={{ textTransform: "uppercase" }}>
+        {/* "dowlladahahoose" in bold */}
+        <Typography variant="body1" fontWeight="bold" sx={{ color: 'white', margin: 0, paddingBottom: 0 }}>
+          dowlladahahoose
+        </Typography>
+        {/* "KGS" in bold and larger size */}
+        <Typography
+          variant={matchDownSM ? 'h2' : 'h1'}
+          fontWeight="bold"
+          sx={{
+            fontSize: {
+              xs: "4rem",
+              sm: "4rem",
+              md: '4.5rem',
+              lg: '4.5rem'
+            },
+            color: 'white',
+            paddingTop: 0,
+            margin: 0, // Adjust margin to 0
+          }}
+        >
+          KGS
+        </Typography>
+      </Grid>
                   </Grid>
                   <Grid item xs={12}>
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">

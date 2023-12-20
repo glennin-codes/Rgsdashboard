@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -152,24 +152,33 @@ const FirebaseLogin = ({ ...others }) => {
             </FormControl>
 
             {errors.submit && (
-              <Box sx={{ mt: 2 }}>
-                <FormHelperText
-                  sx={{
-                    textAlign: 'center',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    background: 'white'
-                  }}
-                  error
-                >
-                  {errors.submit}
-                </FormHelperText>
-              </Box>
-            )}
+  <Alert  severity="error" sx={{ mt: 2 ,textAlign:'center',alignItems:'center', backgroundColor: 'white', color: 'red'}}>
+    <FormHelperText
+      sx={{
+        textAlign: 'center',
+        fontSize: '1rem',
+        fontWeight: '600',
+       color:'red'
+      }}
+      error
+    >
+      {errors.submit}
+    </FormHelperText>
+  </Alert>
+)}
+
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" sx={{
+  color: 'green',
+  backgroundColor: 'white',
+  fontWeight: 'bold',
+  '&:hover': {
+    backgroundColor: 'white',
+  },
+}}
+ variant="contained" >
                 {isSubmitting?(<CircularProgress size={24}  />):'Sign in'}  
                 </Button>
               </AnimateButton>
