@@ -57,7 +57,7 @@ const FirebaseLogin = ({ ...others }) => {
               setSubmitting(false);
             }
 
-            console.log(values);
+          
             const resp = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/login', values);
             const token = resp.data.token;
             localStorage.setItem('token', JSON.stringify(token));

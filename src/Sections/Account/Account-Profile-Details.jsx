@@ -13,12 +13,15 @@ import {
   CircularProgress
 } from '@mui/material';
 import AnimateButton from 'ui-component/extended/AnimateButton';
+import { useSelector } from 'react-redux';
 
 
 
 export const AccountProfileDetails = ({values,setValues,isLoading,handleUpdate}) => {
   const [error,setError]=useState('');
-
+  
+  const role = useSelector((state) => state.role);
+  
   const handleChange =  (event) => {
       setValues({ ...values, [event.target.name]: event.target.value });
     };
@@ -113,6 +116,7 @@ const handleSubmit = useCallback(
                 md={6}
               >
                 <TextField
+                disabled={role === 'user'}
                   fullWidth
                   label="Location"
                   name="location"
