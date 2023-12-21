@@ -30,13 +30,14 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
   return (
     <div
       style={{
-        display: 'none'
+        // display: 'none',
+        marginTop:2
       }}
     >
       <div ref={componentRef} className="form--el">
         <div className="container--el">
           <div className="main-tittle--el">
-            <h4>DOWLADA HOOSE EE DEGMADA {data?.location === "Lafoole" || data?.location === "Jazira"? "Afgooye" : data?.location}</h4>
+            <h5>DOWLADA HOOSE EE DEGMADA {data?.location === "Lafoole" || data?.location === "Jazira"? "Afgooye" : data?.location}</h5>
             <h3>WAAXDA DHULKA</h3>
           </div>
 
@@ -80,7 +81,7 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
               </div>
             </div>
           </div>
-          <div className="main-tittle--el">
+          <div className="main-tittle--el-warqada">
             <h3>WARQADDA LAHAANSHAHA DHULKA</h3>
           </div>
           <div className="form-field--el">
@@ -189,16 +190,16 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
             }}
           >
             <div className="footer-item">
-              <h4>{values.Agaasimaha}</h4>
-              <h5>Duqa Magaalada</h5>
+              <h5 className='footer-caps'>{values.Agaasimaha}</h5>
+              <h5 className='line-bellow'>Duqa Magaalada</h5>
             </div>
             {/* <div className="footer-item">
               <h4>something here too </h4>
               <h5> </h5>
             </div> */}
             <div className="footer-item">
-              <h4>{values.Duqa}</h4>
-              <h5>Agaasimaha Waaxda Dhulka</h5>
+              <h5 className='footer-caps'>{values.Duqa}</h5>
+              <h5 className='line-bellow'>Agaasimaha Waaxda Dhulka</h5>
             </div>
           </div>
         </div>
