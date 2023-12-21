@@ -48,8 +48,6 @@ export const RealEstateForm = () => {
       })
       .then((response) => {
         const { data } = response.data;
-
-        console.log(data.date);
         setRealEstate(data);
         setIsLoading(false);
       })

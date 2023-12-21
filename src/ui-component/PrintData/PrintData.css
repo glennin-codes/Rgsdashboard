@@ -1,8 +1,8 @@
 .form--el {
-  padding: 28px;
+  padding: 30px;
   width: 8.5in;
   max-width: 8.5in;
-  height: 11in;
+ 
   color: black;
   background-color: #ffff;
   overflow: hidden;
@@ -20,12 +20,12 @@
 }
 
 .container--el {
-  margin-top: 160px;
+  margin-top: 190px;
   width: 100%;
   max-width: 100%;
 }
 .main-tittle--el {
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 .main-tittle--el,
 .main-tittle--el-warqada{

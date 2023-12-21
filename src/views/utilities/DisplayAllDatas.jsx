@@ -46,6 +46,8 @@ const DisplayAll = () => {
   const [shouldPrint, setShouldPrint] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState('');
+  const [currentPrintId, setCurrentPrintId] = useState(null);
+
   const navigate = useNavigate();
 
   const token = getDataFromLocalStorage('token');
@@ -62,14 +64,14 @@ const DisplayAll = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      console.log({ start: startDate, end: endDate });
+      // console.log({ start: startDate, end: endDate });
       const startDateString = startDate ? startDate.toISOString() : ''; 
       const endDateString = endDate ? endDate.toISOString() : '';
 
-      console.log("start", startDateString);
-      console.log("end", endDateString);
+      // console.log("start", startDateString);
+      // console.log("end", endDateString);
 
-      console.log('location', locationQuery);
+      // console.log('location', locationQuery);
 
       const response = await axios.get(
         `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
@@ -85,8 +87,6 @@ const DisplayAll = () => {
         // Handle successful responses
         const result = response.data;
         setLoading(false);
-        console.log(result);
-    
         setData(result.items);
         setTotalItems(result.totalItems);
     }
@@ -102,8 +102,8 @@ const DisplayAll = () => {
           setError('Forbidden: You do not have permission to access this resource.');
         } else if (status === 404) {
           const info = error.response.data;
-          console.log(info.message);
-          setError(error.response.message)
+          // console.log(info.message);
+          setError(info.message);
         } else {
           console.error('Error:', status);
           setError(`Something went wrong? We are working around to bring everything to its place (Status: ${status})`);
@@ -142,36 +142,63 @@ const DisplayAll = () => {
   };
 
   // Function to handle printing
-  const HandlePrint = async (id) => {
-    setIsLoading(true); // Set loading state
+const HandlePrint = async (id) => {
+  setIsLoading(true); // Set loading state
 
-    try {
-      // Fetch the data for the selected dataset using the ID
-      const response = await fetch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, requestOptions);
-      if (response.status === 401) {
-        setError('Unauthorized: You are not authorized to access this resource.');
-      } else if (response.status === 403) {
-        setError('Forbidden: You do not have permission to access this resource.');
-      } else if (response.status === 500) {
-        setError('Something went wrong? we are working around to bring everything to its place');
-      } else if (response.ok) {
-        const result = await response.json();
-        const data = result.data;
-        setPrintableData(data);
-      } else {
-        console.error('Error:', response.status);
-        setError('Network error! Please check your connection then try again');
-      }
-      setShouldPrint(true);
-    } catch (error) {
-      setError('Network error! Please check your connection then try again');
-      console.error('Error fetching data:', error);
-    } finally {
-      setIsLoading(false); // Reset loading state
+  try {
+    const response = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, requestOptions);
+
+    // Assuming a successful response has status code 200
+    if (response.status === 200) {
+      const data = response.data.data; // Adjust the property name based on your API response
+      setPrintableData(data);
     }
-  };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // Axios error (network, 4xx, 5xx)
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        if (error.response.status === 401) {
+          setError('Unauthorized: You are not authorized to access this resource.');
+        } else if (error.response.status === 403) {
+          setError('Forbidden: You do not have permission to access this resource.');
+        } else if (error.response.status === 500) {
+          setError('Something went wrong? We are working around to bring everything to its place');
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        setError('No response received. Check your connection and try again.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', error.message);
+        setError('Error setting up the request. Please try again.');
+      }
+    } else {
+      // Non-Axios error
+      console.error('Error fetching data:', error);
+      setError('Network error! Please check your connection then try again.');
+    }
+  } finally {
+    setIsLoading(false); // Reset loading state
+  }
+};
+useEffect(() => {
+  if (currentPrintId) {
+    HandlePrint(currentPrintId);
+    setCurrentPrintId(null); // Reset the currentPrintId after handling the print
+  }
+}, [currentPrintId]);
 
- return (       // secondary={<SecondaryAction link="https://glenayienda.tech" />}
+useEffect(() => {
+  if (printableData) {
+    setShouldPrint(true);
+  }
+}, [printableData]);
+
+ return (    
+  <>  
+   {/*secondary={<SecondaryAction link="https://glenayienda.tech" />*/}
     <MainCard title="display all datas" >
       <Grid container spacing={5}>
         {/* On extra-small screens (xs), display components in a column */}
@@ -266,9 +293,9 @@ const DisplayAll = () => {
                       {isLoading ? (
                         <p>Loading</p>
                       ) : (
-                        <IconButton onClick={() => HandlePrint(item._id)} aria-label="Print">
-                          <PrintIcon />
-                        </IconButton>
+                        <IconButton onClick={() => setCurrentPrintId(item._id)} aria-label="Print">
+                        <PrintIcon />
+                      </IconButton>
                       )}
                     </TableCell>
                   </TableRow>
@@ -303,8 +330,12 @@ const DisplayAll = () => {
           </Box>
         </Box>
       </div>
-      {printableData && <PrintData shouldPrint={shouldPrint} data={printableData} setShouldPrint={setShouldPrint} />}
+    
     </MainCard>
+
+     <PrintData shouldPrint={shouldPrint} data={printableData} setShouldPrint={setShouldPrint} />
+    </>
+
   );
 };
 export default DisplayAll;
