@@ -2,7 +2,7 @@
   padding: 30px;
   width: 8.5in;
   max-width: 8.5in;
- 
+  height:11in;
   color: black;
   background-color: #ffff;
   overflow: hidden;
@@ -20,7 +20,7 @@
 }
 
 .container--el {
-  margin-top: 190px;
+  margin-top: 170px;
   width: 100%;
   max-width: 100%;
 }
@@ -273,7 +273,7 @@
    
 }
 .line-bellow{
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 0;
   padding: 0;
 }

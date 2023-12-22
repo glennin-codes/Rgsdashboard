@@ -187,20 +187,37 @@ const PrintData = ({ data, shouldPrint, setShouldPrint }) => {
           <div
             className="footer--el"
             style={{
-              marginTop: '30px'
+              marginTop: '20px'
             }}
           >
             <div className="footer-item">
-              <h5 className='footer-caps'>{values?.Agaasimaha}</h5>
-              <h5 className='line-bellow'>Duqa Magaalada</h5>
+              <h5 style={{
+              marginTop:0,
+              marginBottom:0
+            }}
+            className='footer-caps'>{values?.Agaasimaha}</h5>
+              <h5 style={{
+              marginTop:0,
+            
+            }} 
+            className='line-bellow'>Duqa Magaalada</h5>
             </div>
             {/* <div className="footer-item">
               <h4>something here too </h4>
               <h5> </h5>
             </div> */}
             <div className="footer-item">
-              <h5 className='footer-caps'>{values?.Duqa}</h5>
-              <h5 className='line-bellow'>Agaasimaha Waaxda Dhulka</h5>
+              <h5 style={{
+              marginTop:0,
+              marginBottom:0
+            }} 
+            className='footer-caps'>{values?.Duqa}</h5>
+              <h5 
+              style={{
+                marginTop:0,
+                
+              }}
+              className='line-bellow'>Agaasimaha Waaxda Dhulka</h5>
             </div>
           </div>
         </div>
