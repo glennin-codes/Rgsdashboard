@@ -7,6 +7,7 @@ import {  Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthRegister from '../auth-forms/AuthRegister';
+import Logo from 'ui-component/Logo';
 
 
 // assets
@@ -29,13 +30,57 @@ const Register = () => {
                   <Grid item xs={12}>
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
                       <Grid item>
+                      <Grid container spacing={2} alignItems="center" justifyContent="center">
+                  <Grid item  gap={1} sx={{ mb: 3,display:"flex",flexDirection:'raw', alignItems:'center'}}>
+                    <Logo />
+                  
+                    <Grid item xs={12} sx={{ textTransform: "uppercase" }}>
+        {/* "dowlladahahoose" in bold */}
+        <Typography variant="body1" fontWeight="bold" sx={{ color: 'white', margin: 0, paddingBottom: 0 } }
+             style={{
+              paddingTop: 0,
+              marginTop:0,
+              margin: 0,
+              paddingBottom: 0,
+              marginBottom:0
+            }}
+        >
+          dowlladahahoose
+        </Typography>
+        {/* "KGS" in bold and larger size */}
+        <Typography
+          variant={matchDownSM ? 'h2' : 'h1'}
+          style={{
+            paddingTop: 0,
+            marginTop:0,
+            margin: 0,
+            padding:0
+          }}
+          fontWeight="bold"
+          sx={{
+            fontSize: {
+              xs: "4rem",
+              sm: "4rem",
+              md: '4.5rem',
+              lg: '4.5rem'
+            },
+            color: 'white',
+            paddingTop: 0,
+            margin: 0, // Adjust margin to 0
+          }}
+        >
+          KGS
+        </Typography>
+      </Grid>
+      </Grid>
+      </Grid>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
+                          <Typography sx={{color:"white"}} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
                             create Master Acount
                           </Typography>
-                          <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
+                          {/* <Typography variant="caption" sx={{color:"white"}} fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
                             Enter your credentials to continue
-                          </Typography>
+                          </Typography> */}
                         </Stack>
                       </Grid>
                     </Grid>

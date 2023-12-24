@@ -35,7 +35,9 @@ const App = () => {
       localStorage.removeItem('token');
         // Log out the regular user
         dispatch(AuthLogout());
-        navigate('/');
+        if(!isMasterRegisterRoute){
+          navigate('/')
+        }
      
     }
   }, [dispatch]);

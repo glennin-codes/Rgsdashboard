@@ -3,8 +3,10 @@ import { useState } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
+  Alert,
   Box,
   Button,
+  CircularProgress,
   FormControl,
   FormHelperText,
   Grid,
@@ -29,7 +31,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import PhotoUploadField from 'ui-component/FormikPhotoUpload';
+// import PhotoUploadField from 'ui-component/FormikPhotoUpload';
 import CustomSnackbar from 'ui-component/SnackBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -45,7 +47,6 @@ const FirebaseRegister = ({ ...others }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
-
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
@@ -71,11 +72,12 @@ const FirebaseRegister = ({ ...others }) => {
   const handleErrorSnackbarClose = () => {
     setOpenErrorSnackbar(false);
   };
-const navigate=useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
+        
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle1">Sign up with Email address</Typography>
@@ -90,35 +92,34 @@ const navigate=useNavigate()
           phone: '',
           location: '',
           photo: '',
-          fname:"",
-          lname:""
+          fname: '',
+          lname: ''
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required'),
           phone: Yup.number().required('Phone number is required'),
-          location: Yup.string().max(280).required('Location or an Address  is required'),
-          
+          location: Yup.string().max(280).required('Location or an Address  is required')
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting ,resetForm}) => {
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           const dataToSend = {
             photo: selectedImage, // You might need to serialize this if it's not a file path or URL
             email: values.email,
             password: values.password,
             location: values.location,
             phone: values.phone,
-            name: values.fname + ' ' + values.lname,
+            name: values.fname + ' ' + values.lname
           };
-      
+
           try {
-            console.log('formdata',dataToSend);
-         
+            console.log('formdata', dataToSend);
+
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
             }
-            const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/master-admin',dataToSend);
-           
+            const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/master-admin', dataToSend);
+
             setSuccessMessage(response.data.message);
             setOpenSuccessSnackbar(true);
             resetForm();
@@ -127,12 +128,11 @@ const navigate=useNavigate()
               // Navigate after the delay (e.g., 3 seconds)
               navigate('/');
             }, 3000);
-          
           } catch (err) {
             console.error(err);
             if (scriptedRef.current) {
               setStatus({ success: false });
-              setErrors({ submit: err?.response?.data?.message});
+              setErrors({ submit: err?.response?.data?.message });
               setSubmitting(false);
             }
             setErrorMessage(err?.response?.data?.message);
@@ -153,7 +153,6 @@ const navigate=useNavigate()
                   value={values.fname}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                 
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
@@ -166,7 +165,6 @@ const navigate=useNavigate()
                   type="text"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                 
                   value={values.lname}
                   sx={{ ...theme.typography.customInput }}
                 />
@@ -275,40 +273,65 @@ const navigate=useNavigate()
                 </Box>
               </FormControl>
             )}
-            <PhotoUploadField
+            {/* <PhotoUploadField
               name="photo"
               value={values.photo}
               error={Boolean(touched.photo && errors.photo)}
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-
-            />
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+            /> */}
 
             {errors.submit && (
-              <Box sx={{ mt: 2}}>
-                <FormHelperText  sx={{textAlign:"center"}} error>{errors.submit}</FormHelperText>
-              </Box>
+              <Alert severity="error" sx={{ mt: 2, textAlign: 'center', alignItems: 'center', backgroundColor: 'white', color: 'red' }}>
+                <FormHelperText
+                  sx={{
+                    textAlign: 'center',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    color: 'red'
+                  }}
+                  error
+                >
+                  {errors.submit}
+                </FormHelperText>
+              </Alert>
             )}
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                  Sign up
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                 
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    fontSize:16 ,
+                    color: 'green',
+                    backgroundColor: 'white',
+                    fontWeight: 'bold',
+                    '&:hover': {
+                      backgroundColor: 'grey'
+                    }
+                  }}
+                >
+                  {isSubmitting ? <CircularProgress size={24} /> : 'Sign up'}
                 </Button>
               </AnimateButton>
             </Box>
           </form>
-
         )}
       </Formik>
       <CustomSnackbar
-          openSuccessSnackbar={openSuccessSnackbar}
-          openErrorSnackbar={openErrorSnackbar}
-          successMessage={successMessage}
-          errorMessage={errorMessage}
-          handleSuccessSnackbarClose={handleSuccessSnackbarClose}
-          handleErrorSnackbarClose={handleErrorSnackbarClose}
-        />
+        openSuccessSnackbar={openSuccessSnackbar}
+        openErrorSnackbar={openErrorSnackbar}
+        successMessage={successMessage}
+        errorMessage={errorMessage}
+        handleSuccessSnackbarClose={handleSuccessSnackbarClose}
+        handleErrorSnackbarClose={handleErrorSnackbarClose}
+      />
     </>
   );
 };

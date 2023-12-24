@@ -3,7 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Alert, Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput
+} from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -57,26 +68,24 @@ const FirebaseLogin = ({ ...others }) => {
               setSubmitting(false);
             }
 
-          
             const resp = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/login', values);
             const token = resp.data.token;
             localStorage.setItem('token', JSON.stringify(token));
 
-              // Get the token from localStorage
-    const getToken = localStorage.getItem('token');
+            // Get the token from localStorage
+            const getToken = localStorage.getItem('token');
 
-    if (token) {
-      // Decode the token
-      const decodedData = decodeToken(getToken);
+            if (token) {
+              // Decode the token
+              const decodedData = decodeToken(getToken);
 
-      // Dispatch the setRole action
-      dispatch(setRole(decodedData.role));
-    }
+              // Dispatch the setRole action
+              dispatch(setRole(decodedData.role));
+            }
             // Dispatch the loginSuccess action to update the authentication state
             // Navigate to the dashboard page
 
             dispatch(loginSuccess());
-            
 
             setStatus({ success: true });
             setSubmitting(false);
@@ -152,34 +161,40 @@ const FirebaseLogin = ({ ...others }) => {
             </FormControl>
 
             {errors.submit && (
-  <Alert  severity="error" sx={{ mt: 2 ,textAlign:'center',alignItems:'center', backgroundColor: 'white', color: 'red'}}>
-    <FormHelperText
-      sx={{
-        textAlign: 'center',
-        fontSize: '1rem',
-        fontWeight: '600',
-       color:'red'
-      }}
-      error
-    >
-      {errors.submit}
-    </FormHelperText>
-  </Alert>
-)}
-
+              <Alert severity="error" sx={{ mt: 2, textAlign: 'center', alignItems: 'center', backgroundColor: 'white', color: 'red' }}>
+                <FormHelperText
+                  sx={{
+                    textAlign: 'center',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    color: 'red'
+                  }}
+                  error
+                >
+                  {errors.submit}
+                </FormHelperText>
+              </Alert>
+            )}
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" sx={{
-  color: 'green',
-  backgroundColor: 'white',
-  fontWeight: 'bold',
-  '&:hover': {
-    backgroundColor: 'white',
-  },
-}}
- variant="contained" >
-                {isSubmitting?(<CircularProgress size={24}  />):'Sign in'}  
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  sx={{
+                    color: 'green',
+                    backgroundColor: 'white',
+                    fontWeight: 'bold',
+                    '&:hover': {
+                      backgroundColor: 'white'
+                    }
+                  }}
+                  variant="contained"
+                >
+                  {isSubmitting ? <CircularProgress size={24} /> : 'Sign in'}
                 </Button>
               </AnimateButton>
             </Box>

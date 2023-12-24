@@ -31,12 +31,26 @@ const Login = () => {
                   
                     <Grid item xs={12} sx={{ textTransform: "uppercase" }}>
         {/* "dowlladahahoose" in bold */}
-        <Typography variant="body1" fontWeight="bold" sx={{ color: 'white', margin: 0, paddingBottom: 0 }}>
+        <Typography variant="body1" fontWeight="bold" sx={{ color: 'white', margin: 0, paddingBottom: 0 } }
+             style={{
+              paddingTop: 0,
+              marginTop:0,
+              margin: 0,
+              paddingBottom: 0,
+              marginBottom:0
+            }}
+        >
           dowlladahahoose
         </Typography>
         {/* "KGS" in bold and larger size */}
         <Typography
           variant={matchDownSM ? 'h2' : 'h1'}
+          style={{
+            paddingTop: 0,
+            marginTop:0,
+            margin: 0,
+            padding:0
+          }}
           fontWeight="bold"
           sx={{
             fontSize: {
