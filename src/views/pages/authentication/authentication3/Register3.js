@@ -40,7 +40,7 @@ const Register = () => {
              style={{
               paddingTop: 0,
               marginTop:0,
-              margin: 0,
+              margin: '0 !important',
               paddingBottom: 0,
               marginBottom:0
             }}
@@ -53,12 +53,12 @@ const Register = () => {
           style={{
             paddingTop: 0,
             marginTop:0,
-            margin: 0,
+            margin: '0 !important',
             padding:0
           }}
           fontWeight="bold"
           sx={{
-            margin: '0px',
+            margin: '0 !important',
             fontSize: {
               xs: "4rem",
               sm: "4rem",
