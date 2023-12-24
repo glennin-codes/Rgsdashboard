@@ -36,7 +36,7 @@ const Register = () => {
                   
                     <Grid item xs={12} sx={{ textTransform: "uppercase" }}>
         {/* "dowlladahahoose" in bold */}
-        <Typography variant="body1" fontWeight="bold" sx={{ color: 'white', margin: 0, paddingBottom: 0 } }
+        <Typography variant="body1" fontWeight="bold" sx={{ color: 'white',  paddingBottom: 0, margin: '0px' } }
              style={{
               paddingTop: 0,
               marginTop:0,
@@ -58,6 +58,7 @@ const Register = () => {
           }}
           fontWeight="bold"
           sx={{
+            margin: '0px',
             fontSize: {
               xs: "4rem",
               sm: "4rem",
@@ -66,7 +67,7 @@ const Register = () => {
             },
             color: 'white',
             paddingTop: 0,
-            margin: 0, // Adjust margin to 0
+          // Adjust margin to 0
           }}
         >
           KGS
