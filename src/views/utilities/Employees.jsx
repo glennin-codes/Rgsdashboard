@@ -25,7 +25,7 @@ const Table = () => {
   useEffect(() => {
     // Fetch data from your API using Axios
     axios
-      .get('http://204.12.245.222:8080/api/employees', {
+      .get('https://api.dowlladahahoosekgs.com//api/employees', {
         headers: {
           Authorization: `Bearer ${token}`
         }

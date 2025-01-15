@@ -71,7 +71,7 @@ const CreateEmployee = () => {
 
     // Create an Axios instance with the default headers
     const apiInstance = axios.create({
-      baseURL: 'http://204.12.245.222:8080',
+      baseURL: 'https://api.dowlladahahoosekgs.com/',
       headers: {
         Authorization: `Bearer ${token}`
       }

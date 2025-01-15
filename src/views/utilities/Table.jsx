@@ -75,7 +75,7 @@ const ResponsiveTable = ({ data }) => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.delete(`http://204.12.245.222:8080/api/employees/${id}`, {
+      const response = await axios.delete(`https://api.dowlladahahoosekgs.com//api/employees/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -110,7 +110,7 @@ const ResponsiveTable = ({ data }) => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.post(`http://204.12.245.222:8080/api/user/renewal`, {
+      const response = await axios.post(`https://api.dowlladahahoosekgs.com//api/user/renewal`, {
         id
       },{
         headers: {
