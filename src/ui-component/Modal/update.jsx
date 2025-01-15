@@ -66,7 +66,7 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.put(`https://plum-inquisitive-bream.cyclic.cloud/api/employees/${formData.id}`, formData, {
+      const response = await axios.put(`http://204.12.245.222:8080/api/employees/${formData.id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

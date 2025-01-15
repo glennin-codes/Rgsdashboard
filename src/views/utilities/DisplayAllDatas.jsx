@@ -74,7 +74,7 @@ const DisplayAll = () => {
       // console.log('location', locationQuery);
 
       const response = await axios.get(
-        `https://plum-inquisitive-bream.cyclic.cloud/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
+        `http://204.12.245.222:8080/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
         {  
         headers: {
             Authorization: `Bearer ${token}`,
@@ -146,7 +146,7 @@ const HandlePrint = async (id) => {
   setIsLoading(true); // Set loading state
 
   try {
-    const response = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, requestOptions);
+    const response = await axios.get(`http://204.12.245.222:8080/api/datas/${id}`, requestOptions);
 
     // Assuming a successful response has status code 200
     if (response.status === 200) {

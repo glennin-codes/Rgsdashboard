@@ -156,7 +156,7 @@ export default function LandOwnershipForm() {
       const token = getDataFromLocalStorage('token');
       try {
         console.log('values ', values);
-        const response = await axios.post('https://plum-inquisitive-bream.cyclic.cloud/api/datas', values, {
+        const response = await axios.post('http://204.12.245.222:8080/api/datas', values, {
           headers: {
             Authorization: `Bearer ${token}`
           }

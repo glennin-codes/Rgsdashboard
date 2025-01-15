@@ -71,7 +71,7 @@ const CreateEmployee = () => {
 
     // Create an Axios instance with the default headers
     const apiInstance = axios.create({
-      baseURL: 'https://plum-inquisitive-bream.cyclic.cloud',
+      baseURL: 'http://204.12.245.222:8080',
       headers: {
         Authorization: `Bearer ${token}`
       }

@@ -66,7 +66,7 @@ const PreviewPosts = () => {
       const token = getDataFromLocalStorage('token');
       const decodedData = decodeToken(token);
       const response = await fetch(
-        `https://plum-inquisitive-bream.cyclic.cloud/api/reviewPost/${decodedData?.id}?page=${page}&limit=${limit}&search=${value}`,
+        `http://204.12.245.222:8080/api/reviewPost/${decodedData?.id}?page=${page}&limit=${limit}&search=${value}`,
         requestOptions
       );
       if (response.status === 401) {
@@ -137,7 +137,7 @@ const PreviewPosts = () => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.delete(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, {
+      const response = await axios.delete(`http://204.12.245.222:8080/api/datas/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -39,7 +39,7 @@ const ProfilePage = () => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/user/profile/${id}`, {
+      const response = await axios.get(`http://204.12.245.222:8080/api/user/profile/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -82,7 +82,7 @@ const ProfilePage = () => {
     const token = getDataFromLocalStorage('token');
     console.log('values after handle update is called', values);
     try {
-      const response = await axios.patch(`https://plum-inquisitive-bream.cyclic.cloud/api/user/profile/${id}`, values, {
+      const response = await axios.patch(`http://204.12.245.222:8080/api/user/profile/${id}`, values, {
         headers: {
           Authorization: `Bearer ${token}`
         }

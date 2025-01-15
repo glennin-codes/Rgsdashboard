@@ -41,7 +41,7 @@ export const RealEstateForm = () => {
     // 6504a24d4bb17035693cff4e
     // Make a GET request to your API endpoint to fetch a single data entry
     axios
-      .get(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, {
+      .get(`http://204.12.245.222:8080/api/datas/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -67,7 +67,7 @@ export const RealEstateForm = () => {
     setDownloadLoading(true);
 
     try {
-      const res = await axios.get(`https://plum-inquisitive-bream.cyclic.cloud/api/files/${userId}`,{
+      const res = await axios.get(`http://204.12.245.222:8080/api/files/${userId}`,{
         responseType:'blob'
       });
 
@@ -127,7 +127,7 @@ export const RealEstateForm = () => {
       setUpdateLoading(true);
 
       // Make a PATCH request to update the data
-      const res = await axios.patch(`https://plum-inquisitive-bream.cyclic.cloud/api/datas/${id}`, realEstate, {
+      const res = await axios.patch(`http://204.12.245.222:8080/api/datas/${id}`, realEstate, {
         headers: {
           Authorization: `Bearer ${token}`
         }
