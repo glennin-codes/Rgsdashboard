@@ -57,7 +57,7 @@ export function CreateAdmin() {
 
     // Create an Axios instance with the default headers
     const apiInstance = axios.create({
-      baseURL: 'https://api.dowlladahahoosekgs.com/',
+      baseURL: 'https://api.dowlladahahoosekgs.com',
       headers: {
         Authorization: `Bearer ${token}`
       }

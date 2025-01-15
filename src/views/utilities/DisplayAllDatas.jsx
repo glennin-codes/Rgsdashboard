@@ -74,7 +74,7 @@ const DisplayAll = () => {
       // console.log('location', locationQuery);
 
       const response = await axios.get(
-        `https://api.dowlladahahoosekgs.com//api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
+        `https://api.dowlladahahoosekgs.com/api/datas?page=${page}&limit=${limit}&search=${value}&startDate=${startDateString}&endDate=${endDateString}&l=${locationQuery}`,
         {  
         headers: {
             Authorization: `Bearer ${token}`,
@@ -146,7 +146,7 @@ const HandlePrint = async (id) => {
   setIsLoading(true); // Set loading state
 
   try {
-    const response = await axios.get(`https://api.dowlladahahoosekgs.com//api/datas/${id}`, requestOptions);
+    const response = await axios.get(`https://api.dowlladahahoosekgs.com/api/datas/${id}`, requestOptions);
 
     // Assuming a successful response has status code 200
     if (response.status === 200) {

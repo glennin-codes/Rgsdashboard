@@ -66,7 +66,7 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.put(`https://api.dowlladahahoosekgs.com//api/employees/${formData.id}`, formData, {
+      const response = await axios.put(`https://api.dowlladahahoosekgs.com/api/employees/${formData.id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

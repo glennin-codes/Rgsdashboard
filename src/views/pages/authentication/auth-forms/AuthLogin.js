@@ -68,7 +68,7 @@ const FirebaseLogin = ({ ...others }) => {
               setSubmitting(false);
             }
 
-            const resp = await axios.post('https://api.dowlladahahoosekgs.com//api/login', values);
+            const resp = await axios.post('https://api.dowlladahahoosekgs.com/api/login', values);
             const token = resp.data.token;
             localStorage.setItem('token', JSON.stringify(token));
 

@@ -45,7 +45,7 @@ const FileUploadModal = ({ open, onClose, info, setShowUploadBtn }) => {
       });
      
       // Make a POST request to the API with the FormData
-      const res = await axios.post(`https://api.dowlladahahoosekgs.com//api/files/${info?.id}`, formData, {
+      const res = await axios.post(`https://api.dowlladahahoosekgs.com/api/files/${info?.id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

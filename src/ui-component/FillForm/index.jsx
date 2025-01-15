@@ -156,7 +156,7 @@ export default function LandOwnershipForm() {
       const token = getDataFromLocalStorage('token');
       try {
         console.log('values ', values);
-        const response = await axios.post('https://api.dowlladahahoosekgs.com//api/datas', values, {
+        const response = await axios.post('https://api.dowlladahahoosekgs.com/api/datas', values, {
           headers: {
             Authorization: `Bearer ${token}`
           }
