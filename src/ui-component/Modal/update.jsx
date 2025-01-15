@@ -41,12 +41,13 @@ const locations = [
   'Ceel-Barde',
   'Rabdhure'
 ];
-const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
+const UpdateUserModal = ({ open, handleClose, formData, setFormData,password }) => {
   // const fullScreen = useMediaQuery('(max-width:600px)');
   const dispatch=useDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  
   const handleSnackbarOpen = (message) => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
@@ -66,11 +67,21 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
     const token = getDataFromLocalStorage('token');
 
     try {
-      const response = await axios.put(`https://api.dowlladahahoosekgs.com/api/employees/${formData.id}`, formData, {
+     // Filter out empty fields from formData
+     const filteredFormData = Object.fromEntries(
+      Object.entries(formData).filter(([, value]) => value.trim() !== "")
+    );
+setFormData(filteredFormData);
+  
+    const response = await axios.put(
+      `https://api.dowlladahahoosekgs.com/api/employees/${formData.id}`,
+     formData,
+      {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
       if (response.status === 200) {
         setLoading(false);
         handleSnackbarOpen('Success: User Updated successfully');
@@ -132,7 +143,7 @@ const UpdateUserModal = ({ open, handleClose, formData, setFormData }) => {
             </FormControl>
             <TextField fullWidth label="Phone" name="phone" value={formData.phone} onChange={handleInputChange} margin="normal" />
             <TextField fullWidth label="Email" name="email" value={formData.email} onChange={handleInputChange} margin="normal" />
-            <TextField fullWidth label="password" name="password" value={formData.password} onChange={handleInputChange} margin="normal" />
+            <TextField fullWidth disabled type='password' label="password" name="password" value={password}  margin="normal" />
             {/* Add fields for password and photo here */}
           </Container>
         </DialogContent>

@@ -58,7 +58,7 @@ const ResponsiveTable = ({ data }) => {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [renewalLoading, setRenewalLoading] = useState(false);
-
+  const [password,setPassword]=useState("");
   const handleOpenDeleteModal = (_id) => {
     setIsDeleteModalOpen(true);
     setId(_id)
@@ -158,9 +158,10 @@ const handleData=(datas)=>{
   location: datas?.location,
   phone: datas?.phone,
   email:datas?.email,
-  password: datas?.password,
+ 
   id:datas?._id
 })
+setPassword(datas?.password);
     setIsModalOpen(true);
 
 }
@@ -256,6 +257,7 @@ const handleData=(datas)=>{
       handleClose={handleCloseModal}
       formData={formData}
       setFormData={setFormData}
+      password={password}
     />
       <UserDeleteModal
         open={isDeleteModalOpen}
