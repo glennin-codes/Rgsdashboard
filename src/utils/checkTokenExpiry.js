@@ -13,17 +13,17 @@ export const checkTokenExpiryAndWorkingHours = () => {
     const decodedToken = decodeToken(token);
     const currentTime = new Date();
 
-    // Check if it's a weekend (Friday, Saturday, or Sunday)
+    // Check if it's a weekend (Friday)
     const dayOfWeek = currentTime.getDay();
-    if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) {
-      if (decodedToken.role === "user") {
-        return false; // Deny access during weekends for "user" role
+    if (dayOfWeek === 5) {
+      if (decodedToken.role === "user" && !decodedToken.hasWeekendAccess) {
+        return false;
       }
     }
 
     // Check if it's outside of working hours (8:00 AM to 5:00 PM)
     const currentHour = currentTime.getHours();
-    if (currentHour < 8 || currentHour >= 17) {
+    if (currentHour < 8 || currentHour >= 20) {
       if (decodedToken.role === "user") {
         return false; // Deny access outside working hours for "user" role
       }

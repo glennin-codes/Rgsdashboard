@@ -64,7 +64,7 @@ const App = () => {
       if (
         role === 'user' &&
         (!isWorkingHours || currentHour < 7 || currentHour >= 20) &&
-        (dayOfWeek === 5 )
+        (dayOfWeek === 5  && !checkTokenExpiryAndWorkingHours())
       ) {
 
         localStorage.removeItem('token');
