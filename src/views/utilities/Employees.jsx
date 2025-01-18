@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 
   const fetchEmployees = async (searchTerm = '') => {
     setLoading(true);
+    setError(``);
     try {
       const response = await axios.get(
         `https://api.dowlladahahoosekgs.com/api/employees?search=${searchTerm}`,
@@ -43,6 +44,7 @@ import { useSelector } from 'react-redux';
         setError(`Error: ${err?.response?.data?.message}`);
       } else if (err?.response?.status === 404) {
         setError(`Error: ${err?.response?.data?.message}`);
+        setData([]);
       } else if (err?.response?.status === 500) {
         setError(`Error: ${err?.response?.data?.message}`);
       } else {

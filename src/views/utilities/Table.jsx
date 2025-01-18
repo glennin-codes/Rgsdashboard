@@ -13,6 +13,8 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PendingIcon from '@mui/icons-material/HourglassEmpty';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import './Table.css'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+  
 const columns = ['Name', 'Location', 'Role', 'Phone', 'Email','status','Actions'];
 
 const ResponsiveTable = ({ data }) => {
@@ -174,6 +176,64 @@ setPassword(datas?.password);
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const [weekendAccessLoading, setWeekendAccessLoading] = useState({});
+  
+  const grantWeekendAccess = async (userId) => {
+    setWeekendAccessLoading(prev => ({ ...prev, [userId]: true }));
+    const token = getDataFromLocalStorage('token');
+
+    try {
+      const response = await axios.patch(
+        `https://api.dowlladahahoosekgs.com/api/employees/grant-weekend-access/${userId}`,
+       {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      if (response?.data) {
+        const { message, expiresAt } = response.data;
+  
+        if (message && expiresAt) {
+          // Parse the `expiresAt` timestamp
+          const expiryDate = new Date(expiresAt).toLocaleString(); // Converts to local readable format
+  
+          // Display a more informative success message
+          handleSnackbarOpen(
+            `Success: ${message}. Access expires on ${expiryDate}, but regular working hours remain unchanged.`
+          );
+          
+        } else {
+          // Fallback for incomplete response
+          handleSnackbarOpen("Success: Weekend access granted successfully.");
+        }
+      } else {
+        // Fallback for undefined response
+        handleSnackbarOpen("Success: Weekend access granted successfully.");
+      }
+      dispatch(setRefreshUpdate());
+    } catch (err) {
+      console.log(err)
+      if (err?.response?.status === 401) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 403) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 404) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 400) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else if (err?.response?.status === 500) {
+        handleSnackbarOpen(`Error: ${err?.response?.data?.message}`);
+      } else {
+        handleSnackbarOpen('Error: Network problem, check your connections and try again');
+      }
+    } finally {
+      setWeekendAccessLoading(prev => ({ ...prev, [userId]: false }));
+    }
+  };
+
   return (
    
     <>
@@ -211,6 +271,16 @@ setPassword(datas?.password);
                   >
                     <EditIcon  />
                   </IconButton>
+                  {row.role === 'user' && (
+      <IconButton
+        color="secondary"
+        disabled={weekendAccessLoading[row._id]}
+        onClick={() => grantWeekendAccess(row._id)}
+        title="Grant weekend access"
+      >
+        <AccessTimeIcon />
+      </IconButton>
+    )}
                   {row.accountExpiration && new Date(row.accountExpiration) < currentDate && (
                     <IconButton
                       color="secondary"

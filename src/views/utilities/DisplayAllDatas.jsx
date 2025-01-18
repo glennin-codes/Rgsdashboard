@@ -87,8 +87,11 @@ const DisplayAll = () => {
         // Handle successful responses
         const result = response.data;
         setLoading(false);
-        setData(result.items);
+     
+          setData(result.items);
+        
         setTotalItems(result.totalItems);
+        
     }
       
     } catch (error) {
@@ -104,6 +107,8 @@ const DisplayAll = () => {
           const info = error.response.data;
           // console.log(info.message);
           setError(info.message);
+          setData([]);
+          setTotalItems(0);
         } else {
           console.error('Error:', status);
           setError(`Something went wrong? We are working around to bring everything to its place (Status: ${status})`);
